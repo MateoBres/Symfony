@@ -1,0 +1,199 @@
+singular_name:   Azienda
+plural_name:     Aziende
+generic_entity: '../../Contacts/Generic'
+
+#multistep form configuration
+fieldset_titles:
+  fieldset1: Contatto
+#    fieldset2: Dettagli Utente
+
+is_multirole: true
+
+list_fields:
+  - businessName
+  - vatId
+  - taxCode
+  - type
+  - createdBy
+  - createdAt
+
+
+blocks:
+  fieldset1:
+    row1:
+      col1:
+        size: 12
+        blocks:
+          contact:
+            title:  Contatto
+            icon:   fa-user
+            fields:
+              - type
+              - createUser
+              - businessName
+              - vatId
+              - taxCode
+              - fullNameCanonical
+              - notes
+              - imageFile
+          branches:
+            title:  Sedi
+            validator: branches-form-collection-validator.js
+            icon:   fa-building
+            fields:
+              - ownedPlaces
+          roles:
+            title:  Ruoli
+            icon:   fa-pencil
+            class:  role-toggle-panel # this block is hidden and its options are exposed via 'Ruoli' button
+            fields:
+              - roleNames
+          contact_infos:
+            title:  Recapiti
+            icon:   fa-phone
+            fields:
+              - contactable
+
+
+show_blocks:
+  row1:
+    col1:
+      size: 6
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   details
+          fields:
+            - fullName
+            - summary
+            - infos
+            - createdBy
+            - image
+        branches:
+          title:  Sedi
+          validator: branches-form-collection-validator.js
+          icon:   fa-building
+          fields:
+            - ownedPlaces
+    contact_roles:
+      size: 6
+      blocks:
+
+fields_map:
+  businessName:
+    label:        Ragione Sociale
+    type:         string
+    sort_by:      Contacts\Company.businessName
+    search_alias: Contacts\Company.businessName
+    class:        col-12
+  fullName:
+    label:        Nome
+    type:         self
+    sort_by:      Contact\Company.fullNameCanonical
+    search_alias: Contact\Company.fullNameCanonical
+  vatId:
+    label:        Partita IVA
+    type:         string
+    sort_by:      Contacts\Company.vatId
+    search_alias: Contacts\Company.vatId
+  taxCode:
+    label:        Codice Fiscale
+    type:         string
+    sort_by:      Contacts\Company.taxCode
+    search_alias: Contacts\Company.taxCode
+  turnover:
+    label:        Classe di fatturato
+    type:         enum_type
+    dbal_type:    TurnoverType
+    class:        col-md-6
+  headcount:
+    label:        Classe Numero Dipendenti
+    type:         enum_type
+    dbal_type:    HeadcountType
+    class:        col-md-6
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Contacts\Company.id
+    search_alias: Contacts\Company.id
+  nid:
+    label:        Nid
+    type:         integer
+    sort_by:      Contacts\Company.nid
+    search_alias: Contacts\Company.nid
+  contactable.infos:
+    label:        Recapiti
+    type:         collection
+  fullNameCanonical:
+    label:        Fullnamecanonical
+    type:         string
+    sort_by:      Contacts\Company.fullNameCanonical
+    search_alias: Contacts\Company.fullNameCanonical
+  cleanFullName:
+    label:        Cleanfullname
+    type:         string
+    sort_by:      Contacts\Company.cleanFullName
+    search_alias: Contacts\Company.cleanFullName
+  imageFile:
+    label:        Logo
+    type:         image
+    class:        col-12
+  image:
+    label:        Logo
+    type:         image
+  type:
+    label:        Tipo
+    type:         enum_type
+    dbal_type:    ContactKindType
+    class:        col-12
+    sort_by:      Contacts\Company.type
+    search_alias: Contacts\Company.type
+  createUser:
+    label:        Crea utente
+    class:        col-md-6
+    type:         integer
+  createdBy:
+    label:        Creato da
+    type:         entity
+    link_to_show:   true
+    sort_by:      Contacts\Company.createdBy
+    search_alias: Contacts\Company.createdBy
+  createdAt:
+    label:        Creato il
+    type:         datetime
+    sort_by:      Contacts\Company.createdAt
+    search_alias: Contacts\Company.createdAt
+  updatedBy:
+    label:        Aggiornato da
+    type:         string
+    sort_by:      Contacts\Company.updatedBy
+    search_alias: Contacts\Company.updatedBy
+  updatedAt:
+    label:        Aggiornato il
+    type:         datetime
+    sort_by:      Contacts\Company.updatedAt
+    search_alias: Contacts\Company.updatedAt
+  ownedPlaces:
+    label:
+    type:         collection
+    class:        col-md-12
+    path_to_config: ContactFlock/PersonOwnedPlaceController.yaml
+  companyOwnedPlaces:
+    label:
+    type:         collection
+    class:        col-md-12
+    path_to_config: ContactFlock/PersonOwnedPlaceController.yaml
+  roleNames:
+    label:
+    type:         collection
+    class:        col-md-12
+  notes:
+    label:        Note
+    type:         string
+    class:        col-md-12
+  summary:
+    label:        Dati anagrafici
+    type:         string
+  infos:
+    label:        Recapiti
+    type:         collection

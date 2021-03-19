@@ -1,0 +1,3 @@
+{#{% if is_granted(constant('Sinervis\\AdminBundle\\Security\\Authorization\\Voter\\AdminVoter::EDIT'),entity) %}#}
+{#  <li><a href="{{ path(configuration.route_prefix ~ "_notification_edit", configuration.route_params|merge({ 'id': entity.id })) }}"><span class="fa fa-envelope-square"></span> Impostazioni Notifiche</a></li>#}
+{#{% endif %}#}

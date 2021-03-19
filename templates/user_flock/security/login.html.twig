@@ -1,0 +1,62 @@
+{% extends "user_flock/layout.html.twig" %}
+
+{% block stylesheets -%}
+    {{ parent() }}
+    <style>
+        #login-form div.alert {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+{% endblock %}
+
+{% block fos_user_content %}
+    <form method="post" id="login-form" class="m-t" novalidate>
+
+        <div class="auth-box">
+            <div class="row m-b-20">
+                <div class="col-md-12">
+                    <h3 class="text-left txt-primary">Accedi ora</h3>
+
+                    {% if error %}
+                        <div class="alert alert-danger fade show">
+                            <div>
+                                <i class="fa-fw fa fa-exclamation-circle"></i>
+                                <span>{{ error.message|trans }}</span>
+                            </div>
+                            <button class="close" data-dismiss="alert">×</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Nome utente" autofocus id="username"
+                       name="username" value="{{ last_username }}" required="required">
+                <span class="md-line"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" id="password" name="password"
+                       required="required">
+                <span class="md-line"></span>
+            </div>
+            <div class="form-group" style="text-align: left">
+                <label class="checkbox icheck-peterriver  ">
+                    <input type="checkbox" id="remember_me" name="_remember_me">
+                    <label for="remember_me">
+                        <span>&nbsp;Ricordami </span>
+                    </label>
+                </label>
+            </div>
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <input type="submit" id="_submit" name="_submit"
+                           value="Login"
+                           class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"/>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock fos_user_content %}

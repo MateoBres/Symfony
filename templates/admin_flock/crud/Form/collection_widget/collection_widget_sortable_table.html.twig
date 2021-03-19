@@ -1,0 +1,248 @@
+<!-- TEMPLATE {{ _self }} -->
+{# src/ebesse/StoreBundle/Resources/views/Layout/form-element-place.html.twig #}
+
+{% set field_name = form.vars.name %}
+{% set coll_widget_fields = {} %}
+{% set view_table_id = '' %}
+{% set edit_table_id = '' %}
+
+{% apply spaceless %}
+  <div class="collection-widget-wrapper col col-md-12 no-padding no-margin" id="{{form.vars.name}}">
+
+    {% if form.vars.attr.fields_map is defined %}
+
+      {% set view_table_id = form.vars.attr.fields_map.table_id is defined ? form.vars.attr.fields_map.table_id ~ '_view' : '' %}
+
+      {% set edit_table_id = form.vars.attr.fields_map.table_id is defined ? form.vars.attr.fields_map.table_id ~ '_edit' : id %}
+
+      <section class="no-margin">
+        {% for key, rec in form.vars.attr.fields_map %}
+          {% if rec.collection_widget is defined %}
+            {# skip type collection from data rapresentation table #}
+            {% if attribute(form.vars.attr.fields_map, key).type != 'collection' %}
+              {% set coll_widget_fields = coll_widget_fields|merge({(key):(rec)}) %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {#{{krumo(coll_widget_fields)}} #}
+        {% set table_classes = 'table table-bordered data-representation-table' %}
+        {% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+          {% set table_classes = table_classes ~ ' sortable' %}
+        {% endif %}
+
+        <table class="{{ table_classes }}" id="{{ view_table_id }}" target_table="{{ edit_table_id }}">
+          <thead>
+            <tr>
+              {% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+              <th></th>
+              {% endif %}
+              <th><div class="row">
+                {% for row in coll_widget_fields %}
+                  <section class="col {{row.collection_widget.data_table_class is defined ? row.collection_widget.data_table_class : row.collection_widget.class}}">{{ row.label }}</section>
+                {% endfor %}
+                </div>
+              </th>
+              <th class="actions">
+                <section class="col col-md-12">Azioni</section>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for subform in form %}
+              <tr id="{{id}}-row_{{loop.index0}}" rel="{{id}}-row_{{loop.index0}}_list">
+                {% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+                  <td class="table-sortable-handler"><i class="glyphicon glyphicon-move"></i></td>
+                {% endif %}
+                <td>
+                  <div class="row">
+                  {% for key, row in coll_widget_fields %}
+                    {% if attribute(subform, key) is defined %}
+                      {% set field = attribute(subform, key) %}
+                      <section class="col {{row.collection_widget.data_table_class is defined ? row.collection_widget.data_table_class : row.collection_widget.class}}" id="_{{field.vars.id}}">
+                        {% if field.vars.block_prefixes.1 == 'choice' %}
+                          {% if field.vars.block_prefixes.2 == 'entity' %}
+                            {% if field.vars.data is not null %}
+                              {% if field.vars.data is iterable %}
+                                {% set field_vars_data = [] %}
+                                  {% for field_data in field.vars.data %}
+                                    {% set field_vars_data = field_vars_data | merge([field_data.__toString]) %}
+                                  {% endfor %}
+                                  {{ field_vars_data|join(', ') }}
+                              {% else %}
+                                {{field.vars.data.__toString}}
+                              {% endif %}
+                            {% endif %}
+                          {% else %}
+                            {% if field.vars.value is iterable %} {# expanded choice #}
+                              {% set selected_values = [] %}
+                              {% for subkey, val in field.vars.value %}
+                                {% if val is same as(true) %}
+                                  {{ attribute(field.vars.choices, subkey).label }}
+                                {% elseif val is not same as(false) %}
+                                  {% for choice in field.vars.choices %}
+                                    {% if choice.value == val %}
+                                      {% set selected_values = selected_values | merge([choice.label]) %}
+                                    {% endif %}
+                                  {% endfor %}
+                                {% endif %}
+                              {% endfor %}
+                              {% if selected_values is empty %}
+                                {% if attribute(field.vars.attr, 'data-empty-value') is defined %}
+                                  {{attribute(field.vars.attr, 'data-empty-value')}}
+                                {% endif %}
+                              {% else %}
+                                {{ selected_values|join(', ') }}
+                              {% endif %}
+                            {% else %} {# non expanded choice #}
+                              {% for choice in field.vars.choices %}
+                                {% if choice.value == field.vars.value %}
+                                  {{ choice.label }}
+                                {% endif %}
+                              {% endfor %}
+                            {% endif %}
+                          {% endif %}
+                        {% elseif field.vars.block_prefixes.1 == 'checkbox' %}
+                          {% if field.vars.checked == true %} Sì {% else %} No {% endif %}
+                        {% else %}
+                          {% if 'color_picker' in field.vars.block_prefixes %}
+                            <div class="picked-color-sample" style="background-color: {{ field.vars.value }}">{{ field.vars.value }}</div>
+                          {% elseif 'sv_entity_autocomplete' in field.vars.block_prefixes or row.type == 'entity' %}
+                              {{ field.vars.entity_title }}
+                          {% else %}
+                            {{ field.vars.value }}
+                          {% endif %}
+                        {% endif %}
+                      </section>
+                    {% else %}
+                    {# TODO: refine the functionality #}
+                        {% if attribute(subform, 'contact') is defined %}
+                          {% set entity_field = attribute(subform, 'contact') %}
+                            {#{% set key = key|slice(8) %}#}
+                            {% if attribute(entity_field, key) is defined %}
+                              <section class="col {{row.collection_widget.class}}" id="_{{attribute(entity_field, key).vars.id}}">
+                                {{attribute(entity_field, key).vars.value}}
+                              </section>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+
+                  {% endfor %}
+                  </div>
+                </td>
+
+                  <td class="actions">
+                    <a href="#" id="{{id}}-row_{{loop.index0}}" rel="{{id}}-row_{{loop.index0}}_edit" class="collection-widget-edit" data-toggle="tooltip" title="Modifica elemento"><i class="fas fa-pencil-alt"></i></a>
+                    {% if form.vars.attr.deletion_requested is defined and form.vars.attr.deletion_requested == true and subform.isRemoved is defined %}
+                      {% set field = attribute(subform, 'isRemoved') %}
+                      {{ form_row(field) }}
+                    {% elseif form.vars.allow_delete == true %}
+                      <a href="#" class="delete" data-toggle="tooltip" title="Rimuovi elemento"><i class="{{ icons['remove'] }} text-danger"></i></a>
+                    {% endif %}
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+
+          <tfoot>
+            <tr class="dummy-track" id="{{id}}-row__ID_">
+              {% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+                <td class="table-sortable-handler"><i class="glyphicon glyphicon-move"></i></td>
+              {% endif %}
+              <td>
+                <div class="row">
+                  {% for key in coll_widget_fields|keys %}
+
+                    {% set d_class = 'col-md-2' %}
+                    {% if attribute(coll_widget_fields, key) is defined %}
+                      {% set attribs = attribute(coll_widget_fields, key) %}
+                      {% set d_class = attribs.collection_widget.class %}
+                      {% if attribs.collection_widget.machine_name is defined %}
+                        {% set key = attribs.collection_widget.machine_name %}
+                      {% endif %}
+                    {% endif %}
+
+                    <section class="col {{d_class}}" id="_{{id}}__ID__{{key}}">
+                    </section>
+                  {% endfor %}
+                </div>
+              </td>
+              <td class="actions">
+                <a href="#" id="{{id}}-row__ID_" class="collection-widget-edit" data-toggle="tooltip" title="Modifica elemento" target_table="{{id}}"><i class="fas fa-pencil-alt"></i></a>
+                <a href="#" class="delete" data-toggle="tooltip" title="Rimuovi elemento"><i class="{{ icons['remove'] }} text-danger"></i></a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+      </section>
+    {% else %}
+
+        ****************** field map not defined *************************
+
+    {% endif %}
+
+
+    <section class="no-margin">
+
+      <table class="table form-data-table table-borderless" id="{{ edit_table_id }}">
+
+        <tbody>
+        {% for subform in form %}
+          <tr class="tmp-display-none" id="{{id}}-row_{{loop.index0}}" rel="{{id}}-row_{{loop.index0}}_form">
+            <td class="data-td row">
+              {% for field in subform %}
+
+                {% if (field.vars.name == 'contact') %}
+                  {% set configuration = form.vars.attr %}
+                  {% include 'contact_flock/Contact/Form/render_field_contact.html.twig' %}
+                {% else %}
+                  {% set class = '' %}
+                  {% if attribute(form.vars.attr.fields_map, field.vars.name).class is defined %}
+                    {% set class = attribute(form.vars.attr.fields_map, field.vars.name).class ~ ' field-' ~ field.vars.name %}
+                  {% endif %}
+
+                  {{ form_row(field, {'class': class}) }}
+                {% endif %}
+              {% endfor %}
+
+              <div class="action-button-wrapper">
+                <a class="btn btn-success btn-sm btn-labeled btn-labeled-right collection-widget-save-modification" href="#">Conferma <span class="btn-label"><i class="fas fa-check"></i> </span></a>
+                <a class="btn btn-success btn-sm btn-labeled btn-labeled-right collection-widget-cancel-modification" href="#">Annulla <span class="btn-label"><i class="fas fa-undo"></i> </span></a>
+              </div>
+
+            </td>
+
+          </tr>
+        {% endfor %}
+        </tbody>
+
+        {% if prototype is defined %}
+
+          <tfoot>
+          <tr class="add-new-item">
+            <td colspan="2">
+              {% set fields_map = '' %}
+              {% if form.vars.attr.fields_map is defined %}
+                {% set fields_map = form.vars.attr.fields_map %}
+              {% endif %}
+
+              {% set btn_label_name = form.vars.attr.add_more_button_label is defined ? form.vars.attr.add_more_button_label|split('_')|last : 'Aggiungis' %}
+
+              <a href="#" class="add add-{{btn_label_name|lower}} btn btn-inverse btn-xs btn-mini" data-prototype="{% apply escape %}
+                                   {{ include('admin_flock/crud/Form/collection_widget/prototype.html.twig', { 'form': prototype, 'fields_map': fields_map, 'parent_name': field_name, 'entity_label_name': btn_label_name}) }}
+                               {% endapply %}">
+                <i class="fa fa-fw fa-plus-circle"></i>
+                  Aggiungi {{btn_label_name}}
+              </a>
+            </td>
+          </tr>
+          </tfoot>
+        {% endif %}
+
+      </table>
+    </section>
+
+  </div>
+{% endapply %}

@@ -1,0 +1,28 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set reps = entity.contact is defined ? entity.contact.representatives : entity.representatives %}
+{% if reps|length > 0 %}
+  <table class="table contact-representatives table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Ruolo</th>
+        <th>Recapiti</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for representative in reps %}
+        <tr>
+          <td>{{ representative }}</td>
+          <td>{{ representative.type is not null ? representative.type|readable_enum('RepresentativeTypeType') : '' }}</td>
+          <td>
+            {% for key, contactInfo in representative.contact.infos %}
+              <button tabindex="{{key}}" class="btn btn-default info " role="button" rel="popover" data-placement="top" title="{{ contactInfo.type|capitalize }}" data-html="true" data-content="<a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>">
+                  <i class="fa {{ contactInfo.icon }}"></i>
+              </button>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

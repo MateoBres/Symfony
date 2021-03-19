@@ -1,0 +1,11 @@
+
+{% if entity.contact.roles and field_conf.type == 'collection' %}
+	<ul>
+		{% for role in entity.contact.roles %}
+			<li>{{role.getRoleName() }}</li>
+		{% else %}
+			<li>Nessun Ruolo Assegnato</li>
+		{% endfor %}
+
+	</ul>
+{% endif %}

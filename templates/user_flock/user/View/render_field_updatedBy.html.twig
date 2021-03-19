@@ -1,0 +1,7 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% if entity.updatedBy is empty %}
+  importazione
+{% else %}
+  <a href="{{ path('admin_user_show_by_username', {'username':entity.updatedBy}) }}">{{ entity.updatedBy }}</a>
+{% endif %}

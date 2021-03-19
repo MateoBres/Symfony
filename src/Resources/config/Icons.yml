@@ -1,0 +1,75 @@
+parameters:
+    icons:
+        # general
+        details: fas fa-table
+        home: fas fa-home
+        modify: fas fa-edit
+        taxonomy: fas fa-layer-group
+        pdf: fas fa-file-pdf
+        goto: fas fa-arrow-circle-right
+        lock: fas fa-lock
+        unlock: fas fa-unlock
+        undo: fas fa-undo-alt
+        delete: fas fa-trash
+        remove: fas fa-trash
+        cancel: fas fa-times-circle
+        settings: fas fa-cog
+        gears: fas fa-cogs
+        save: fas fa-save
+        calendar: fas fa-calendar-check
+        email: fas fa-envelope
+        tel: fas fa-phone-alt
+
+        # UserFlock
+        users: fas fa-users
+        user: fas fa-user
+
+        # ContactFlock
+        contacts: fas fa-address-book
+        company: far fa-building
+        person: fas fa-portrait
+        worker: fas fa-user-tie
+        location: fas fa-map-marker-alt
+        facility: fas fa-h-square
+
+        # CommercialFlock
+        commercial: fas fa-briefcase
+        certificate: fas fa-award
+        proxyassignment: fas fa-university
+        assignment: fas fa-file-signature
+        enrollment: fas fa-address-card
+
+        # CourseFlock
+        course: fas fa-graduation-cap
+        planning: fas fa-swatchbook
+        format: fas fa-book-open
+        program: fas fa-clipboard-list
+        revision: fas fa-highlighter
+        module: fas fa-cube
+        modules: fas fa-cubes
+        edition: fas fa-book
+        lesson: fas fa-comment-alt
+
+        # QuestionnaireFlock
+        questionnaire: fas fa-th-list
+        question: fas fa-question-circle
+        completed_questionnaire: fas fa-clipboard-list
+        style: fas fa-palette
+        answer: fas fa-tasks
+        rules: fas fa-spell-check
+        compiled: far fa-list-alt
+        form: fas fa-clipboard-list
+        link: fas fa-link
+        security: fas fa-shield-alt
+        quality: fas fa-award
+
+        # Plans
+        plan: fas fa-lightbulb
+        funding_plan: fas fa-money-bill-alt
+        resolution_plan: fas fa-warehouse
+        market_plan: fas fa-shopping-cart
+        training_plan: fas fa-school
+
+twig:
+    globals:
+        icons: '%icons%'

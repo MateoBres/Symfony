@@ -1,0 +1,96 @@
+fields_map:
+    id:
+        label:        Id
+        type:         integer
+    type:
+        label:        Tipo
+        type:         string
+    name:
+        label:        Nome
+        type:         string
+        class:        col-md-6
+    fullAddress:
+        label:        Indirizzo completo
+        type:         string
+        class:        col-md-12 address-stretch
+        sort_by:      Place.fullAddress
+        search_alias: Place.fullAddress
+        link_to_show: true
+        collection_widget:
+            class:        col-md-12
+    code:
+        label:        Codice
+        type:         string
+    street:
+        label:        Via
+        type:         string
+        class:        col-md-8 crouch fade
+        sort_by:      Place.street
+        search_alias: Place.street
+    number:
+        label:        Civico
+        type:         string
+        class:        col-md-4 crouch fade
+        sort_by:      Place.number
+        search_alias: Place.number
+    zip:
+        label:        CAP
+        type:         string
+        class:        col-md-3 crouch fade
+        sort_by:      Place.zip
+        search_alias: Place.zip
+    city:
+        label:        Città
+        type:         string
+        class:        col-md-5 crouch fade
+        sort_by:      Place.city
+        search_alias: Place.city
+    province:
+        label:        Provincia
+        type:         string
+        class:        col-md-4 crouch fade
+        sort_by:      Place.province
+        search_alias: Place.province
+    region:
+        label:        Regione
+        type:         string
+        class:        col-md-3 crouch fade
+        sort_by:      Place.region
+        search_alias: Place.region
+    country:
+        label:        Stato
+        type:         string
+        class:        col-md-3 crouch fade
+        sort_by:      Place.country
+        search_alias: Place.country
+    latitude:
+        label:        Latitudine
+        type:         float
+        class:        col-md-3 crouch fade
+        sort_by:      Place.latitude
+        search_alias: Place.latitude
+    longitude:
+        label:        Longitudine
+        type:         float
+        class:        col-md-3 crouch fade
+        sort_by:      Place.longitude
+        search_alias: Place.longitude
+    contact:
+        label:        Proprietario
+        type:         string
+    siteType:
+        label:        Topo sito
+        type:         string
+        class:        col-md-4
+    siteName:
+        label:        Sito
+        type:         string
+        class:        col-md-4
+    contactable:
+        label:        Recapiti
+        type:         collection
+        class:        col-md-12
+    isFiscalSendingAddress:
+        label:        Indirizzo per spedizione documenti fiscali
+        type:         boolean
+        class:        col-md-12 invoice-sending-address

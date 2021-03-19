@@ -1,0 +1,24 @@
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+@import "../../inspinia/variables";
+
+/*
+ * COLORS OVERRIDE
+ */
+
+$theme-colors: (
+    "primary": $navy,
+    "default": $dark-gray,
+    "success": $blue,
+    "info": $lazur,
+    "warning": $yellow,
+    "danger": $red
+);
+
+$default-margin: 20px;
+$topbar-height: 61px;
+$page-heading-height: 94px;
+
+$light-navy: lighten($navy, 50%);
+$lighter-navy: #F4FDFB;

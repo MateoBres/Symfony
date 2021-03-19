@@ -1,0 +1,52 @@
+/*
+    AUTOCOMPLETE
+ */
+
+.sv-entity-autocomplete-wrapper,
+.sv-text-autocomplete-wrapper {
+
+    .autocomplete-input-label {
+
+        position: relative;
+
+        .autocomplete-reset {
+            position: absolute;
+            top: -20px;
+            right: 8px;
+            display: block;
+            cursor: pointer;
+            color: lighten(theme-color('default'), 14%);
+            text-align: left;
+            font-size: 12px;
+
+            &:hover {
+                color: lighten(theme-color('danger'), 14%);
+            }
+        }
+
+        input[readonly] + .autocomplete-reset, input[disabled] + .autocomplete-reset {
+            display: none;
+        }
+    }
+
+    &.filtermode {
+        .autocomplete-reset {
+            display: none;
+        }
+    }
+}
+
+.no-data-table {
+
+    .autocomplete-input-label {
+        input {
+            padding-right: 44px;
+        }
+
+        .autocomplete-reset {
+            top: 8px !important;
+            right: 28px !important;
+        }
+    }
+
+}

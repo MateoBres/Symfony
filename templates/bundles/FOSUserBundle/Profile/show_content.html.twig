@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="col-md-4 offset-md-4">
+  <div class="z-depth-bottom-0 card panel-block-course">
+    <header class="card-header extra-side-padding panel-heading font-weight-bold">DATI ACCOUNT</header>
+    <div role="content" class="card-block panel-body">
+      <div class="fos_user_user_show">
+        <p><span class="font-weight-bold">{{ 'profile.show.username'|trans }}</span>: {{ user.username }}</p>
+        <p><span class="font-weight-bold">{{ 'profile.show.email'|trans }}</span>: {{ user.email }}</p>
+      </div>
+    </div>
+  </div>
+</div>

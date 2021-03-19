@@ -1,0 +1,3 @@
+{% if is_granted(constant('Sinervis\\AdminBundle\\Security\\Authorization\\Voter\\AdminVoter::EDIT'),entity.contact) %}
+  <li><a href="{{ path("admin_place_tariff_settings", { 'id': entity.id, 'type': get_entity_class(entity) }) }}"><span class="fa fa-fw fa-money"></span> Impostazioni tariffe</a></li>  
+{% endif %}

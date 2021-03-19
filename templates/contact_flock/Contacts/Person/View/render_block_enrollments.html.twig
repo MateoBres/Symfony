@@ -1,0 +1,106 @@
+{% if entity.student.enrollments is not null %}
+
+    <!-- TEMPLATE {{ _self }} -->
+    {% if entity.student.enrollments | length %}
+
+
+        <table class="table table-bordered table-sm mb-0">
+            <thead>
+            <tr>
+                <th width="20%">
+                    <b>Edizione</b>
+                </th>
+                <th width="20%">
+                    <b>Assenze residue</b>
+                </th>
+                <th width="30%">
+                    <b>Presenze</b>
+                </th>
+                <th width="10%">
+                    <b>Verifica</b>
+                </th>
+                <th width="10%">
+                    <b>Allocazione</b>
+                </th>
+                <th>
+                    <b>Azioni</b>
+                </th>
+            </tr>
+            </thead>
+            {% for enrollment in entity.student.enrollments %}
+                {% set allowedAbsencePercentage = enrollment.edition.course.minStudentPresencePercentage ? (1 - enrollment.edition.course.minStudentPresencePercentage) * 100 : null %}
+                <tr>
+                    <td>
+                        {{ link_to_show(enrollment.edition) }}
+                    </td>
+                    {% if enrollment.hasCreditsAcquired %}
+                        <td colspan="6">
+                            <div class="badge badge-success" data-toggle="tooltip" data-original-title="Lo studente non ha frequentato in quanto ha già acquisito i crediti per questa edizione">
+                                Crediti già acquisiti
+                            </div>
+                        </td>
+                    {% else %}
+                        <td>
+                            {% if allowedAbsencePercentage %}
+                                {% set absenceRemaining = enrollment.remainingAbsenceAllowedInSeconds %}
+                                {% if absenceRemaining %}
+
+                                    {% set absence = enrollment.remainingAbsenceAllowedInSeconds %}
+                                    {% set hoursAbsence = absence | date('H', '+00:00 GMT') | number_format(0) %}
+                                    {% set minutesAbsence = absence | date('i') | number_format(0) %}
+                                    {% set absenceLabel = (hoursAbsence > 0 ? hoursAbsence ~ ' ore' : '') ~ (hoursAbsence > 0 and minutesAbsence > 0 ? ', ' : '') ~ (minutesAbsence > 0 ? minutesAbsence ~ ' minuti' : '') %}
+                                    <div class="badge badge-info" data-toggle="tooltip" data-original-title="{{ absenceLabel }} di assenze disponibili">
+                                        {{ absenceLabel }}
+                                    </div>
+                                {% else %}
+                                    <div class="badge badge-danger" data-toggle="tooltip" data-original-title="Non sono più possibili assenze">
+                                        Esaurite
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td style="position: relative;">
+
+                            {% set presencePercentage = enrollment.estimatedPresencePercentage() %}
+                            {% set presenceAchievementStatus = enrollment.estimatedPresenceAchievementStatus %}
+
+                            {% if presenceAchievementStatus is constant('App\\DBAL\\Types\\AchievementStatusType::COMPLETE') %}
+                                {% set labelClass = 'progress-bar-success' %}
+                            {% elseif presenceAchievementStatus >= constant('App\\DBAL\\Types\\AchievementStatusType::SUFFICIENT') %}
+                                {% set labelClass = 'progress-bar-warning' %}
+                            {% else %}
+                                {% set labelClass = 'progress-bar-danger' %}
+                            {% endif %}
+
+                            <div class="progress" rel="tooltip" data-original-title="Percentuale di presenza prevista senza ulteriori assenze: {{ presencePercentage | number_format(0) }}% (richiesta: {{ enrollment.minStudentPresencePercentage | number_format(0) }}%)">
+                                {% if enrollment.minStudentPresencePercentage > 0 %}
+                                    <div class="progress-bar-limit" style="left: {{ enrollment.minStudentPresencePercentage }}%"></div>
+                                {% endif %}
+                                <div class="progress-bar {{ labelClass }} progress-bar-striped {{ enrollment.edition.isConcluded ? '' : 'progress-bar-animated' }}"
+                                     role="progressbar"
+                                     style="width: {{ presencePercentage }}%"
+                                     aria-valuenow="{{ presencePercentage }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    {{ presencePercentage  | number_format(0) }}%
+                                </div>
+                            </div>
+                        </td>
+                        <td class="boolean">
+                            <span class="{{ enrollment.finalTestSuccessful ? 'bool-yes' : 'bool-no' }}">{{ enrollment.finalTestSuccessful ? 'Sì' : 'No' }}</span>
+                        </td>
+                    {% endif %}
+                    <td>
+                        {% include 'commercial_flock/contracts/shared/View/render_field_lessonAllocationStatus.html.twig' with {entity: enrollment} %}
+                    </td>
+                    <td>
+                        {{ link_to_action_show(enrollment, {}, {'display_name': 'Iscrizione'}) }} &nbsp;
+                        {{ link_to_action_edit(enrollment, {}, {'display_name': 'Iscrizione'}) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        {% include 'admin_flock/crud/View/render_empty_block.html.twig' %}
+    {% endif %}
+{% endif %}

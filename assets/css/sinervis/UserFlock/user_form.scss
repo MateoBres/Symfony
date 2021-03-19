@@ -1,0 +1,60 @@
+label.user-enabled {
+    padding-top: 16px;
+}
+
+.quiz-permissions {
+    .permission-group {
+        .main-group {
+            > label {
+                padding-left: 30px;
+            }
+
+            > label:first-child {
+                padding-top: 16px;
+                padding-left: 0px;
+
+                > label {
+                    font-weight: bold;
+                }
+            }
+        }
+        .sub-group {
+            padding-left: 60px;
+        }
+    }
+
+    .other {
+        > label:first-child {
+            padding-top: 0px;
+        }
+    }
+}
+
+.permissions-block {
+    td#quizPermissions-value {
+        ul.first-level {
+            padding-bottom: 16px;
+            > li {
+                padding-left: 16px;
+                &::before {
+                    content: '\f140';
+                    font-family: 'Font Awesome 5 Free';
+                    font-size: 0.6rem;
+                    padding-right: 16px;
+                }
+            }
+            > li:first-child {
+                padding-left: 0px;
+                &::before {
+                    content: '\f192';
+                    font-family: 'Font Awesome 5 Free';
+                    font-size: 0.6rem;
+                    padding-right: 16px;
+                }
+            }
+        }
+        ul.second-level {
+            padding-left: 32px;
+        }
+    }
+}

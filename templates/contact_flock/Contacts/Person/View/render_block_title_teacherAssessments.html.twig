@@ -1,0 +1,18 @@
+{% extends 'admin_flock/crud/View/render_block_title.html.twig' %}
+{% block extra_title_actions %}
+    {% set standardTeacherAssessmentQuestionnaireModel = questionnaire_service.getLastStandardTeacherAssessmentQuestionnaire %}
+    {% if standardTeacherAssessmentQuestionnaireModel %}
+
+        {{ link_to_action_compile_questionnaire(standardTeacherAssessmentQuestionnaireModel, {
+            route_params: {
+                questionnaire: standardTeacherAssessmentQuestionnaireModel.id,
+                teacher: entity.teacher.id,
+            },
+            type: standardTeacherAssessmentQuestionnaireModel.type,
+            class: 'btn btn-warning btn-xs',
+            icon: icons.form,
+            label: 'Nuova scheda di valutazione'
+        }) }}
+    </a>
+    {% endif %}
+{% endblock extra_title_actions %}

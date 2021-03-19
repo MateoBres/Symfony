@@ -1,0 +1,12 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+  <form method="post" class="form-login client-form">
+      <div id="logo"><a href="{{path("fos_user_security_login")}}"><img src="/images/sinervis_logo.png"></a></div>
+      <h2 class="form-login-heading">password reset mail inviata</h2>
+
+      <div class="alert alert-success fade in">
+          <b>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</b>
+      </div>
+  </form>
+{% endblock fos_user_content %}

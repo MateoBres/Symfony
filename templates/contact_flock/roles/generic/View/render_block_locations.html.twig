@@ -1,0 +1,26 @@
+<!-- TEMPLATE {{ _self }} -->
+
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th id="countInterestedPlaces-label" class="render-block-label">Location</th>
+      <td id="countInterestedPlaces-value">
+        {% if entity.countInterestedPlaces %}
+          <a href="{{ path('admin_place') }}?sinervis_contactbundle_placefilter[customer]{{ entity.id|to_autocomplete }}">{{ entity.countInterestedPlaces }}</a>
+        {% else %}
+          0
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th id="countActiveInterestedPlaces-label" class="render-block-label">Location con servizi</th>
+      <td id="countActiveInterestedPlaces-value">
+        {% if entity.countActiveInterestedPlaces %}
+          <a href="{{ path('admin_place') }}?sinervis_contactbundle_placefilter[customer]{{ entity.id|to_autocomplete }}&sinervis_contactbundle_placefilter[hasActiveServices]=y">{{ entity.countActiveInterestedPlaces }}</a>
+        {% else %}
+          0
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>

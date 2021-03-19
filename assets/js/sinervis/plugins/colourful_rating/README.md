@@ -1,0 +1,2 @@
+# Colourful rating system with CSS3
+Source files from demo located at [Marcofolio.net](http://marcofolio.net/). Read [the article](http://www.marcofolio.net/webdesign/jquery_quickie_colourful_rating_system_with_css3.html), view [the demo](http://demo.marcofolio.net/colourful_rating_system/) or download the code here.

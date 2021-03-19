@@ -1,0 +1,120 @@
+<!-- TEMPLATE {{ _self }} -->
+{# input vars:
+field_name              string
+field_conf     array('label'=>'...', 'type'=>'...'
+#}
+
+{# find property value, could be a simple "entity.property" or chained "entity.childObject[.childObjects].property"  #}
+{% apply spaceless %}
+    {% set method_path = field_name|split('.') %}
+    {% set value = '' %}
+    {% for method in method_path %}
+        {% if loop.first %}
+            {% if attribute(entity,method) is defined %}
+                {% set value = attribute(entity,method) %}
+            {% endif %}
+        {% else %}
+            {% if not value is null %}
+                {% if attribute(value,method) is defined %}
+                    {% set value = attribute(value,method) %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {# short_name renderizza valore con metodo getShortName, short_name_in_index solo se siamo nella lista (e non nel dettaglio view) #}
+    {% set render_short_name = (block_id is not defined and field_conf.short_name_in_index is defined and field_conf.short_name_in_index) or (field_conf.short_name is defined and field_conf.short_name)%}
+
+    {% if(value is defined) %}
+        {# format value based on field_conf.type #}
+        {% if field_conf.type == 'date' %}
+            {% if not value is empty %}
+                {#{{ value|localizeddate('long','none','it') }}#}
+                {{ value|date('d/m/Y') }}
+            {% endif %}
+        {% elseif field_conf.type == 'datetime' %}
+            {% if not value is empty %}
+                {#{{ value|localizeddate('long','short_name','it') }}#}
+                {{ value|date('d/m/Y H:i') }}
+            {% endif %}
+        {% elseif field_conf.type == 'time' %}
+            {{ value|date('H:i') }}
+        {% elseif field_conf.type == 'email' %}
+            <a href="mailto:{{ value }}"><i class="{{ icons.email }}"></i> {{ value }}</a>
+        {% elseif field_conf.type == 'tel' %}
+            <a href="tel:{{ value }}"><i class="{{ icons.tel }}"></i> {{ value }}</a>
+        {% elseif field_conf.type == 'boolean' or field_conf.type == 'sv_boolean' %}
+            {% if value %}
+                <span class="bool-yes">Sì</span>{% else %}
+                <span class="bool-no">No</span>{% endif %}
+        {% elseif field_conf.type == 'currency' or field_conf.type == 'sv_currency' %}
+            &euro; {{ value|number_format(2, ',', '.') }}
+        {% elseif field_conf.type == 'entity' and value and (value is iterable or value.id is defined) %}
+            {% if value.id > 0 %} {# Yash to be removed when 'inquadramento fiscale' is set #}
+                {{ link_to_show(value, {short_name: render_short_name}) }}
+            {% endif %}
+        {% elseif field_conf.type == 'self' %}
+            {%  if(configuration.route_prefix is defined and configuration.route_prefix != '') %}
+                {{ link_to_show(entity, {short_name: render_short_name, 'forced_route': configuration.route_prefix~'_show'}) }}
+            {% else %}
+                {{ link_to_show(entity, {short_name: render_short_name}) }}
+            {% endif %}
+        {% elseif field_conf.type == 'decimal' or field_conf.type == 'sv_decimal' %}
+            {{ value|replace({'.': ','}) }}
+        {% elseif field_conf.type == 'raw' %}
+            {{ value|raw|nl2br }}
+        {% elseif field_conf.type == 'color' %}
+            <div class="picked-color-sample" style="background-color: {{ value }}">{{ value }}</div>
+        {% elseif field_conf.type == 'sv_duration' %}
+            {{ value|secToHoursMins }}
+        {% elseif field_conf.type == 'sv_percentage' %}
+            {{ value is not empty and value >= 0 ? (value * 100) | sv_percentage : '' }}
+        {% elseif field_conf.type == 'enum_type' and value is not empty %}
+            {{ value|readable_enum(field_conf.dbal_type) }}
+        {% elseif field_conf.type == 'file' and field_conf.file_name_field is defined and value is not null %}
+            {% set file_owning_entity = entity %}
+            {% set org_file_name = entity %}
+
+            {% for property in field_conf.file_name_field|split('.') %}
+                {% if loop.last == false %}
+                    {% set file_owning_entity = attribute(file_owning_entity, property) %}
+                {% endif %}
+                {% set org_file_name = attribute(org_file_name, property) %}
+            {% endfor %}
+            {% set class_name = get_entity_class(file_owning_entity, 'complete') %}
+            <a href="{{ path('admin_file_download', {'id': file_owning_entity.id, 'class_name': class_name, 'file_field': field_conf.file_field, 'file_name': org_file_name}) }}" target='_blank' rel="tooltip" data-html="true" title="{{ org_file_name }}<br/>">
+                {{ print_file_icon(org_file_name, 'fa-2x') }}
+            </a>
+        {% elseif field_conf.type == 'image' and value is not null %}
+            {% if value.name is not null %}
+                <img class="image-file-thumb" src="{{ asset('media/images/' ~ value.name) | imagine_filter('entity_image_thumb') }}" alt="{{ value.originalName }}">
+            {% endif %}
+        {% elseif field_conf.type == 'collection' and value is iterable %}
+            <ul>
+                {% for single_value in value %}
+                    <li>{% apply spaceless %}
+                            {# check if value is an object #}
+                            {% if single_value.id is defined and field_conf.render_as_str is not defined %}
+                                {{ link_to_show(single_value, {short_name: render_short_name}) }}
+                            {% else %}
+                                {{ single_value }}
+                            {% endif %}
+                        {% endapply %}</li>
+                {% endfor %}
+            </ul>
+        {% elseif field_conf.type == 'array' and value is iterable %}
+            <ul>
+                {% for single_value in value %}
+                    <li>
+                        {{ single_value }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {# check if value id not an array or an object #}
+            {%- if value is not iterable -%}
+                {{ value|nl2br }}
+            {%- endif -%}
+        {% endif %}
+    {% endif %}
+{% endapply %}

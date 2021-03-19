@@ -1,0 +1,70 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}
+    Elenco Tassonomie
+{% endblock title %}
+
+
+{% block body %}
+    <!-- TEMPLATE {{ _self }} -->
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>
+                <i class="{{ icons.taxonomy }}"></i> Elenco Tassonomie
+            </h2>
+            <span>({{ entities|length }} {% if entities|length == 1 %}risultato{% else %} risultati{% endif %})</span>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row index-page">
+            <div class="col-sm-12">
+                <div class="card">
+
+                    <div class="card-block table-border-style">
+
+                        <div class="table-responsive">
+                            {% set entity_for_permission_check = entities|first %}
+                            <table class="table">
+                                <thead class="thead-light">
+                                {% block thead %}
+                                    <tr>
+                                    <tr>
+                                        {% for key, field_name in fields %}
+                                            <th>{{ field_name }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </tr>
+                                {% endblock thead %}
+                                </thead>
+
+                                {% block tbody %}
+                                    {% for entity in entities %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ path(entity['route_name']) }}">{{ entity['plural_name'] }}</a>
+                                            </td>
+                                            <td>{{ entity['num_terms'] }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endblock tbody %}
+                            </table>
+                        </div>
+
+                        <div class="dt-bottom-row dt-row mt-3">
+                            <div class="row">
+                                <div class="col-sm-6 text-right">
+                                    {#                                <div class="paging_bootstrap paging_bootstrap_full">#}
+                                    {#                                    {{ knp_pagination_render(entities) }}#}
+                                    {#                                </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

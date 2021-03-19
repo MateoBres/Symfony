@@ -1,0 +1,5 @@
+<ul>
+  {% for role in entity.roles %}
+    <li>{{ role|replace({'ROLE_':'', '_':' ','USER':'UTENTE'}) }}</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,43 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        types:
+            ContactKindType: App\DBAL\Types\ContactKindType
+            PersonGenderType: App\DBAL\Types\PersonGenderType
+            ExcelDataType: App\DBAL\Types\ExcelDataType
+            CollaboratorKindType: App\DBAL\Types\CollaboratorKindType
+            CourseEcmType: App\DBAL\Types\CourseEcmType
+            CourseLevelType: App\DBAL\Types\CourseLevelType
+            StateOfProgressType: App\DBAL\Types\StateOfProgressType
+            OfficeTypeType: App\DBAL\Types\OfficeTypeType
+            DaysOfWeekType: App\DBAL\Types\DaysOfWeekType
+            RepresentativeTypeType: App\DBAL\Types\RepresentativeTypeType
+            PlanKindType: App\DBAL\Types\PlanKindType
+            HallArrangementType: App\DBAL\Types\HallArrangementType
+            CertificateStatusType: App\DBAL\Types\CertificateStatusType
+            CertificateTypeType: App\DBAL\Types\CertificateTypeType
+            AchievementStatusType: App\DBAL\Types\AchievementStatusType
+            TeacherAssessmentStatusType: App\DBAL\Types\TeacherAssessmentStatusType
+            ProfessionalPositionType: App\DBAL\Types\ProfessionalPositionType
+            SettingsKindType: App\DBAL\Types\SettingsKindType
+            CourseModuleAreaType: App\DBAL\Types\CourseModuleAreaType
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                DATE: DoctrineExtensions\Query\Mysql\Date
+            datetime_functions:
+                DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
+
+

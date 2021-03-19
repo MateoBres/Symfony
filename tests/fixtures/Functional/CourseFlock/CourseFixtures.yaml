@@ -1,0 +1,35 @@
+App\Entity\TaxonomyFlock\Vocabulary\CourseCategory:
+  it_category:
+    term: 'Informatica'
+    code: 'IT'
+  ss_category:
+    term: 'Socio Sanitario'
+    code: 'SS'
+
+App\Entity\CourseFlock\Course:
+  course_{1..8}:
+    name: 'Corso <numberBetween(1,  10)>'
+    duration: <numberBetween(36000,  64000)>
+    category: '50%? @it_category : @ss_category'
+  java_course:
+    name: 'Java base'
+    duration: <numberBetween(36000,  64000)>
+    category: '@it_category'
+  exel_course:
+    name: 'Exal base'
+    duration: <numberBetween(36000,  64000)>
+    category: '@it_category'
+
+App\Entity\CourseFlock\CourseModule:
+  module_{1..10}:
+    name: 'Modulo <numberBetween(1,  10)>'
+    duration: <numberBetween(18000,  36000)>
+    course: '@course_*'
+  module_for_java_course:
+    name: 'Modulo <numberBetween(1,  10)>'
+    duration: <numberBetween(18000,  36000)>
+    course: '@java_course'
+  module_for_excel_course:
+    name: 'Modulo <numberBetween(1,  10)>'
+    duration: <numberBetween(18000,  36000)>
+    course: '@exel_course'

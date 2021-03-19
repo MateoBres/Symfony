@@ -1,0 +1,56 @@
+/*
+    btn-inverse
+ */
+
+.btn-inverse {
+    color: $light-blue;
+    background-color: $nav-bg;
+    border-color: $nav-bg;
+
+    &.btn-outline {
+        color: $light-blue;
+    }
+
+    &.btn-outline:hover{
+        color: $light-blue;
+    }
+
+    &.disabled, &:disabled {
+        color: $light-blue;
+        background-color: darken($nav-bg, 3%);
+        border-color: darken($nav-bg, 3%);
+    }
+
+    &:hover, &:focus, &.focus {
+        color: $light-blue;
+        background-color: darken($nav-bg, 3%);
+        border-color: darken($nav-bg, 3%);
+    }
+
+    @at-root {
+        button#{&} {
+            &.dim {
+                box-shadow: inset 0 0 0 darken($nav-bg, 6%), 0 5px 0 0 darken($nav-bg, 6%), 0 10px 5px #999 !important;
+
+                &:active {
+                    box-shadow: inset 0 0 0 darken($nav-bg, 6%), 0 2px 0 0 darken($nav-bg, 6%), 0 5px 3px #999 !important;
+                }
+            }
+        }
+    }
+}
+
+.btn-inverse:not(:disabled):not(.disabled):active,
+.btn-inverse:not(:disabled):not(.disabled).active,
+.show > .btn-inverse.dropdown-toggle {
+    color: $light-blue;
+    background-color: darken($nav-bg, 3%);
+    border-color: darken($nav-bg, 3%);
+}
+
+.btn-inverse:not(:disabled):not(.disabled):active:focus,
+.btn-inverse:not(:disabled):not(.disabled).active:focus,
+.show > .btn-inverse.dropdown-toggle:focus {
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}

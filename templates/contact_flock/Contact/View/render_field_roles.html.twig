@@ -1,0 +1,6 @@
+<!-- TEMPLATE {{ _self }} -->
+<ul>
+    {% for role in entity.roles %}
+          <li>{{ link_to_show(role, {'getter': 'getRoleName'}) }}</li>
+    {% endfor %}
+</ul>

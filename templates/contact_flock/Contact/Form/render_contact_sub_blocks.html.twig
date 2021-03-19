@@ -1,0 +1,15 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{# ContactInfos fields #}
+{% set contacts = ['contact', 'contact_person', 'contact_company'] %}
+
+{% for contact in contacts %}
+  {% if attribute(entity_form, contact) is defined %}
+    {% set field = attribute(entity_form, contact) %}
+    {% if attribute(field, sub_entity) is defined %}
+      <section class="col col-md-12 contact-type-{{contact}} contact-sub-entity-{{sub_entity}}">
+        {{ form_widget(attribute(field, sub_entity)) }}
+      </section>
+    {% endif %}
+  {% endif %}
+{% endfor %}

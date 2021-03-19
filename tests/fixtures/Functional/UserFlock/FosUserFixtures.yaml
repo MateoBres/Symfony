@@ -1,0 +1,14 @@
+App\Entity\UserFlock\User:
+  admin_user:
+    username: "admin_test"
+    email: 'admin@admin.it'
+    plainPassword: "fer"
+    roles: ["ROLE_ADMIN"]
+    enabled: 1
+    # related_dummy: '@related_dummy*'
+  normal_user:
+    username: "user_test"
+    email: 'user@user.it'
+    plainPassword: "fer"
+    roles: ["ROLE_USER"]
+    enabled: 1

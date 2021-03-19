@@ -1,0 +1,52 @@
+<!-- TEMPLATE {{ _self }} -->
+
+
+{% set count = entity.customerSuppliers|length %}
+
+{% if count > 0 %}
+  {% set max_lines = 5 %}
+
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Ragione Sociale</th>
+        <th>Sedi</th>
+        <th>Operazioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set rec_count = 0 %}
+      {% for customerSupplier in entity.customerSuppliers if rec_count <  max_lines %}
+        {% set rec_count = loop.index %}
+
+        <tr>
+          <td>
+            {{ link_to_show(customerSupplier) }}
+          </td>
+          <td>
+            <ul>
+              {% for place in customerSupplier.contact.ownedPlaces %}
+                {% set place_path = path('admin_place_show', {'id': place.id }) %}
+                {% set place_link = '<a href="' ~ place_path ~ '">' ~ place ~ '</a>' %}
+                <span class="btn btn-default btn-ci-icon" data-html="true" rel="popover" title="{{ place.type|capitalize }}" data-placement="top" data-content="{{ place_link }}">
+                  <img src="{{ place.icon }}" height="15"/>
+                </span>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="actions">
+            {{ link_to_action_show(customerSupplier) }}
+            {{ link_to_action_edit(customerSupplier) }}
+          </td>
+        </tr>
+      {% endfor %}
+      {% if count > max_lines %}
+        <tr>
+          <td colspan="6">
+            <a class="btn btn-info" href="{{ path('admin_roles_customersupplier') }}?sinervis_contactbundle_roles_customersupplierfilter[customer]={{ entity.id }}">Visualizza tutti ({{ count }} fornitori)</a>
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+{% endif %}

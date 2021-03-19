@@ -1,0 +1,2 @@
+"Username could not be found.": "Il nome utente non è stato trovato."
+'Authentication failed because "App\Security\LoginFormAuthenticator::checkCredentials()" did not return true.': "Credenziali errate."

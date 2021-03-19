@@ -1,0 +1,9 @@
+<div class="sv-flash-msgs fade">
+    {% if app.request.hasPreviousSession %} {#Avoid Starting Sessions for Anonymous Users#}
+        {% for msgMode, flashMsgs in app.session.flashbag.all %}
+            {% for flashMsg in flashMsgs %}
+                <div data-msg-mode="{{ msgMode }}">{{ flashMsg }}</div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</div>

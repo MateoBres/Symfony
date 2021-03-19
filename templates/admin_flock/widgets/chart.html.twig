@@ -1,0 +1,29 @@
+<!-- TEMPLATE {{ _self }} -->
+<div class="ibox sv-widget-box sv-chart-widget-box">
+    <div class="ibox-title" style="background-color: {{ color }}">
+        <span class="icon"><i class="{{ icon }}"></i></span>
+        {{ title }}
+        <div class="title-extra-actions">
+            <a class="print-menu"><i class="fas fa-bars"></i></a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <form id="filter_form" method="get" action="" novalidate>
+            <div class="advanced-search-fieldset" style="display:block;">
+                <div class="form-row">
+                    {% if filter_form %}
+                        {% form_theme filter_form 'admin_flock/crud/Form/layout.html.twig' %}
+                        {% include 'admin_flock/crud/Form/render_filter_form.html.twig' %}
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        <div class="highchart-canvas {{ polling_channel is defined ? 'long-poll' : '' }}"
+             data-chart-url="{{ api_route }}"
+             {{ polling_channel is defined ? 'data-polling-channel='~polling_channel : '' }}
+        >
+            <div class="no-chart-data-msg-block d-none" style="display: flex; justify-content: center; align-items: center; min-height: 400px;">In caricamento...</div>
+        </div>
+    </div>
+</div>

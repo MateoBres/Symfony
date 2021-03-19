@@ -1,0 +1,39 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set wrapper_class = col_conf.grid_class is defined ? col_conf.grid_class : 'col-sm-12 col-md-' ~ col_conf.size %}
+<article class="{{ wrapper_class }}">
+    {% for block_id, block_conf in col_conf.blocks %}
+        {% set block_is_full = 1 %}
+        {% if block_conf.path_to_content is defined %}
+            {% set entity_block = entity %}
+
+            {% for content_path in block_conf.path_to_content %}
+                {% if attribute(entity_block, content_path) is defined %}
+                    {% set entity_block = attribute(entity_block, content_path) %}
+                {% endif %}
+            {% endfor %}
+
+            {% set block_is_full = entity_block|length %}
+        {% endif %}
+
+        <div class="ibox z-depth-bottom-0 {{block_conf.class is defined ? block_conf.class : ''}}" id="{{block_conf.id is defined ? block_conf.id : row ~ '-' ~ col ~ '-' ~ block_id }}" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"  >
+            <header class="ibox-title extra-side-padding panel-heading bg-success rounded-top">
+                {% include [ configuration.templates_path ~ '/View/render_block_title_' ~ block_id ~ '.html.twig', 'admin_flock/crud/View/render_block_title.html.twig'] %}
+                <div class="clearfix"></div>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </header>
+            <div role="content" class="ibox-content">
+                {% if block_is_full %}
+                    {% include [ configuration.templates_path ~ '/View/render_block_' ~ block_id ~ '.html.twig',
+                        configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_block_' ~ block_id ~ '.html.twig',
+                        'admin_flock/crud/View/render_block.html.twig'] %}
+                {% else %}
+                    {% include 'admin_flock/crud/View/render_empty_block.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</article>

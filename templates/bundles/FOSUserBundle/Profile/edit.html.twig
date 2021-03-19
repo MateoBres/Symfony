@@ -1,0 +1,7 @@
+{% extends "admin_flock/layout.html.twig" %}
+
+{% block body %}
+    {% block fos_user_content %}
+        {% include "@FOSUser/Profile/edit_content.html.twig" %}
+    {% endblock fos_user_content %}
+{% endblock %}

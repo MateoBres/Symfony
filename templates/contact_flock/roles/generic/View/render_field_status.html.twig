@@ -1,0 +1,3 @@
+{% if entity.status %}
+  {{entity.status | readable_enum('CustomerStatusType')}}
+{% endif %}

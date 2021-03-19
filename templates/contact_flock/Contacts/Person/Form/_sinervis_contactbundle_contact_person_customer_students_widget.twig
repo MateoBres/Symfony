@@ -1,0 +1,17 @@
+
+{% block _sinervis_contactbundle_contact_person_customer_students_widget %}
+    {% set collection_class = form.vars.attr.fields_map.collection_class is defined ? form.vars.attr.fields_map.collection_class : '' %}
+
+    {% set children_keys = form.children|keys %}
+    {% set data_index = 0 %}
+    {% if children_keys is not empty %}
+        {% set data_index = max(children_keys) + 1 %}
+    {% endif %}
+    <section class="col col-md-12 collection embedded-student-wrapper {{ collection_class }}" data-index="{{ data_index }}">
+        {% if attribute(form.vars.attr.fields_map, 'no_data_table') is defined %}
+            {% include 'admin_flock/crud/Form/collection_widget/collection_widget_without_data_table.html.twig' %}
+        {% else %}
+            {% include 'contact_flock/roles/customer/Form/collection_widget_sortable_table.html.twig' %}
+        {% endif %}
+    </section>
+{% endblock %}

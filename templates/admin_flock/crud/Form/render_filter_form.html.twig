@@ -1,0 +1,33 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% if not filter_form.vars.valid %}
+    <div class="alert alert-danger fade in">
+        <button class="close" data-dismiss="alert">
+          ×
+        </button>
+        <i class="fa-fw fa fa-times"></i>
+        <strong>Errori:</strong> {{ form_errors(filter_form) }}
+    </div>
+{% endif %}
+
+{{ form_start(filter_form, {'attr': {'id':'admin-form', 'autocomplete':'off', 'class': ''}}) }}
+    {% for field in filter_form %}
+        {% if (field.vars.block_prefixes.2 == 'filter_collection_adapter') %}
+            {# recursively call the template when form contains sub forms #}
+            {% include 'admin_flock/crud/Form/render_filter_form.html.twig' with {'filter_form': field[0]} %}
+        {%- elseif (field.vars.block_prefixes.1 != 'hidden') -%}
+            {% set attr_class = '' %}
+            {% if field.vars.attr.class is defined %}
+              {% set attr_class = field.vars.attr.class %}
+            {% endif %}
+
+                <div class="form-group col-md-{{ (field.vars.attr.field_size is defined) ? field.vars.attr.field_size : '6' }}">
+                {{ form_label(field) }} 
+                {{ form_widget(field) }}
+                {{ form_errors(field) }}
+                </div>
+
+        {%- endif -%}
+    {% endfor %}
+    <div style="display: none;">{{ form_rest(filter_form) }}</div>
+{{ form_end(filter_form) }}

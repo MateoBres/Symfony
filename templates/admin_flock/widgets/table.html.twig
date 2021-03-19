@@ -1,0 +1,33 @@
+<!-- TEMPLATE {{ _self }} -->
+<div class="ibox sv-widget-box sv-table-widget-box">
+    <div class="ibox-title" style="background-color: {{ color }}">
+        <span class="icon"><i class="{{ icon }}"></i></span>
+        {{ title }}
+    </div>
+    <div class="ibox-content">
+        <table class="table table-bordered sv-data-table {{ polling_channel is defined ? 'long-poll' : '' }}"
+               data-table-content-url="{{ data_table_content_url }}"
+                {{ polling_channel is defined ? 'data-polling-channel='~polling_channel : '' }}
+        >
+            <thead>
+                <tr>
+                    {% for head_key, head_label in thead_labels %}
+                        <th data-column-name="{{ head_key }}">{{ head_label }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+{#            <tbody>#}
+{#                {% for tbody_row in tbody_rows %}#}
+{#                    <tr>#}
+{#                        {% for td_value in tbody_row %}#}
+{#                            <td>{{ td_value | raw }}</td>#}
+{#                        {% endfor %}#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </tbody>#}
+        </table>
+        {% if table_suffix is defined %}
+            <div class="table-suffix">{{ table_suffix | raw }}</div>
+        {% endif %}
+    </div>
+</div>

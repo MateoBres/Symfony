@@ -1,0 +1,15 @@
+App\Entity\CourseFlock\CourseEdition:
+  c_edition_{1..9}:
+    name: 'Edizione <numberBetween(1,  10)>'
+    state: '3'
+    course: '@course_*'
+    duration: <numberBetween(64000, 180000)>
+    startDate: <dateTime()>
+    regionalPartner: '@r_partner_*'
+  c_edition_java:
+    name: 'Java Edizione 1'
+    state: '3'
+    course: '@java_course'
+    duration: <numberBetween(64000, 180000)>
+    regionalPartner: '@r_partner_1'
+  

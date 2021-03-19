@@ -1,0 +1,11 @@
+
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" method="post" class="form-login client-form">
+    <div id="logo"><a href="{{path("fos_user_security_login")}}"><img src="/images/sinervis_logo.png"></a></div>
+    <h2 class="form-login-heading">Inserisci Nuova Password</h2>
+
+    <div class="login-wrap">
+        {{ form_widget(form) }}
+
+        <input type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-lg btn-login btn-block" />
+    </div>
+</form>

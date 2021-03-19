@@ -1,0 +1,21 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}home | {{ parent() }}{% endblock %}
+
+{% block stylesheets -%}
+    {{ parent() }}
+    {{ encore_entry_link_tags('chart') }}
+    {{ encore_entry_link_tags('sv_dashboard') }}
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content sv-main-dashboard">
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chart') }}
+    {{ encore_entry_script_tags('sv_dashboard') }}
+{% endblock %}

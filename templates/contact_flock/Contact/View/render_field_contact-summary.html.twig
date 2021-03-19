@@ -1,0 +1,58 @@
+<!-- TEMPLATE {{ _self }} -->
+<table id="field-contact-summary" class="table table-sm">
+    {% set contact = entity %}
+
+    {% if contact.className=='Company' %}
+        {% if contact.vatId is defined %}
+            <tr>
+                <td>P.IVA</td>
+                <td class="td-separator"> -</td>
+                <td>{{ contact.vatId }}</td>
+            </tr>
+        {% endif %}
+
+        {% if contact.taxCode is defined %}
+            <tr>
+                <td>Codice fiscale</td>
+                <td class="td-separator"> -</td>
+                <td>{{ contact.taxCode }}</td>
+            </tr>
+        {% endif %}
+
+    {% else %}
+        {% if contact.taxCode is defined %}
+            <tr>
+                <td class="td-label">Codice fiscale</td>
+                <td class="td-separator"> -</td>
+                <td>{{ contact.taxCode }}</td>
+            </tr>
+        {% endif %}
+
+        {% if contact.gender is defined %}
+            <tr>
+                <td class="td-label">Sesso</td>
+                <td class="td-separator"> -</td>
+                <td>{{ contact.gender|readable_enum('PersonGenderType') }}</td>
+            </tr>
+        {% endif %}
+
+        {% if contact.birthDate is defined %}
+            <tr>
+                <td class="td-label">Data di nascita</td>
+                <td class="td-separator"> -</td>
+                <td>{{ contact.birthDate ? contact.birthDate|date('d/m/Y') : '' }}</td>
+            </tr>
+        {% endif %}
+
+        {% if contact.birthCity is defined %}
+            <tr>
+                <td class="td-label">Città di nascita</td>
+                <td class="td-separator"> -</td>
+                <td>
+                    {{ contact.birthCity }}
+                    {% if contact.birthProvince %} ({{ contact.birthProvince }}) {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+    {% endif %}
+</table>

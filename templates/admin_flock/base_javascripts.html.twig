@@ -1,0 +1,65 @@
+{% block base_javascripts %}
+    <!-- javascript default for all pages-->
+
+{#    {% javascripts#}
+{#        'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'#}
+{#        'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/js/bootstrap.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/jquery.scrollTo.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/jquery.nicescroll.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/sinervis/geocode.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/sparkline/jquery.sparkline.min.js'#}
+
+{#        '@FOSJsRoutingBundle/Resources/public/js/router.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/js/jquery.dcjqaccordion.2.7.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/respond.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/bootstrap-multiselect/bootstrap-multiselect.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/datepicker-it.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/owl.carousel.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/jquery.customSelect.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/sparkline-chart.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/easy-pie-chart.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/count.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/icheck/icheck.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/readonly/readonly.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/json2.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/sweetalert/dist/sweetalert.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/jRate/jRate.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/lobibox/dist/js/lobibox.min.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/js/inputmask/jquery.inputmask.min.js'#}
+{#        '@SinervisAdminBundle/Resources/public/js/inputmask/jquery.inputmask.date.extensions.min.js'#}
+
+{#        '@SinervisAdminBundle/Resources/public/js/plugin/jquery-dateFormat/dateFormat.min.js'#}
+{#                                     %}#}
+{#        <script src="{{ asset_url }}"></script>#}
+{#    {% endjavascripts %}#}
+
+    <!-- javascript for FOSJsRoutingBundle -->
+
+{#    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>#}
+
+    <!-- custom autocomplete related js -->
+    <script type="text/javascript" src="/bundles/sinervisadmin/js/sinervis/sv_autocomplete_helper.js"></script>
+
+    <!-- initialize owlCarousel, iCheck, tooltip, popover, multiselect, datepicker -->
+    <script src="/bundles/sinervisadmin/js/sinervis/form-plugin-initialization.js"></script>
+    <script type="text/javascript" src="/bundles/sinervisadmin/js/sinervis/sv_general.js"></script>
+
+    <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+    <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
+
+    <!-- pbx -->
+
+    <!--
+        {#{ ws_client() }#}
+    -->
+
+    <script type="text/javascript" src="/bundles/pbx/js/pbx.js"></script>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+nelmio_alice:
+    functions_blacklist:
+        - 'current'
+        - 'shuffle'
+        - 'date'
+        - 'time'
+        - 'file'
+        - 'md5'
+        - 'sha1'
+    locale: it_IT

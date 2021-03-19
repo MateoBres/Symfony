@@ -1,0 +1,554 @@
+{% block form_row %}
+    {% set classes = 'general-class' %}
+
+    {# verify if field is a collection #}
+    {% if attribute(form.vars.block_prefixes, 1) == 'collection' %}
+        {% set classes = 'col-md-12 collection general-class' %}
+    {% endif %}
+
+    {% if class is defined %}
+        {% set classes = class %}
+    {% endif %}
+
+    {% if fields_map is defined %}
+        {% set classes = classes ~ ' fields-map' %}
+    {% endif %}
+
+    {% if form.vars.attr.class is defined %}
+        {% set classes = classes ~ ' ' ~ form.vars.attr.class %}
+    {% endif %}
+
+    {% set field_specific_classes = '' %}
+    {% if form.vars.block_prefixes[1] is defined %}
+        {% set field_type = form.vars.block_prefixes[1] %}
+        {% if field_type == 'choice' and form.vars.expanded is defined and form.vars.expanded == true %}
+            {% set field_specific_classes = 'form-radio' %}
+        {% elseif field_type == 'checkbox' %}
+            {% set field_specific_classes = 'border-checkbox-section' %}
+        {%- endif -%}
+    {% endif %}
+
+    <div class="form-group col {{ classes }} {{ field_specific_classes }}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+
+{% endblock form_row %}
+
+
+{% block form_errors %}
+    {% apply spaceless %}
+        {% if errors|length > 0 %}
+            <div class="note note-error">
+                {% set error_messages = [] %}
+                {% for error in errors %}
+                    {% set error_messages = error_messages|merge([error.message]) %}
+                {% endfor %}
+                {{ error_messages|join('<br>')|raw }}
+            </div>
+        {% endif %}
+    {% endapply %}
+{% endblock form_errors %}
+
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% set field_class = attr.class is defined ? attr.class ~ ' label-tag' : 'label-tag' %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ field_class)|trim}) %}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {% if attr.label_prefix is defined %} {{ attr.label_prefix|raw }} {% endif %}
+            <div class="label-inner">
+                {{- label -}}
+                {% if (required and form.vars.compound is same as(false)) or form.vars.required is same as(true) -%}
+                    <span class="required">*</span>
+                {% endif %}
+            </div>
+            {% if attr.label_suffix is defined %} {{ attr.label_suffix|raw }} {% endif %}
+        </label>
+
+    {%- endif -%}
+{%- endblock form_label -%}
+
+
+{% block form_widget_simple -%}
+    {% set type = type|default('text') -%}
+    {% if type=='number' %}
+        {#{% set attr = attr|merge({'style': 'padding: 0 0 0 10px;' }) %} #}
+    {% endif %}
+    <label {{ id is defined ? 'id=label_'~id : '' }}
+            class="input {{ attr.class is defined ? attr.class : '' }} {% if errors|length > 0 %}state-error{% endif %}">
+        {% if attr.prefix is defined %} <span class="sv-field-prefix">{{ attr.prefix|raw }}</span> {% endif %}
+        {% if widget_icon is defined %}
+            <span class="{{ icon_position is defined ? icon_position : 'icon-prepend' }} {{ widget_icon }}"></span>
+        {% elseif attr.widget_icon is defined %}
+            <span class="{{ attr.icon_position is defined ? attr.icon_position : 'icon-prepend' }} {{ attr.widget_icon }}"></span>
+        {% endif %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% if help is defined and help is not null %}
+            <i rel="tooltip" class="icon-append fas fa-question-circle" title="{{ help }}"></i>
+        {% endif %}
+        {% if attr.suffix is defined %} <span class="sv-field-suffix">{{ attr.suffix|raw }}</span> {% endif %}
+    </label>
+{%- endblock form_widget_simple %}
+
+
+{% block textarea_widget -%}
+    <label {{ id is defined ? 'id=label_'~id : '' }} class="textarea {{ attr.class is defined ? attr.class : '' }} {% if errors|length > 0 %}state-error{% endif %}">
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+        {% if help is defined and help != '' %}
+            <i rel="tooltip" class="icon-append fas fa-question-circle" title="{{ help }}"></i>
+        {% endif %}
+        {% if attr.suffix is defined %} {{ attr.suffix|raw }} {% endif %}
+    </label>
+{%- endblock textarea_widget %}
+
+
+{% block choice_widget_collapsed -%}
+    <label {{ id is defined ? 'id=label_'~id : '' }} class="select {% if errors|length > 0 %}state-error{% endif %}">
+        {% if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+            {% set required = false %}
+        {%- endif -%}
+        <div {% if multiple %} class="multiselect-wrapper"{% endif %}>
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                {% if placeholder is not none -%}
+                    <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder }}</option>
+                {%- endif %}
+                {%- if preferred_choices|length > 0 -%}
+                    {% set options = preferred_choices %}
+                    {{- block('choice_widget_options') -}}
+                    {% if choices|length > 0 and separator is not none -%}
+                        <option disabled="disabled">{{ separator }}</option>
+                    {%- endif %}
+                {%- endif -%}
+                {% set options = choices -%}
+                {{- block('choice_widget_options') -}}
+            </select>
+        </div>
+    </label>
+{%- endblock choice_widget_collapsed %}
+
+{% block checkbox_widget %}
+    {% apply spaceless %}
+        <label {{ id is defined ? 'id=label_'~id : '' }} class="checkbox icheck-peterriver {{ attr.class is defined ? attr.class : '' }} {% if errors|length > 0 %}state-error{% endif %}">
+            <input type="checkbox"
+                   class="border-checkbox {{ attr.class is defined ? attr.class : '' }}" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+            <label class="border-checkbox-label" for="{{ id }}">
+                {%- if label is defined -%}
+{#                    <span>&nbsp; {{ form.vars.form.parent.parent is null ? '': label|trans }} </span>#}
+                    {{ label }}
+                {%- endif -%}
+            </label>
+        </label>
+    {% endapply %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    <label class="radio icheck-peterriver" for="{{ id }}">
+        <input style="z-index: 2" type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        {%- if label is defined -%}
+            <label for="{{ id }}">&nbsp;&nbsp;{{ label }}</label>
+        {%- endif -%}
+    </label>
+{% endblock radio_widget %}
+
+{% block choice_widget_expanded %}
+    {% apply spaceless %}
+        {% set class = attr.class is defined ? attr.class : '' %}
+        {% if errors|length > 0 %}
+            {% set attr = attr|merge({'class': class ~ ' state-error'}) %}
+        {% endif %}
+
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+        </div>
+    {% endapply %}
+{% endblock choice_widget_expanded %}
+
+{% block date_widget -%}
+    {% if widget == 'single_text' %}
+        {% set widget_icon = 'fas fa-calendar' %}
+        {% set existing_classes = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+        {% set attr = attr|merge({'class': 'datepicker ' ~ existing_classes }) %}
+        {{- block('form_widget_simple') -}}
+    {% else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+        </div>
+    {%- endif %}
+{%- endblock date_widget %}
+
+{% block datetime_widget %}
+    {% apply spaceless %}
+        {% if widget == 'single_text' %}
+            {% set widget_icon = 'fas fa-calendar' %}
+            {% set existing_classes = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+            {% set attr = attr|merge({'class': 'datepicker-with-time ' ~ existing_classes }) %}
+            {{ block('form_widget_simple') }}
+        {% else %}
+            <div {{ block('widget_container_attributes') }}>
+                <div style="width: 60%; float: left;">
+                    {{ form_errors(form.date) }}
+                    {{ form_widget(form.date) }}
+                </div>
+                <div style="width: 39%; float: left;">
+                    {{ form_errors(form.time) }}
+                    {{ form_widget(form.time) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endapply %}
+{% endblock datetime_widget %}
+
+{% block without_date_picker_widget %}
+    {% apply spaceless %}
+        {% if widget == 'single_text' %}
+            {% set widget_icon = 'fas fa-calendar' %}
+            {% set existing_classes = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+            {% set attr = attr|merge({'class': existing_classes }) %}
+            {{ block('form_widget_simple') }}
+        {% else %}
+            <div {{ block('widget_container_attributes') }}>
+                <div style="width: 60%; float: left;">
+                    {{ form_errors(form.date) }}
+                    {{ form_widget(form.date) }}
+                </div>
+                <div style="width: 39%; float: left;">
+                    {{ form_errors(form.time) }}
+                    {{ form_widget(form.time) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endapply %}
+{% endblock without_date_picker_widget %}
+
+{% block money_widget -%}
+    {% set widget_icon = 'fas fa-euro-sign' %}
+    {{ block('form_widget_simple') }}
+{%- endblock money_widget %}
+
+{% block percent_widget -%}
+    {% set widget_icon = 'fas fa-percent' %}
+    {{ block('form_widget_simple') }}
+{%- endblock percent_widget %}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        <label {{ id is defined ? 'id=label_'~id : '' }} class="input inputmask-time {% if errors|length > 0 %}state-error{% endif %}">
+            <span class="icon-prepend fas fa-clock"></span>
+            <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            {% if help is defined %}
+                <b class="tooltip tooltip-top-right">{{ help }}</b>
+            {% endif %}
+        </label>
+    {%- else -%}
+        {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+        </div>
+    {%- endif -%}
+{%- endblock time_widget -%}
+
+{%- block file_widget -%}
+    <div class="sv-file-wrapper">
+        {{- form_widget(form) -}}
+        <div class="form-group sv-fake-file-group col col-md-12">
+            <input type="text" class="form-control col-md-10" value="Nessun file selezionato" readonly="readonly"/>
+            <button class="btn btn-default btn-rounded" type="button">Scegli File</button>
+        </div>
+    </div>
+{%- endblock file_widget -%}
+
+{%- block button_row -%}
+    <div class="{{ class is defined ? class : '' }}">
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+
+{% block infinite_form_polycollection_row %}
+    {% set add_button_labels = form.vars.attr.add_more_button_labels is defined ? form.vars.attr.add_more_button_labels : null %}
+
+    {% set children_keys = form.children|keys %}
+    {% set data_index = 0 %}
+    {% if children_keys is not empty %}
+        {% set data_index = max(children_keys) + 1 %}
+    {% endif %}
+    <section class="col col-md-12 collection polycollection" data-index="{{ data_index }}">
+        <table class="table table-hover creation-form-table creation-table-margin">
+            {% if form.vars.label is not same as(false) %}
+                <thead>
+                <tr>
+                    <th colspan="2">{{ form_label(form) }}</th>
+                </tr>
+                </thead>
+            {% endif %}
+            <tbody>
+            {% for subform in form %}
+                <tr>
+                    <td class="action">
+                        <a href="#" class="delete" data-toggle="tooltip" title="Rimuovi elemento"><i class="{{ icons['remove'] }} text-danger"></i></a>
+                    </td>
+                    <td class="td-data">
+                        {% for field in subform %}
+                            {{ form_row(field) }}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr class="prototype">
+                <td colspan="2">
+                    {% if form.vars.prototypes is defined %}
+                        {% for name, prototype in form.vars.prototypes %}
+                            {% if form.vars.allow_add == true %}
+                                {% set btn_label = add_button_labels? attribute(add_button_labels, name): name|split('_')|last %}
+                                <a href="#" class="add add-{{ btn_label|lower }} btn btn-inverse btn-xs btn-mini"
+                                   data-name="{{ name }}" data-prototype="{{ form_row(prototype) | escape }}"><i
+                                            class="fas fa-fw fa-plus-circle"></i>Aggiungi {{ btn_label }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </section>
+{% endblock infinite_form_polycollection_row %}
+
+{% block collection_widget %}
+    {% set collection_class = form.vars.attr.fields_map.collection_class is defined ? form.vars.attr.fields_map.collection_class : '' %}
+
+    {% set children_keys = form.children|keys %}
+    {% set data_index = 0 %}
+    {% if children_keys is not empty %}
+        {% set data_index = max(children_keys) + 1 %}
+    {% endif %}
+
+    <section {{ id is defined ? 'id=label_'~id : '' }}
+            class="col col-md-12 collection {{ collection_class }} {{ attr.class is defined ? attr.class : '' }}"
+            data-index="{{ data_index }}"
+            {{ block('widget_attributes') }}
+    >
+        {% if attribute(form.vars.attr.fields_map, 'no_data_table') is defined %}
+            {% include 'admin_flock/crud/Form/collection_widget/collection_widget_without_data_table.html.twig' %}
+        {% else %}
+            {% include 'admin_flock/crud/Form/collection_widget/collection_widget_sortable_table.html.twig' %}
+        {% endif %}
+    </section>
+{% endblock collection_widget %}
+
+{% block vich_file_widget %}
+    {% apply spaceless %}
+        <div class="real-file-field">
+            <div class="{{ form.delete is defined and form.file.vars.data is not null ? 'file-already-uploaded' : 'no-file-uploaded' }}">
+                {{ form_widget(form.file) }}
+            </div>
+
+            {% if form.delete is defined and form.file.vars.data is not null %}
+
+                {% set file_name = '' %}
+                {% if download_uri|length %}
+                    {% set file_name = download_uri|split('/')|last %}
+                {% endif %}
+
+                {% set is_image = '.png' in file_name or '.jpg' in file_name %}
+
+                {% if is_image %}
+                    {% set preview = 'tabindex="0" rel="popover" data-html="true" data-placement="top" ' %}
+                    {% set preview = preview ~ 'data-content="<img src=\'' ~ download_uri ~ '\' class=\'sv-image-preview\'/>"' %}
+                {% endif %}
+
+                <div class="file-remove form-control" {{ is_image ? preview|raw : '' }}>
+                    {{ form_widget(form.delete) }}
+                    <a target="_blank" id="download-link"
+                       href="{{ download_uri ~ '?url=' ~ form.file.vars.data.Pathname }}">
+                        {{ print_file_icon(form.file.vars.data.extension, 'icon-prepend') }}
+                    </a>
+                    <a class="delete-file btn btn-danger btn-xs" href="javascript:void(0);">Elimina il file</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endapply %}
+{% endblock vich_file_widget %}
+
+{% block sv_entity_autocomplete_widget %}
+    {% set class = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+
+    <div class="sv-entity-autocomplete-wrapper sv-entity-autocomplete{{ autocomplete_filtermode | default(null) ? ' filtermode' : '' }}">
+        <div class="sv-entity-autocomplete-value" style="display: none">
+            {{ form_widget(form) }}
+        </div>
+
+        <label class="autocomplete-input-label" class="{{ form.vars.errors.count ? 'state-error' : '' }}">
+            <input type="text" name="autocompleter_{{ form.vars.full_name }}" id="autocompleter_{{ form.vars.id }}"
+                   class="form-control sv-autocomplete-input {{ class }} {{ show_all_on_focus ? 'autocomplete-show-all-on-focus' : '' }}"
+                   value="{{ entity_title }}" {{ form.vars.attr.readonly is defined ? 'readonly="readonly"' : '' }} {{ form.vars.disabled ? 'disabled="disabled"' : '' }}
+                    data-autocomplete-params="{{ params | json_encode }}"
+                   data-autocomplete-route={{ route_name }} data-autocomplete-route-params={{ route_params }}
+                    {{ autocomplete_filtermode | default(null) ? 'data-autocomplete-filtermode=' ~ autocomplete_filtermode ~ ' ' : '' }}/>
+            <div rel="tooltip" class="autocomplete-reset" title="Resetta il campo"><i class="{{ icons['undo'] }}"></i></div>
+        </label>
+    </div>
+{% endblock sv_entity_autocomplete_widget %}
+
+{% block sv_text_autocomplete_widget %}
+    {% set class = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+    <div class="sv-text-autocomplete-wrapper sv-entity-autocomplete {{ autocomplete_filtermode | default(null) ? ' filtermode' : '' }}">
+        <label class="autocomplete-input-label {{ form.vars.errors.count ? 'state-error' : '' }}">
+            <input type="text" name="{{ form.vars.full_name }}" id="{{ form.vars.id }}"
+                   class="form-control sv-autocomplete-input {{ class }} {{ show_all_on_focus ? 'autocomplete-show-all-on-focus' : '' }}"
+                   value="{{ form.vars.value }}" {{ form.vars.attr.readonly is defined ? 'readonly="readonly"' : '' }} {{ form.vars.disabled ? 'disabled="disabled"' : '' }}
+                   data-autocomplete-route="{{ route_name }}" data-autocomplete-route-params={{ route_params }}
+                    {{ autocomplete_filtermode | default(null) ? 'data-autocomplete-filtermode=' ~ autocomplete_filtermode ~ ' ' : '' }}"/>
+            <div rel="tooltip" class="autocomplete-reset" title="Resetta il campo"><i class="{{ icons['undo'] }}"></i></div>
+        </label>
+    </div>
+{% endblock sv_text_autocomplete_widget %}
+
+{% block sv_markup_widget %}
+    {% set field_classed = form.vars.attr is defined and form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+    <div class="sv-markup form-control {{ field_classed }}">
+        {{- markup|raw -}}
+    </div>
+{% endblock sv_markup_widget %}
+
+{%- block widget_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"
+    {#{%- if read_only and attr.readonly is not defined %} readonly="readonly"{% endif -%}#}
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+
+    {% if attr.class is defined %}
+        {% set attr = attr|merge({'class': attr.class ~ ' form-control'}) %}
+    {% else %}
+        {% set attr = attr|merge({'class': 'form-control'}) %}
+    {% endif %}
+
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrvalue is iterable -%}
+            {# empty #}
+        {%- elseif attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock widget_attributes -%}
+
+{#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#}
+{#                     FILTER WIDGETS                       #}
+{#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#}
+
+{% block filter_text_widget %}
+    {% if compound %}
+        <div class="filter-pattern-selector">
+            <section class="col col-md-4 pattern-selector">
+                {{ form_widget(form.condition_pattern, {'attr': {'class': 'pattern-selector'} }) }}
+            </section>
+            <section class="col col-md-8">
+                {{ form_widget(form.text, {'attr': attr}) }}
+            </section>
+        </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{% endblock filter_text_widget %}
+
+{% block filter_number_widget %}
+    {% if compound %}
+        <div class="filter-operator-selector">
+            <span style="display: inline-block;">{{ form_widget(form.condition_operator, {'attr': {'class': 'operator-selector'} }) }}</span>
+            <span style="display: inline-block;">{{ form_widget(form.text, {'attr': attr}) }}</span>
+        </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{% endblock filter_number_widget %}
+
+{% block filter_number_range_widget %}
+    <div class="filter-number-range filter-range">
+        <section class="col col-xs-4 col-md-1 label left">Da</section>
+        <section class="col col-xs-8 col-md-5">{{ form_widget(form.left_number, {'attr': attr}) }}</section>
+
+        <section class="col col-xs-4 col-md-1 label right">A</section>
+        <section class="col col-xs-8 col-md-5">{{ form_widget(form.right_number, {'attr': attr}) }}</section>
+    </div>
+{% endblock filter_number_range_widget %}
+
+{% block filter_date_range_widget %}
+    <div class="filter-date-range filter-range d-flex">
+        <div class="pr-1 media-body d-flex">
+            <div class=""><div class="label">Dal</div></div>
+            <div class="media-body flex-grow-1">{{ form_widget(form.left_date, {'attr': attr}) }}</div>
+        </div>
+        <div class="pl-1 media-body d-flex">
+            <div class=""><div class="label">Al</div></div>
+            <div class="media-body flex-grow-1">{{ form_widget(form.right_date, {'attr': attr}) }}</div>
+        </div>
+    </div>
+{% endblock filter_date_range_widget %}
+
+{% block filter_date_widget %}
+    {% if widget == 'single_text' %}
+        {% set widget_icon = 'fas fa-calendar' %}
+        {% set attr = attr|merge({'class': 'datepicker' }) %}
+        {{- block('form_widget_simple') -}}
+    {% else -%}
+        <div {{ block('widget_container_attributes') }}>
+            <section class="filter_date_widget">
+                {{- date_pattern|replace({
+                    '{{ year }}':  '<section class="col col-md-4 year-field">' ~ form_widget(form.year) ~ '</section>',
+                    '{{ month }}': '<section class="col col-md-4 month-field">' ~ form_widget(form.month) ~ '</section>',
+                    '{{ day }}':   '<section class="col col-md-4 day-field">' ~ form_widget(form.day) ~ '</section>',
+                })|raw -}}
+            </section>
+        </div>
+    {%- endif %}
+{% endblock filter_date_widget %}
+
+{% block filter_collection_adapter_widget %}
+    {# only display the first element #}
+    {{ form_widget(form[0]) }}
+{% endblock filter_collection_adapter_widget %}
+
+{% block filter_autocomplete_widget %}
+    {% if operand_selector %}
+        <div class="filter-pattern-selector">
+            <section class="col col-md-5 pattern-selector">
+                {{ form_widget(form.condition_pattern, {'attr': {'class': 'pattern-selector'} }) }}
+            </section>
+            <section class="col col-md-7">
+                {{ form_widget(form.autocomplete_field, {'attr': attr}) }}
+            </section>
+        </div>
+    {% else %}
+        {{ form_widget(form.autocomplete_field, {'attr': attr}) }}
+    {% endif %}
+{% endblock filter_autocomplete_widget %}

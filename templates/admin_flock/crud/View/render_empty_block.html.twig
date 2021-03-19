@@ -1,0 +1,12 @@
+<!-- TEMPLATE {{ _self }} -->
+<table class="table table-bordered mb-0">
+    <tr>
+        <td style="color: #676767"> <i class="fa fa-exclamation-circle"></i>
+            {% if block_conf.empty_message is defined %}
+                <i>{{ block_conf.empty_message }}</i>
+            {% else %}
+                <i>Nessun dato disponibile!</i>
+            {% endif %}
+        </td>
+    </tr>
+</table>

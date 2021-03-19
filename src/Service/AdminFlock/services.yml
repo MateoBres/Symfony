@@ -1,0 +1,14 @@
+services:
+    app.menu_builder:
+        class: App\Service\AdminFlock\MenuBuilder
+        arguments: ["@knp_menu.factory", "@security.authorization_checker", "@event_dispatcher", "@service_container"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: mainMenu } # The alias is what is used to retrieve the menu
+    sv_utility.tax_code_calculator:
+        class: App\Service\AdminFlock\TaxCodeCaluculator
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    lexik_form_filter.data_extraction_method.autocompleter:
+        class:    App\Filter\AdminFlock\LexikExtension\Filter\DataExtractor\Method\AutocompleterExtractionMethod
+        tags:
+            - { name: lexik_form_filter.data_extraction_method }

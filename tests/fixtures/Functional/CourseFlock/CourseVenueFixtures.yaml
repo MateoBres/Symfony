@@ -1,0 +1,4 @@
+App\Entity\CourseFlock\CourseVenue:
+  course_venue_{1..10}:
+    siteName: <company()>
+    fullAddress: <address()>

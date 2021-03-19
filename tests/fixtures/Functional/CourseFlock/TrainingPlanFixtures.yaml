@@ -1,0 +1,12 @@
+App\Entity\CourseFlock\TrainingPlans\FundingPlan:
+  f_plan_{1..4}:
+    name: <sentence()>
+    fundingAgency: '@f_agency_*'
+
+App\Entity\CourseFlock\TrainingPlans\ResolutionPlan:
+  r_plan_{1..3}:
+    name: <sentence()>
+
+App\Entity\CourseFlock\TrainingPlans\MArketPlan:
+  m_plan_{1..3}:
+    name: <sentence()>

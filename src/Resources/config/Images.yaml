@@ -1,0 +1,9 @@
+parameters:
+    images:
+        certificate:
+            gvm_logo: build/images/sinervis/gvm_logo_black.png
+            placeholder_logo:  build/images/sinervis/logo-placeholder.png
+
+twig:
+    globals:
+        images: '%images%'

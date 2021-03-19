@@ -1,0 +1,17 @@
+<form action="{{ path("fos_user_resetting_send_email") }}" method="post" id="login-form" class="form-login client-form">
+    <div id="logo"><a href="{{path("fos_user_security_login")}}"><img src="/images/sinervis_logo.png"></a></div>
+    <h2 class="form-login-heading">Richiedi nuova password</h2>
+
+    <div class="login-wrap">
+        {% if invalid_username is defined %}
+            <div class="alert alert-danger fade in">
+                <button class="close" data-dismiss="alert"> × </button>
+                <i class="fa-fw fa fa-times"></i>
+                {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+            </div>
+        {% endif %}
+        <input type="text" class="form-control" id="username" name="username" placeholder="{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') | replace({':' : ''}) }}" required="required" />
+
+        <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-lg btn-login btn-block" />
+    </div>
+</form>

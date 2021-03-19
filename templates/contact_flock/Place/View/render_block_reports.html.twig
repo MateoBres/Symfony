@@ -1,0 +1,40 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% set lenght = entity.reports|length %}
+
+{% if lenght > 0 %}
+  {% set max_lines = 5 %}
+
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Nome Report</th>
+      <th>Tipo Report</th>
+      <th>Operazioni</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% set limit = 0 %}
+      {% for report in entity.reports if limit < max_lines %}
+        {% set limit = loop.index %}
+        <tr>
+          <td>
+            {{ link_to_show(report) }}
+          </td>
+          <td>{{report.reportType}}</td>
+          <td class="actions">
+            {{ link_to_action_show(report) }}
+            {{ link_to_action_edit(report) }}
+          </td>
+        </tr>
+      {% endfor %}
+      {% if lenght > max_lines %}
+        <tr>
+          <td colspan="3">
+            <a class="btn btn-info" href="{{ path('admin_roles_customersupplier') }}?sinervis_contactbundle_roles_customersupplierfilter[customer]={{ entity.id }}">Visualizza tutti ({{ lenght }} reports)</a>
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+{% endif %}

@@ -1,0 +1,328 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}
+    Elenco {{ configuration.plural_name }} - {{ parent() }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('entity_show') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('entity_show') }}
+{% endblock %}
+
+{% block body %}
+    <!-- TEMPLATE {{ _self }} -->
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>{% if configuration.icon | default %}<i class="fas {{ icons[configuration.icon] | default(configuration.icon) }}"></i>{% endif %} Elenco {{ configuration.plural_name -}}</h2>
+            <span>{{- entities.getTotalItemCount -}} {%- if entities.getTotalItemCount == 1 %} risultato{%- else %} risultati{%- endif -%}
+                </span>
+        </div>
+    </div>
+
+
+    <div class="wrapper wrapper-content animated fadeInRight sv-index-page">
+        <!-- DQL -->
+        {% if app.environment == 'dev' %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <code>
+                                <strong>{{ debug_query | replace({' FROM ': " \n FROM ", ' INNER JOIN ': " \n INNER JOIN ", ' LEFT JOIN ': " \n LEFT JOIN ", ' WHERE ': " \n WHERE ", ' ORDER BY ': " \n ORDER BY "}) | nl2br }}</strong>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- QUICK SEARCH PANEL -->
+        <div class="row">
+            <div class="col col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::CREATE'), new_dummy_entity) %}
+                                <div class="col col-md-1 col-xl-1 header-actions">
+                                    {% block create_action %}
+                                        <a href="{{ path(configuration.route_prefix ~ '_new', configuration.route_params) }}"
+                                           type="button" class="btn btn-success">
+
+                                            <i class="fas fa-plus"></i>
+
+                                        </a>
+                                    {% endblock create_action %}
+                                </div>
+                            {% endif %}
+
+                            {% block filter_forms %}
+                                <div class="col-md-11 col-xl-4">
+                                    <form action="" method="get" id="quick-search">
+                                        <input type="hidden" id="excel-export" name="excel-export" value="search"/>
+                                        <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                            <input type="text" id="search" name="q" value="{{ app.request.get('q') }}"
+                                                   class="form-control"
+                                                   placeholder="Ricerca" rel="tooltip" data-html="true"
+                                                   title="<b>Campi di ricerca:</b> {% for field, config in configuration.fields_map %}{% if(config.search_alias is defined) %}{{ config.label }}, {% endif %}{% endfor %}"
+                                            />
+                                            <span class="input-group-btn input-group-append">
+                                                <button class="btn btn-success bootstrap-touchspin-up" type="submit"><i
+                                                            class="fas fa-search"></i></button>
+                                            </span>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-12 col-xl-7" id="advanced-research-wrapper">
+                                    <section class="">
+                                        <a href="{{ path(app.request.attributes.get('_route'),
+                                            app.request.attributes.get('_route_params')) }}"
+                                           class="btn btn-success btn-reset-quick-filter"
+                                           style="margin-right: 5px;">Azzera</a>
+                                        <div class="btn
+                {% if filter_form.vars.submitted %}
+                  {% if filter_form.vars.valid == false %} alert-danger {% else %} btn-primary btn-filter-active {% endif %}
+                {% else %}
+                  btn-success
+                {% endif %} btn-labeled btn-labeled-right advanced_search"
+                                             data-toggle-slide="advanced-search-form">{% if filter_form.vars.submitted %}
+                                                <i
+                                                        class="ti-check-box"></i> Filtri attivi{% else %}Ricerca avanzata{% endif %}
+                                            <i class="ti-arrow-down"></i></span>
+
+                                        </div>
+                                        <a href="{{ path(app.request.attributes.get('_route'),
+                                            app.request.attributes.get('_route_params')|merge(app.request.query.all)|merge({"excel-export" : true})) }}"
+                                           class="btn btn-warning btn-download-excel"
+                                           style="margin-right: 5px;">Scarica excel</a>
+                                        {# if 'ROLE_ADMIN' in app.user.roles %}
+                                            <div class="btn btn-primary btn-labeled btn-labeled-right" id="excel-export">
+                                                Esporta<span class="btn-label-right"><i
+                                                            class="glyphicon glyphicon-download-alt"></i></span>
+                                            </div>
+                                        {% endif %#}
+                                        {% if stat_blocks['top'] is defined %}
+                                            <div class="btn btn-primary btn-labeled btn-labeled-right"
+                                                 id="top-stat-block-btn"
+                                                 data-toggle-slide="top-stat-block">Statistiche<span
+                                                        class="btn-label-right"><i
+                                                            class="glyphicon glyphicon-arrow-down"></i></span>
+                                            </div>
+                                        {% endif %}
+                                        {% block list_specific_actions %}
+                                        {% endblock list_specific_actions %}
+                                    </section>
+                                </div>
+                            {% endblock filter_forms %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVANCED SEARCH FORM -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox {% if filter_form.vars.submitted %} open {% endif %} " id="advanced-search-form" style="display: none;">
+                    <div class="ibox-title">
+                        <h5>Ricerca avanzata</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form id="filter_form" method="get" action="" novalidate>
+                            <div class="advanced-search-fieldset" style="display:block;">
+                                <div class="form-row">
+                                    {% form_theme filter_form 'admin_flock/crud/Form/layout.html.twig' %}
+                                    {% include 'admin_flock/crud/Form/render_filter_form.html.twig' %}
+                                </div>
+                                <footer>
+                                    <div class="col-sm-12">
+                                        <input type="submit" name="submit-filter"
+                                               class="btn btn-primary btn-sm float-right" value="Cerca"/>
+                                        <input type="submit" name="excel-export"
+                                               class="btn btn-primary float-right" value="Excel"/>
+                                        <a href="{{ path(app.request.attributes.get('_route'),
+                                            app.request.attributes.get('_route_params')) }}"
+                                           class="btn btn-success btn-sm float-right"
+                                           style="margin-right: 5px;">Azzera</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            {% if stat_blocks['top'] is defined %}
+                {{ stat_blocks['top']|raw }}
+            {% endif %}
+        </div>
+
+        <!-- MAIN CONTENT TABLE -->
+        <div class="row main-content-outer-wrapper">
+            <div class="main-content-wrapper col-sm-12">
+                <div class="ibox {{ polling_channel is defined ? 'long-poll' : '' }}"
+                        {{ polling_channel is defined ? 'data-polling-channel='~polling_channel : '' }}
+                        {{ polling_source_uri is defined ? 'data-polling-source-uri='~polling_source_uri : '' }}
+                        id="index-page-main-table"
+                >
+                    <div class="ibox-content table-responsive">
+                        {% set entity_for_permission_check = entities|first %}
+                        <table class="table table-bordered list-table">
+                            <thead class="">
+                            {% block thead %}
+                                <tr>
+                                    {% for field_name in fields %}
+
+                                        {# get or create a configuration for the current field #}
+                                        {% if attribute(configuration.fields_map,field_name) is defined %}
+                                            {% set field_conf = attribute(configuration.fields_map,field_name) %}
+                                        {% else %}
+                                            {% set field_conf = {'label': field_name, 'type': 'string' } %}
+                                        {% endif %}
+
+                                        {% if has_field_permission(entity_for_permission_check, field_name, field_conf) %}
+                                            {# print th with column names for the table #}
+                                            {% if field_conf.sort_by is defined %}
+                                                <th class="sorting{% if entities.isSorted(field_conf.sort_by) %}_{{ entities.getDirection() }}{% endif %}"
+                                                    id="{{ field_name }}">
+                                                    {{ knp_pagination_sortable(entities, field_conf.label, field_conf.sort_by) }}
+                                                </th>
+                                            {% else %}
+                                                <th id="{{ field_name }}">
+                                                    {{ field_conf.label }}
+                                                </th>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {# print actions th #}
+                                    {% block operation_header_block %}
+                                        <th class="actions">Operazioni</th>
+                                    {% endblock operation_header_block %}
+                                </tr>
+                            {% endblock thead %}
+                            </thead>
+
+                            <tbody class="table-striped">
+                            {% block tbody %}
+                                {% for entity in entities %}
+                                    {% block tbody_tr_open %} <tr id="entity-{{ entity.id }}"> {% endblock tbody_tr_open %}
+                                    {% for field_name in fields %}
+
+                                        {# get or create a configuration for the current field #}
+                                        {% if attribute(configuration.fields_map,field_name) is defined %}
+                                            {% set field_conf = attribute(configuration.fields_map,field_name) %}
+                                        {% else %}
+                                            {% set field_conf = {'label': field_name, 'type': 'string' } %}
+                                        {% endif %}
+
+                                        {% if has_field_permission(entity, field_name, field_conf) %}
+                                            {# print td with data for the table #}
+                                            <td class="{{ field_conf.type }} {{ field_name|replace({'.':'-'}) }}">
+                                                {#
+                                                {% if field_conf.link_to_show is defined and field_conf.link_to_show %}
+                                                  {{ link_to_show(entity, {'route_params':configuration.route_params}) }}
+                                                {% else %}
+                                                  {% include [ configuration.flock_name ~ ':' ~ configuration.entity_name ~ ':View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig', 'SinervisAdminBundle:crud:View/render_field.html.twig'] %}
+                                                {% endif %}
+                                                #}
+                                                {% if field_conf.link_to_show is defined and field_conf.link_to_show and is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::VIEW'),entity) %}
+                                                {% set entityIcon = get_entity_icon(entity) %}
+                                                {% set entityDescription = get_entity_description(entity) %}
+                                                <a href="{{ path(configuration.route_prefix ~ '_show', configuration.route_params|merge({ 'id': entity.id })) }}" {{  entityDescription ? 'Vai a <b>' ~ entityDescription ~ '</b>' : '' }}>
+                                                    {{ (entityIcon ? entityIcon ~ ' ' : '') | raw }}
+                                                    {% endif %}
+
+                                                    {# START CACHING #}
+                                                    {% set cache_entry = 'gconsulting_new_render_field_' ~ get_entity_class(entity, 'complete') ~ '_' ~ field_name %}
+                                                    {% set cache_entry = "" %}
+                                                    {#% if cache.contains(cache_entry) and cache_entry != "" %}
+                                                        {% include cache.fetch(cache_entry) %}
+                                                    {% else %#}
+                                                    {% set template_found = false %}
+                                                    {% set field_templates =  [
+                                                        configuration.templates_path ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                                                        configuration.templates_path ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                                                        configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                                                        configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                                                        'admin_flock/crud/View/render_field.html.twig'] %}
+                                                    {% for template in field_templates %}
+                                                        {% set template_source = source(template, true) %}
+                                                        {% if template_source is not empty and not template_found %}
+                                                            {#% set r = cache.save(cache_entry,template) %#}
+                                                            {% include(template) %}
+                                                            {% set template_found = true %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {#% endif %#}
+                                                    {# END CACHING #}
+
+                                                    {% if field_conf.link_to_show is defined and field_conf.link_to_show and is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::VIEW'),entity) %}
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {# print actions colum #}
+                                    {% block operation_body_block %}
+                                        <td class="actions" style="white-space: nowrap;">
+                                            {% block object_actions %}
+                                                {% set _object_extra_actions %}
+                                                    {% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}
+                                                {% endset %}
+
+                                                {% if _object_extra_actions.__toString|trim|length %}
+                                                    <div class="more-options-link">
+                                                        <a tabindex="{{ entity.id }}"
+                                                           role="button"
+                                                           class="tabledit-edit-button waves-effect waves-light"
+                                                           data-html="true" data-placement="top"
+                                                           data-toggle="popover"
+                                                           data-content='<ul id="extra-action-list">{{ _object_extra_actions.__toString|trim }}</ul>'>
+                                                            <span class="fas fa-chevron-up"></span>
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                                <!--span class="d-inline-block" data-toggle="popover" data-content="Disabled popover" data-trigger="hover">
+                                                    <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
+                                                </span-->
+
+                                                {% block object_action_show %}{{ link_to_action_show(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_show %}
+                                                {% block object_action_edit %}{{ link_to_action_edit(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_edit %}
+                                                {% block object_action_delete %}
+                                                    {% set configuration = configuration|merge({'entity_name' : get_entity_class(entity)}) %}
+                                                    {{ link_to_action_delete(entity, configuration, {'route_params': configuration.route_params}) }}
+                                                {% endblock object_action_delete %}
+
+                                            {% endblock object_actions %}
+                                        </td>
+                                    {% endblock operation_body_block %}
+                                    </tr>
+                                {% endfor %}
+                            {% endblock tbody %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="dt-bottom-row dt-row mt-3">
+                        <div class="row">
+                            <div class="col-sm-6 text-right align-right">
+                                <div class="paging_bootstrap paging_bootstrap_full">
+                                    {{ knp_pagination_render(entities) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

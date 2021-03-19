@@ -1,0 +1,3 @@
+services:
+    Symfony\Bundle\MakerBundle\Generator: '@maker.generator'
+    Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper: '@maker.doctrine_helper'

@@ -1,0 +1,27 @@
+App\Entity\ContactFlock\Roles\RegionalPartner:
+  r_partner_{1..10}:
+    contact.type : 'c'
+    contact.businessName: <company()>
+    code: '50%?LF :SV'
+    courseVenues:  ["@c_venue_<randomElement(['bologna', 'milano'])>"]
+    contact.infos: ["@phone_contact<current()>", "@email_contact<current()>"]
+
+App\Entity\ContactFlock\ContactInfos\Phone:
+  phone_contact{1..20}:
+    type: '50%? fisso : cellulare'
+    value: <e164PhoneNumber()>
+
+App\Entity\ContactFlock\ContactInfos\Email:
+  email_contact{1..20}:
+    type: 'email'
+    value: <email()>
+
+App\Entity\CourseFlock\CourseVenue:
+  c_venue_bologna:
+    siteName: '@r_partner_*.contact.fullNameCanonical'
+    fullAddress: "Via Abruzzo, 40139 Bologna Bo, Italia"
+    province: 'BO'
+  c_venue_milano:
+    siteName: '@r_partner_*.contact.fullNameCanonical'
+    fullAddress: "Piazza Firenze, 12, 20149 Milano Mi, Italia"
+    province: 'MI'

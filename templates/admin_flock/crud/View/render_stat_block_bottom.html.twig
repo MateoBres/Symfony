@@ -1,0 +1,26 @@
+<tfoot class="stat-track">
+	<tr>
+		{% for field in fields %}
+			<td class="{{ attribute(fields_map, field) is defined ? fields_map[field]['type'] : ''}}">
+				{% if loop.first %}
+					Totale:
+				{% elseif field in stat_fields|keys and stat_fields[field]['total'] %}
+					{{ statistics[field]|apply_filter(fields_map[field]['type']) }}
+				{% endif %}
+			</td>	
+		{% endfor %}
+		<td></td>	
+	</tr>
+	<tr>
+		{% for field in fields %}
+			<td class="{{ attribute(fields_map, field) is defined ? fields_map[field]['type'] : ''}}">
+				{% if loop.first %}
+					Media:
+				{% elseif field in stat_fields|keys and stat_fields[field]['avg'] %}
+					{{ (statistics[field] / item_number)|apply_filter(fields_map[field]['type']) }} 
+				{% endif %}
+			</td>	
+		{% endfor %}		
+		<td></td>
+	</tr>
+</tfoot>

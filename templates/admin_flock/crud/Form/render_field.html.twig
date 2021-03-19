@@ -1,0 +1,42 @@
+<!-- TEMPLATE {{ _self }} -->
+{% from 'admin_flock/crud/Form/common_form_macros.twig' import field_type_specific_classes %}
+
+{% if field.vars.attr.avoid_rendering is not defined %}
+
+    {% set isCustomizable = field_conf.customizable is defined and field_conf.customizable and field.parent.children[field.vars.name ~ 'Changed'] is defined %}
+    {% set fieldWidgetParameters = {} %}
+    {% set readOnly = false %}
+
+    {% if isCustomizable %}
+        {% set switchValue = field.parent.children[field.vars.name ~ 'Changed'].vars.value %}
+        {% set readOnly = switchValue ? false : true %}collection_widget
+        {% if readOnly == true %}
+            {% set fieldWidgetParameters = fieldWidgetParameters | merge({attr:{'readonly' : 'readonly'}}) %}
+        {% endif %}
+    {% endif %}
+
+    {% if field_conf.help is defined %}
+        {% set fieldWidgetParameters = fieldWidgetParameters | merge({'help': field_conf.help}) %}
+    {% endif %}
+
+    {% set html_field_class = field.vars.attr.class is defined ? field.vars.attr.class : '' %}
+
+    <div class="{{ (readOnly ? 'readonly-area' : '') }} form-group col group-{{ html_field_class }} {% if field_conf.class is defined %}{{ field_conf.class }}{% else %}col-sm-6{% endif %} {{ field_type_specific_classes(field) }}">
+        {% if field.vars.label %}
+            {% if field_conf.label is defined %}
+                {{ form_label(field, field_conf.label) }}
+            {% else %}
+                {{ form_label(field) }}
+            {% endif %}
+        {% endif %}
+
+        {% if isCustomizable %}
+            {{ form_widget(field.parent.children[field.vars.name ~ 'Changed']) }}
+        {% endif %}
+        {{ form_widget(field, fieldWidgetParameters) }}
+
+
+        {{ form_errors(field) }}
+    </div>
+
+{% endif %}

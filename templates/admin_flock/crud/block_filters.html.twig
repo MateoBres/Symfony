@@ -1,0 +1,27 @@
+{% if configuration.block_filters | length > 0 %}
+    <div class="row">
+        <article class="col-12">
+{#            <div class="ibox mb-3">#}
+                <nav class="navbar navbar-expand block-filters mb-3">
+                    <ul class="navbar-nav">
+                        {% for filter in configuration.block_filters %}
+                        <li class="nav-item">
+                            <a id="block_filter_{{ loop.index }}"
+                               href="#"
+                               class="btn btn-secondary mr-2 action-toggle-elements active"
+                               data-toggle="button"
+                               aria-pressed="true"
+                               data-selector="{{ filter.selector }}"
+                               title="Nascondi i blocchi"
+                            >
+                                <i class="{{ filter.icon is defined ? icons[filter.icon] : icons.details }}"></i> {{ filter.label }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+{#            </div>#}
+        </article>
+    </div>
+{% endif %}
+

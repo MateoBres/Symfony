@@ -1,0 +1,3 @@
+{% if is_granted('ROLE_ALLOWED_TO_SWITCH') %}
+    <li><a href="{{ path('admin_user_switch_user', {'id': entity.id}) }}">Impersonifica utente</a></li>
+{% endif %}

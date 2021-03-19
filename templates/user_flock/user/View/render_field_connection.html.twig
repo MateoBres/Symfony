@@ -1,0 +1,9 @@
+
+{% if entity.contact is not null %}
+  {{ entity.contact }}
+  {% if entity.contact %}
+    {% for role in entity.contact.roles %}
+      {{ link_to_show(role, {'getter': 'getRoleName'}) }}
+    {% endfor %}
+  {% endif %}
+{% endif %}

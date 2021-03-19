@@ -1,0 +1,36 @@
+/*
+    INSPINIA TOOLTIP FIX
+ */
+.tooltip {
+
+    z-index: 3000;
+
+    &.show {
+        @include opacity(1.0);
+    }
+
+    .tooltip-inner {
+        font-size: 12px;
+        background-color: $nav-bg;
+    }
+
+    &.bs-tooltip-right .arrow:before {
+        border-right-color: $nav-bg !important;
+    }
+
+    &.bs-tooltip-left .arrow:before {
+        border-right-color: $nav-bg !important;
+    }
+
+    &.bs-tooltip-bottom .arrow:before {
+        border-bottom-color: $nav-bg !important;
+    }
+
+    &.bs-tooltip-top .arrow:before {
+        border-top-color: $nav-bg !important;
+    }
+}
+
+.popover.show {
+    @include opacity(1.0);
+}

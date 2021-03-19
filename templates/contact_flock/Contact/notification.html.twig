@@ -1,0 +1,120 @@
+{% extends '@SinervisAdmin/layout.html.twig' %}
+
+
+{% block title %}
+  Notifiche per {{ entity }}
+{% endblock title %}
+
+{% block body %}
+  <!-- TEMPLATE {{ _self }} -->
+  <div class="row">
+    <div class="col-6">
+      <h1 class="page-title txt-color-blueDark">
+        <i class="fas fa-pencil-alt"></i>
+        Notifiche per  {{ entity }}
+      </h1>
+    </div>
+    <div class="col-6 page-actions">
+      {% block object_actions %}
+        {% block object_action_list %}<a class="btn btn-primary btn-labeled btn-labeled-right" href="{{ app.session.get('notification_referer')  }}">Annulla <span class="btn-label"><i class="glyphicon glyphicon-list"></i> </span></a>{% endblock object_action_list %}
+        {% if is_granted(constant('Sinervis\\AdminBundle\\Security\\Authorization\\Voter\\AdminVoter::EDIT'),entity) %}
+          {% block object_action_save %}<a class="btn btn-success btn-labeled btn-labeled-right" href="#" onclick="$('#admin-form').submit();" id="form-save">Salva <span class="btn-label"><i class="glyphicon glyphicon-floppy-disk"></i> </span></a>{% endblock object_action_save %}
+        {% endif %}
+      {% endblock object_actions %}
+    </div>
+  </div>
+
+  {% if not form.vars.valid %}
+    <div class="alert alert-danger fade in">
+      <button class="close" data-dismiss="alert">
+        ×
+      </button>
+      <i class="icon-close"></i>
+      <strong>Errori:</strong> {{ form_errors(form) }}
+    </div>
+  {% endif %}
+
+  {% import _self as table %}
+  {% form_theme form 'form_div_layout.html.twig' %}
+  {{ form_start(form, {'attr': {'id':'admin-form', 'autocomplete':'off', 'class': ''}}) }}
+  <section id="widget-grid">
+    <div class="row">
+      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="jarviswidget jarviswidget-color-blueLight"  data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false">
+          <header role="heading">
+            <span class="widget-icon"> <i class="fa fa-envelope-square"></i></span>
+            <h2>Notifiche</h2>
+          </header>
+          <div role="content" class="jarviswidget-content">
+            <div class="widget-body  no-padding">
+              <div class="dataTables_wrapper" role="grid">
+                <table id="admin-list" class="table dataTable table-striped table-bordered table-hover">
+                  <tbody>
+                      <tr>
+                        <th>{{ form_label(form.contactable.infos) }}</th>
+                        <th>
+                          {{ table.print_infos(form.contactable) }}
+                        </th>
+                      </tr>
+                      {% if form.ownedPlaces is defined %}
+                        {% for place in form.ownedPlaces %}
+                          {% if place.contactable.infos|length %}
+                            <tr>
+                              <th>Sede:<br/>{{ form_label(place.contactable.infos) }}</th>
+                              <th>
+                                {{ table.print_infos(place.contactable) }}
+                              </th>
+                            </tr>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                      {% if form.representatives is defined %}
+                        {% for representative in form.representatives %}
+                          {% if representative.contact.contactable.infos|length %}
+                            <tr>
+                              <th>Referente:<br/>{{ form_label(representative.contact.contactable.infos) }}</th>
+                              <th>
+                                {{ table.print_infos(representative.contact.contactable) }}
+                              </th>
+                            </tr>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <div class="hide">
+    {{ form_end(form) }}
+  </div>
+
+
+  <style>
+    .info-label{
+      width: 200px;
+    }
+    .info-select .btn-group{
+      width: 100%;
+    }
+  </style>
+{% endblock body %}
+
+
+{% macro print_infos(contactable) %}
+  <table class="table">
+    {% for info in contactable.infos %}
+      {% for key, value in info %}
+        <tr>
+          <td class="info-label">{{ form_label(value) }}</td>
+          <td class="info-select">{{ form_widget(value) }}</td>
+        </tr>
+      {% endfor %}
+      {{ form_widget(info) }}
+    {% endfor %}
+  </table>
+{% endmacro %}

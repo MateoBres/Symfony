@@ -1,0 +1,148 @@
+singular_name:   Utente
+plural_name:     Utenti
+icon: users
+
+list_fields:
+  # - createdAt
+  - username
+  - email
+  - enabled
+  - lastLogin
+#  - roles
+
+
+blocks:
+  row1:
+    col1:
+      size: 6
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   details
+          fields:
+          - username
+          - email
+          - plainPassword
+          - enabled
+          - roles
+    col2:
+      size: 6
+      blocks:
+        permissions:
+          title:  Permessi
+          icon:   fa-cog
+          fields:
+            - quizPermissions
+
+
+show_blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   details
+          fields:
+            - username
+            - email
+            - enabled
+            - lastLogin
+            - roles
+    col2:
+      size: 5
+      blocks:
+        permissions:
+          title:  Permessi
+          icon:   fa-cog
+          class: 'permissions-block'
+          fields:
+            - quizPermissions
+
+fields_map:
+  username:
+    label:        Username
+    type:         self
+    sort_by:      User.username
+    search_alias: User.username
+  usernameCanonical:
+    label:        UsernameCanonical
+    type:         string
+    sort_by:      User.usernameCanonical
+    search_alias: User.usernameCanonical
+  email:
+    label:        Email
+    type:         email
+    sort_by:      User.email
+    search_alias: User.email
+  emailCanonical:
+    label:        EmailCanonical
+    type:         string
+    sort_by:      User.emailCanonical
+    search_alias: User.emailCanonical
+  enabled:
+    label:        Attivo
+    type:         boolean
+    sort_by:      User.enabled
+    search_alias: User.enabled
+  salt:
+    label:        Salt
+    type:         string
+    sort_by:      User.salt
+    search_alias: User.salt
+  plainPassword:
+    label:        Password
+    type:         string
+  lastLogin:
+    label:        Ultimo login
+    type:         datetime
+    sort_by:      User.lastLogin
+    search_alias: User.lastLogin
+  confirmationToken:
+    label:        ConfirmationToken
+    type:         string
+    sort_by:      User.confirmationToken
+    search_alias: User.confirmationToken
+  passwordRequestedAt:
+    label:        PasswordRequestedAt
+    type:         datetime
+    sort_by:      User.passwordRequestedAt
+    search_alias: User.passwordRequestedAt
+  roles:
+    label:        Ruoli
+    type:         collection
+    class:        col-sm-12
+    search_alias: User.roles
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      User.id
+    search_alias: User.id
+  passwordChangedAt:
+    label:        PasswordChangedAt
+    type:         datetime
+    sort_by:      User.passwordChangedAt
+    search_alias: User.passwordChangedAt
+  notificationSent:
+    label:        NotificationSent
+    type:         boolean
+    sort_by:      User.notificationSent
+    search_alias: User.notificationSent
+  settings:
+    label:        Settings
+    type:         json
+    sort_by:      User.settings
+    search_alias: User.settings
+  createdAt:
+    label:        Creato il
+    type:         datetime
+    sort_by:      User.createdAt
+    search_alias: User.createdAt
+  updatedAt:
+    label:        Aggiornato il
+    type:         datetime
+    sort_by:      User.updatedAt
+    search_alias: User.updatedAt
+  quizPermissions:
+    label:        Permessi
+    type:         array

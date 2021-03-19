@@ -1,0 +1,12 @@
+# See the docs at https://github.com/geocoder-php/BazingaGeocoderBundle
+bazinga_geocoder:
+    # The local IP (127.0.0.1) will be replaced by the fake_ip
+    # see https://github.com/geocoder-php/BazingaGeocoderBundle/blob/5.0.0/Resources/doc/index.md#fake-local-ip
+    fake_ip: 83.211.93.121
+    providers:
+        googleMaps:
+            factory: Bazinga\GeocoderBundle\ProviderFactory\GoogleMapsFactory
+            locale: 'it'
+            options:
+                region: 'Italy'
+                api_key: 'AIzaSyAWyHmyrPh7tAF2szKqqizSWJ_1Bq5Xzho'

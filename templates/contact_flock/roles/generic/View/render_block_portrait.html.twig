@@ -1,0 +1,25 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% for field_name in block_conf.fields %}
+
+	{# get or create a configuration for the current field #}
+    {% if attribute(configuration.fields_map,field_name) is defined %}
+      {% set field_conf = attribute(configuration.fields_map,field_name) %}
+    {% else %}
+      {% set field_conf = {'label': field_name, 'type': 'string' } %}
+    {% endif %}
+
+    {% if has_field_permission(entity, field_name, field_conf) %}
+  	  <div id="{{field_name|replace('.', '-')}}-wrapper">
+    		{% if (field_name != 'contact.fullName') and (field_name != 'contact.imageName') %}   
+  	    	<label id="{{field_name|replace('.', '-')}}-label" class="render-block-label">{{ field_conf.label }}</label>
+    		{% endif %}
+  	    <div id="{{field_name|replace('.', '-')}}-value">
+  	      {% include [ configuration.bundle_name ~ ':' ~ configuration.entity_name ~ ':View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+          configuration.bundle_name ~ ':' ~ configuration.generic_entity ~ ':View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+           'SinervisAdminBundle:crud:View/render_field.html.twig'] %}
+  	    </div>
+  	  </div>
+    {% endif %}
+
+{% endfor %}

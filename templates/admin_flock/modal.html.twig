@@ -1,0 +1,36 @@
+<!-- TEMPLATE {{ _self }} -->
+<div class="modal inmodal {{ modal_class }}" id="{{ modal_id }}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog {{ modal_size }}">
+        <div class="modal-content animated bounceInRight">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                {% block modal_header %}
+                {% endblock modal_header %}
+            </div>
+
+            <div class="modal-body">
+                {% block additional_info %}
+                {% endblock additional_info %}
+                {% block modal_body %}
+                {% endblock modal_body %}
+            </div>
+
+            <div class="modal-footer">
+                {% block modal_footer %}
+                    {% block modal_close_button %}
+                        <button type="button" id="js-close" class="btn btn-white" data-dismiss="modal">Annulla <i class="fas fa-times"></i></button>
+                    {% endblock modal_close_button %}
+                    {% block modal_save_button %}
+{#                        <button id="js-save" class="btn btn-warning ladda-button" data-style="slide-left">#}
+{#                            <span class="ladda-label">Salva <i class="far fa-save"></i></span>#}
+{#                        </button>#}
+                    {% endblock modal_save_button %}
+                {% endblock modal_footer %}
+            </div>
+
+        </div>
+    </div>
+</div>

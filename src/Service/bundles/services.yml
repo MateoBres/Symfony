@@ -1,0 +1,5 @@
+services:
+  #-------- ImageCropBundle ------------
+  rares_image_crop.helper.image: '@App\Service\bundles\ImageCropBundle\ImageCropHelper'
+  #-------------------------------------
+

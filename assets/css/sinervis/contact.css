@@ -1,0 +1,446 @@
+ul.stepy-titles {
+    margin-bottom: 15px;
+}
+
+.stepy-titles li {
+    margin: 10px 0px;
+    border: 1px solid #27938e;
+    border-top: 4px solid #27938e;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stepy-titles li div,
+.stepy-titles li.current-step div {
+    border-radius: unset;
+    min-width: 250px;
+}
+
+.stepy-titles li.current-step div {
+    background-color: #27938e;
+}
+
+.stepy-titles li div {
+    background: #eaf9f6;
+}
+
+div.jarviswidget-content div.row > section.contact-type-contact,
+div.jarviswidget-content div.row section.contact-type-contact_company {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+section.polycollection table.creation-form-table td.action {
+    text-align: center;
+    vertical-align: middle;
+}
+
+div.panel-block-branches div.panel-body > div.form-group,
+div.panel-block-contact_infos div.panel-body > div.form-group,
+section.polycollection table.creation-form-table td.td-data > div.form-group.general-class,
+section.polycollection table.creation-form-table td.td-data div.form-group.email-field {
+    width: 100%;
+}
+
+section.polycollection table.creation-form-table td.td-data > div.form-group.general-class:not(.value-field),
+section.polycollection table.creation-form-table td.td-data input.phone-field {
+    padding-right: 0px;
+}
+
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-field {
+    width: 44%;
+}
+
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-type-field {
+    width: 56%;
+}
+
+section.polycollection table.creation-form-table td.td-data > div.form-group.general-class,
+section.polycollection table.creation-form-table td.td-data div.form-group.email-field,
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-field,
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-type-field {
+    padding-left: 0px;
+}
+
+section.polycollection table.creation-form-table td.td-data input.phone-field {
+    padding-right: 0px;
+}
+
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-field,
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-type-field {
+    float: left;
+}
+
+section.polycollection table.creation-form-table td.td-data div.form-group.phone-type-field {
+    padding-left: 20px;
+}
+
+div#sinervis_contactbundle_contact_person_contactable table.creation-form-table td.td-data label,
+div#sinervis_contactbundle_contact_company_contactable table.creation-form-table td.td-data label,
+section.contact-sub-entity-infos table.creation-form-table td.td-data label,
+section.contact-sub-entity-representatives table.creation-form-table td.td-data label,
+section.contact-sub-entity-ownedPlaces table.creation-form-table td.td-data label,
+section.contact-sub-entity-infos table.creation-form-table td.td-data div.form-group.general-class div.form-group.general-class label {
+    margin-bottom: 0px;
+}
+
+.table.creation-form-table {
+    margin-bottom: 0px;
+}
+
+table#contact-contactable-infos {
+    width: auto;
+    margin-bottom: 0px;
+}
+
+table#contact-contactable-infos > tbody > tr > td {
+    border-top: none;
+    letter-spacing: 0.5px;
+}
+
+table#contact-contactable-infos > tbody tr td.icon-col > div {
+    border-right: 1px solid #ccc;
+    padding-right: 5px;
+    text-align: center;
+}
+
+table#contact-contactable-infos > tbody tr td:not(.icon-col) {
+    padding-left: 5px !important;
+}
+
+td#contact-summary-value dl.dl-horizontal {
+    margin-bottom: 0px;
+}
+
+td#contact-summary-value dl.dl-horizontal dt {
+    color: #7B7B7B;
+    text-align: left;
+    width: 130px;
+}
+
+td#contact-summary-value dl.dl-horizontal dd {
+    margin-left: 130px;
+}
+
+td#contact-summary-value dl.dl-horizontal dt,
+td#contact-summary-value dl.dl-horizontal dd {
+    border-bottom: 1px dotted #DEDEDE;
+    padding-bottom: 3px;
+}
+
+td#contact-summary-value dl.dl-horizontal dt:last-of-type,
+td#contact-summary-value dl.dl-horizontal dd:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0px;
+}
+
+table.creation-form-table tfoot tr td > div.form-group.general-class > label.required,
+table.creation-form-table tfoot tr td > div.form-group.general-class > div > label.input {
+    display: none;
+}
+
+div#sinervis_contactbundle_contact_person_contactable .form-group.general-class,
+div#sinervis_contactbundle_contact_company_contactable .form-group.general-class,
+section.contact-type-contact table.creation-form-table section.contact-sub-entity-infos,
+section.contact-sub-entity-infos .form-group.general-class,
+section.polycollection .form-group.general-class,
+section.contact-sub-entity-ownedPlaces .form-group.general-class,
+section.contact-sub-entity-representatives .form-group.general-class {
+    margin: 0px;
+    min-height: initial !important;
+}
+
+section.contact-sub-entity-infos section.polycollection {
+    padding: 0px;
+}
+
+section.contact-type-contact table.form-data-table tfoot tr.add-new-item td,
+section.contact-type-contact table.creation-form-table tfoot tr.prototype td {
+    padding-left: 0px;
+    border-top: none;
+}
+
+div.panel-block-contact div.group-tax-code label.tax-code,
+div.contact_person_wrapper label.tax-code,
+div.contact_wrapper label.tax-code {
+    margin-bottom: 4px;
+}
+
+section.contact-sub-entity-ownedPlaces > section.collection,
+section.contact-sub-entity-ownedPlaces > section.collection > div.collection-widget-wrapper,
+section.contact-sub-entity-representatives > section.collection,
+section.contact-sub-entity-representatives > section.collection > div.collection-widget-wrapper {
+    padding: 0px;
+}
+
+
+form[name="sinervis_contactbundle_roles_teacher"] div.form-group.group-contact_type_choice,
+form[name="sinervis_contactbundle_roles_teacher"] div.panel-block-representatives,
+form[name="sinervis_contactbundle_roles_seller"] div.panel-block-representatives,
+section.contact-sub-entity-ownedPlaces div.form-group.invoice-sending-address label.label-tag {
+    display: none;
+}
+
+section.contact-sub-entity-ownedPlaces div.form-group.invoice-sending-address {
+    margin-bottom: 0px;
+    min-height: 50px;
+}
+
+/* skill level related css */
+
+div.panel.panel-block-skillLevels div.panel-body label.label-tag {
+    display: none;
+}
+
+div.panel.panel-block-skillLevels div.panel-body table.form-data-table tbody tr:first-child label.label-tag {
+    display: block;
+    padding-bottom: 5px;
+}
+
+div.panel.panel-block-skillLevels div.panel-body div.form-group {
+    min-height: inherit;
+    margin-bottom: 0px;
+}
+
+div.panel.panel-block-skillLevels div.panel-body > div.form-group section:first-of-type,
+div.panel.panel-block-skillLevels div.panel-body > div.form-group section:first-of-type > div {
+    padding: 0px;
+}
+
+div.panel.panel-block-skillLevels div.panel-body input.skilllevel-level {
+    display: none;
+}
+
+div.panel.panel-block-skillLevels div.panel-body div.jrating-wrapper {
+    padding-top: 5px;
+    position: relative;
+}
+
+div.panel.panel-block-skillLevels div.panel-body div.jrating-wrapper span.selected-rate {
+    position: absolute;
+    right: 0px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: center;
+    border-radius: 2px;
+    padding: 2px 0px;
+    width: 25px;
+    font-weight: bold;
+}
+
+/* teacher */
+div.panel-block-availableDays table tbody label.label-tag,
+div.panel-block-availableDays table tfoot label.label-tag,
+div.panel-block-availableDays table table thead th {
+    display: none;
+}
+
+div.panel-block-availableDays table table td {
+    border: none;
+    padding: 0px;
+}
+
+/*input.cf-city {*/
+/*  !*background-image: url('../images/throbber.gif');*!*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: 98% 10px;*/
+/*  padding-right: 25px;*/
+/*  font-weight: normal;*/
+/*}*/
+
+/*input.cf-city.ui-autocomplete-loading {*/
+/*  background-position: 98% -120px;*/
+/*}*/
+
+section.contact-sub-entity-ownedPlaces div.form-group.office-type {
+    float: left;
+}
+
+div.email-field,
+div.phone-field {
+    width: 50% !important;
+}
+
+div.form-group.phone-type-field {
+    width: 45% !important;
+}
+
+.contact-type-contact td.action {
+    width: 40px;
+}
+
+table.contact-places .btn-default,
+table.contact-representatives .btn-default {
+    background-color: #00403b;
+    padding: 2px 8px;
+    border-color: transparent;
+}
+
+#ownedPlaces table.form-data-table table.creation-form-table thead th {
+    border-top: none;
+}
+
+section.embedded-student-wrapper td.sv-row div.sv-row,
+section.embedded-student-wrapper td.row div.sv-row {
+    display: flex;
+    width: 100%;
+}
+
+section.embedded-student-wrapper td.sv-row div.sv-row .form-group, td.row div.sv-row .form-group {
+    float: left;
+}
+
+section.embedded-student-wrapper .collection.polycollection {
+    clear: left;
+}
+
+section.embedded-student-wrapper div.related-customer-of-student {
+    display: none;
+}
+
+ul.stepy-titles li.content-less-fieldset div {
+    background: #e6e6e6;
+    color: #808080;
+    cursor: auto;
+}
+
+.contact-stepy-tab {
+    width: 90%;
+    float: left;
+}
+
+.role-toggle-button-wrapper {
+    /*right: 24px;
+    top: -6px;
+    position: absolute;
+    z-index: 100;*/
+}
+
+.role-toggle-button-wrapper > button {
+    /*float: right !important;*/
+}
+
+.role-toggle-button-wrapper > button {
+    /*margin-top: 15px;*/
+    margin-right: 14px;
+}
+
+div.role-toggle-button-wrapper div.border-checkbox-section {
+
+}
+
+div.role-toggle-button-wrapper div.border-checkbox-section > div > label {
+    display: block;
+    white-space: nowrap;
+}
+
+div.role-toggle-panel {
+    display: none;
+}
+
+button.contact-role-toggle-btn {
+    background-color: #054240;
+    border: none;
+    color: #fff;
+}
+
+button.contact-role-toggle-btn:hover,
+button.contact-role-toggle-btn:active,
+button.contact-role-toggle-btn:focus {
+    background-color: #032d2c;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+div.role-toggle-button-wrapper .form-group {
+    margin-bottom: 0px;
+}
+
+div.role-toggle-button-wrapper div.dropdown-menu {
+    border: 1px solid #23928f;
+    padding: 6px 10px;
+    margin-top: 10px;
+}
+
+div.role-toggle-button-wrapper div.dropdown-menu .form-group {
+    padding: 0 !important;
+}
+
+.tab-pane.active {
+    -webkit-animation: fadeInRight 0.5s ease-in-out;
+    animation: fadeInRight 0.5s ease-in-out;
+}
+
+article.contact-role-column div.tab-content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+article.contact-role-column ul.nav-tabs {
+    border: 1px solid #27928e;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item {
+    margin-bottom: inherit;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item a {
+    border-right: 1px solid #27938e;
+    border-radius: inherit;
+    background-color: #edfcf9;
+    display: block;
+    height: 100%;
+    margin-bottom: 0;
+    color: #757575;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 6px !important;
+    border-top: 3px solid #27928e;
+    text-align: center;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item:first-child {
+    border-bottom: none;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item:last-child a.nav-link {
+    border-right: none;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item a.nav-link.active {
+    background-color: #27938e;
+    color: #fff;
+    border: none;
+    border-top: 3px solid #27928e;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item a.empty-content {
+    background-color: #e4e4e4;
+    color: #a09f9f;
+}
+
+article.contact-role-column ul.nav-tabs li.nav-item a.nav-link.active.empty-content {
+    background-color: #949494;
+    color: #333333;
+}
+
+article.contact-role-column div.tab-content div.empty-content td {
+    color: #676767;
+    background-color: #dedede;
+    padding: 20px;
+}
+
+article.contact-role-column div.ibox-title {
+    padding-right: 15px;
+}
+
+div.collection-widget-without-datatable-wrapper table.form-data-table th {
+    border-bottom: none;
+}
+
+div.user-roles > label {
+    float: left;
+    padding-right: 24px;
+}

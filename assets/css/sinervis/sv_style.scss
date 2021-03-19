@@ -1,0 +1,404 @@
+#setting-dashboard{
+    margin-top: 90px;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.checkbox.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.pcoded .pcoded-header {
+    height: 120px;
+    background-image: url('../../images/sinervis/360_life_bg.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: 10% 12% !important;
+}
+
+.panel-body {
+    overflow: visible;
+}
+
+div.pcoded-main-container {
+    background-image: url(https://www.toptal.com/designers/subtlepatterns/patterns/quilt.png);
+}
+
+.card-header {
+    background-color: #ffffff;
+}
+
+.form-control {
+    padding: 0.25rem 0.75rem;
+    line-height: 1.6;
+}
+label {
+    margin-bottom: .2rem;
+}
+
+label.label-tag {
+    font-weight: 600;
+    color: #5a5a5a;
+    font-size: 0.9em;
+}
+
+.form-edit label {
+    font-weight: 600;
+}
+.form-control:focus {
+    box-shadow: none;
+}
+.form-group {
+    margin-bottom: 1em;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: inherit;
+}
+/*
+.form-radio label.radio {
+    padding-top: 0.25rem;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.form-radio > label,
+.form-radio > label.radio {
+    padding-left: 0rem !important;
+}
+
+.radio.radio-disable label.radio {
+    cursor: not-allowed;
+}
+
+.form-radio .inline-group > label.radio {
+    display: inline-block;
+}
+
+.radio .helper::after, .radio .helper::before {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.radio input:checked ~ .helper::after {
+    -webkit-transform: scale(0.55);
+    transform: scale(0.55);
+}
+
+.form-radio .form-control:disabled, .form-radio .form-control[readonly] {
+    opacity: 0;
+    cursor: default;
+}*/
+
+/*.form-row {
+    margin-right: 5px;
+    margin-left: 5px;
+}*/
+
+.simple-line-icon.medium {
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.table th, .table td {
+    padding: 0.5rem;
+}
+
+.flatpickr-current-month {
+    padding-top: 4px;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    height: 28px;
+    font-size: 90%;
+    font-weight: bold;
+}
+.flatpickr-current-month .numInputWrapper {
+    height: 24px;
+}
+
+.form-control.flatpickr-input:disabled {
+    background-color: #e9ecef;
+}
+
+.form-control.flatpickr-input[readonly]:not(:disabled) {
+    background-color: #FFF;
+}
+
+.card .card-header {
+    background-color: #8cddcd2e;
+}
+
+table th {
+    /*color: #2F4050;*/
+    font-weight: 600;
+}
+
+.card {
+    /*border-top-color: #1ab394;*/
+}
+
+.pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu .pcoded-submenu li > a .pcoded-micon {
+    display: inline-block;
+    position: relative;
+    width: 25px;
+}
+
+.pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu .pcoded-submenu li > a .pcoded-micon i.simple-line-icon {
+    position: absolute;
+    top: -18px;
+}
+
+.pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu[subitem-icon="style6"] .pcoded-submenu li > a .pcoded-mtext:before {
+    display: none;
+}
+
+.metismenu .active > a > .arrow:before {
+    content: "\f078";
+}
+
+.btn i {
+    font-weight: bold;
+}
+
+code {
+    padding: .3rem .5rem;
+    font-size: 90%;
+    color: #bd4147;
+    background-color: #dedede;
+    border-radius: .25rem;
+    display: block;
+}
+
+/* START extra actions link */
+/*#extra-action-button.dropdown-toggle.btn-sm{*/
+/*    padding: 8px 14px;*/
+/*    line-height: 16px;*/
+/*    font-size: 14px;*/
+/*}*/
+
+/*#extra-action-button.dropdown-toggle span.caret {*/
+/*    position: relative;*/
+/*    top: 2px;*/
+/*    font-size: 1.1rem;*/
+/*    font-weight: normal;*/
+/*}*/
+/*#extra-action-list li a {*/
+/*    color: #00948e!important;*/
+/*}*/
+
+/*#extra-action-list li a.disabled{*/
+/*    pointer-events: none;*/
+/*    opacity: 0.5;*/
+/*}*/
+
+/*#extra-action-list li span.btn-icon {*/
+/*    margin-right: 5px;*/
+/*    font-size: 11px!important;*/
+/*}*/
+
+/*.crud-ribben #extra-action-list li span.btn-icon i {*/
+/*    font-size: 11px!important;*/
+/*    top: 0;*/
+/*}*/
+
+/* END extra actions link */
+
+/* Stepy CSS - START */
+
+.stepy-tab {
+    text-align: center;
+}
+
+.stepy-tab ul{
+    display: inline-block;
+    list-style: none;
+}
+
+.stepy-tab ul li {
+    float: left;
+}
+
+.step legend {
+    border: none;
+}
+
+.button-back {
+    float: left;
+}
+
+.button-next, .finish {
+    float: right;
+}
+
+.button-back, .button-next, .finish {
+    cursor: pointer;  text-decoration: none;
+}
+
+.step {
+    clear: left;
+}
+.step label {
+    display: block;
+}
+
+
+.stepy-titles li {
+    color: #757575;
+    cursor: pointer;
+    float: left;
+    margin: 10px 15px;
+}
+
+.stepy-titles li span { display: block; }
+
+.stepy-titles li.current-step div {
+    color: #fff;
+    cursor: auto;
+    background: #1abc9c;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+}
+
+.stepy-titles li div{
+    font-size:16px;
+    font-weight: 300;
+    background: #eee;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+}
+/* Stepy CSS - END */
+
+.picked-color-sample {
+    text-align: center;
+    width: 100px;
+    font-size: 10px;
+    min-height: 20px;
+    line-height: 20px;
+}
+
+ul.sv-list-style,
+td ul, dd ul {
+    /*padding-left: 15px;*/
+    margin-bottom: 0;
+}
+
+ul.sv-list-style li:before,
+td ul li:before, dd ul li:before {
+    content: "\203A";
+    color: #005d59;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: inline-block;
+    width: .6em;
+    margin-left: 0em;
+}
+
+body ul.metismenu > li > ul > li > a {
+    display: flex;
+    align-items: start;
+}
+//body ul.metismenu > li > ul > li > a  i {
+//    margin-top: 4px;
+//}
+body ul.metismenu > li > ul > li > a  span.nav-label {
+    padding-left: 4px;
+}
+/*body ul.metismenu > li > ul > li > a span.nav-label {*/
+/*    position: absolute;*/
+/*    left: 76px;*/
+/*}*/
+
+body.mini-navbar ul.metismenu > li > ul > li > a span.nav-label {
+    position: inherit;
+    left: inherit;
+    display: inline-block;
+}
+
+div.title-extra-actions {
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 72px;
+}
+
+div.title-extra-actions a {
+    margin-left: 5px;
+}
+
+.rating-wrapper .rating-item {
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    body.mini-navbar.fixed-sidebar {
+        .nav-header {
+            margin-top: 56px;
+        }
+    }
+
+    .header-actions {
+        padding-bottom: 16px;
+    }
+}
+
+@media (max-width: 425px) {
+
+
+    #advanced-research-wrapper {
+        > section {
+            //display: flex;
+            //justify-content: space-between;
+            padding: 16px 0px 0px 0px;
+
+            .btn-reset-quick-filter, .btn-download-excel {
+                margin-right: 0px !important;
+            }
+
+            .btn {
+                margin-bottom: 4px;
+            }
+        }
+    }
+
+    .pcoded-wrapper {
+        .page-heading {
+            display: flex;
+            flex-direction: column;
+            height: 116px;
+
+            h2 {
+                float: none !important;
+            }
+
+            .page-actions {
+                .object-specific-actions {
+                    float: left;
+                }
+            }
+        }
+        .wrapper-content {
+            margin-top: 184px;
+        }
+    }
+}
+.tooltip .tooltip-inner {
+    background-color: #4a4a4a !important;
+}
+.tooltip.bs-tooltip-top.show .arrow:before {
+    border-top-color: #4a4a4a !important;
+}

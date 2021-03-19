@@ -1,0 +1,36 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set places = entity.contact is defined ? entity.contact.ownedPlaces : entity.ownedPlaces %}
+{% if places|length > 0 %}
+  <table class="table contact-places table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Indirizzo</th>
+        <th>Tipo</th>
+        <th>Recapiti</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in places %}
+        <tr>
+          <td>{{ place.fullAddress }}</td>
+          <td>
+            {% if place.type == 'abitazione' %}
+              Abitazione
+            {% elseif place.type is not empty %}
+              {{ place.type | readable_enum('OfficeTypeType') }}
+            {% endif %}
+          </td>
+          <td>
+            {% if place.infos is defined %}
+                {% for key, contactInfo in place.infos %}
+                  <button tabindex="{{key}}" class="btn btn-default info btn-ci-icon" rel="popover" data-placement="top" title="{{ contactInfo.type|capitalize }}" data-html="true" data-content="<a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>">
+                      <i class="fa {{ contactInfo.icon }}"></i>
+                    </button>
+                {% endfor %}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

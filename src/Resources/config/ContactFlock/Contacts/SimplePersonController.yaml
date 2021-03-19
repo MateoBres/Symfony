@@ -1,0 +1,10 @@
+fields_map:
+    id:
+        label:        id
+        type:         integer
+    firstName:
+        label:        Nome
+        type:         string
+    lastName:
+        label:        Cognome
+        type:         string

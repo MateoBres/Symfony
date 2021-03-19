@@ -1,0 +1,84 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}
+  Dettagli  {{ configuration.singular_name }} - {{ parent() }}
+{% endblock title %}
+
+{% block body %}
+  <!-- TEMPLATE {{ _self }} -->
+<div class="row wrapper border-bottom white-bg page-heading">
+      <div class="col-6">
+        {% if entity.timestampableDetail is defined %}
+          <a style="display: inline-block;" rel="popover" data-html="true" data-placement="right" title="Dettagli record" data-content="{{ entity.timestampableDetail }}"><h2 class="page-title"><i class="fa fa-eye fa-fw"></i></h2></a>
+        {% endif %}
+        <h2 style="display: inline-block;" class="page-title txt-color-blueDark">
+          {% block entity_operation_title %}
+            Dettagli  {{ configuration.singular_name }}
+          {% endblock entity_operation_title %}
+        </h2>
+      </div>
+      <div class="col-6 page-actions">
+          <h2 class="float-right">
+              <div class="object-specific-actions">
+              {% block object_specific_actions %}
+              {% endblock object_specific_actions %}
+              </div>
+        {% block object_actions %}
+          {% set _object_extra_actions %}
+              {% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}
+          {% endset %}
+
+          {% if _object_extra_actions.__toString|trim|length %}
+              <div class="btn-group">
+                  <button id="extra-action-button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">Altri </button>
+                  <ul id="extra-action-list" class="dropdown-menu">{% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}</ul>
+              </div>
+          {% endif %}
+
+          {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_ALL'), entity) or is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_OWNED'), entity) %}
+              {% block object_action_list %}<a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">Elenco <span class="btn-icon"><i class="fas fa-list"></i></span></a>{% endblock object_action_list %}
+          {% endif %}
+          {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_ALL'), entity) or is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::CREATE'), entity) %}
+            {% block object_action_create %}<a href="{{ path(configuration.route_prefix ~ '_new', configuration.route_params) }}" type="button" class="btn btn-sm btn-success"><i class="fas fa-plus"></i></a>{% endblock object_action_create %}
+          {% endif %}
+          {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::EDIT'),entity) %}
+            {% block object_action_edit %}<a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix ~ '_edit', configuration.route_params|merge({ 'id': entity.id })) }}">Modifica <span class="btn-icon"><i class="fas fa-pencil-alt"></i> </span></a>{% endblock object_action_edit %}
+          {% endif %}
+          {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::DELETE'),entity) %}
+            {% block object_action_delete %}<a href="{{ path(configuration.route_prefix ~ '_delete', configuration.route_params|merge({ 'id': entity.id, 'token': csrf_token(configuration.entity_name ~ entity.id) })) }}" data-method="POST" class="btn btn-danger btn-sm delete-entity">Elimina <span class="btn-icon"><i class="fas fa-trash-alt"></i> </span></a>{% endblock object_action_delete %}
+          {% endif %}
+        {% endblock object_actions %}
+          </h2>
+      </div>
+  </div>
+
+<div class="wrapper wrapper-content animated fadeIn">
+    {% if configuration.block_filters | length > 0 %}
+        {% include 'admin_flock/crud/block_filters.html.twig' %}
+    {% endif %}
+    {% for row, cols in blocks %}
+      <div class="row">
+        {% for col, col_conf in cols %}
+            {% include [ configuration.templates_path ~ '/View/render_column_' ~ col ~ '.html.twig',
+                configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_column_' ~ col ~ '.html.twig',
+                'admin_flock/crud/View/render_column.html.twig'] %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+</div>
+
+{% endblock body %}
+
+{% block javascripts %}
+  {{ parent() }}
+    {{ encore_entry_script_tags('entity_show') }}
+  <!--script src="/bundles/sinervisadmin/js/plugin/match-height/jquery.matchHeight-min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+      $(document).ready(function(){
+        $('.set-match-height').matchHeight();
+        
+      });
+    });
+   </script-->
+{% endblock %}

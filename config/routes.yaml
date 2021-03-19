@@ -1,0 +1,19 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+#    
+#admin_bank:
+#    path:     /
+#    controller: App\Controller\FinancialFlock\BankController::index
+
+fill_questionnaire:
+    path: /compila-questionario/{token}
+    controller: App\Controller\QuestionnaireFlock\CompletedQuestionnaire\CompletedQuestionnaireController::fillQuestionnaire
+
+completed_questionnaire_completion:
+    path: /thankyou/{questionnaireId}
+    controller: App\Controller\QuestionnaireFlock\CompletedQuestionnaire\CompletedQuestionnaireController::successfullCompletion
+
+completed_questionnaire_link_expired:
+    path: /link-expired/{token}
+    controller: App\Controller\QuestionnaireFlock\CompletedQuestionnaire\CompletedQuestionnaireController::linkExpired

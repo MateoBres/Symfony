@@ -1,0 +1,134 @@
+singular_name:   Contatto
+plural_name:     Contatti
+icon:            contacts
+
+list_fields:
+  - fullNameCanonical
+  - type
+  - contact.infos.email
+  - contact.infos.phone
+  - contact.ownedPlaces
+  - createdAt
+  - roles
+
+
+blocks:
+  row1:
+    col1:
+      size: 12
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   details
+          fields:
+            - type
+            - businessName
+            - vatId
+            - firstName
+            - lastName
+            - gender
+            - birthDate
+            - birthCity
+            - birthProvince
+            - taxCode
+        roles:
+          title: Ruoli
+          icon: fa-users
+          fields:
+            - roles
+
+fields_map:
+  id:
+    label:        id
+    type:         integer
+  fullNameCanonical:
+    label:        Nominativo
+    type:         self
+    sort_by:      Contact.fullNameCanonical
+    search_alias: Contact.fullNameCanonical
+  type:
+    label:        Tipo
+    type:         enum_type
+    dbal_type:    ContactKindType
+    class:        col-md-12 contact-type
+    sort_by:      Contact.type
+  roles:
+    label:        Ruoli
+    type:         collection
+  notes:
+    label:        Note
+    type:         string
+    class:        col-md-12
+  businessName:
+    label:        Ragione Sociale
+    type:         string
+    class:        col-md-6
+  vatId:
+    label:        Partita IVA
+    type:         string
+    class:        col-md-6
+  taxCode:
+    label:        Codice Fiscale
+    type:         string
+    class:        col-md-6
+  CompanyOwnedPlaces:
+    label:        Sedi
+    type:         string
+    path_to_config: ContactFlock/PlaceController.yaml
+  firstName:
+    label:        Nome
+    type:         string
+    class:        col-md-6
+  lastName:
+    label:        Cognome
+    type:         string
+    class:        col-md-6
+  gender:
+    label:        Sesso
+    type:         string
+    class:        col-md-6
+  birthDate:
+    label:        Data di nascita
+    type:         date
+    class:        col-md-6
+  birthCity:
+    label:        Città di nascita
+    type:         string
+    class:        col-md-6
+  birthProvince:
+    label:        Provincia di nascita (Sigla)
+    type:         string
+    class:        col-md-6
+  PersonOwnedPlaces:
+    label:        Domicili
+    type:         string
+    path_to_config: ContactFlock/PersonOwnedPlaceController.yaml
+  imageFile:
+    label:        Avatar
+    type:         string
+    class:        col-md-6
+  createdAt:
+    label:        Creato il
+    type:         date
+    sort_by:      Contact.createdAt
+  contact.infos.email:
+    label:        Email
+    type:         collection
+  contact.infos.phone:
+    label:        Telefono
+    type:         collection
+  contact.ownedPlaces:
+    label:        Sedi / Domicili
+    type:         collection
+  turnover:
+    label:        Classe di fatturato
+    type:         enum_type
+    dbal_type:    TurnoverType
+    class:        col-md-6
+  headcount:
+    label:        Classe Numero Dipendenti
+    type:         enum_type
+    dbal_type:    HeadcountType
+    class:        col-md-6
+
+

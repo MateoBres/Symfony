@@ -1,0 +1,36 @@
+<div class="panel" id="top-stat-block" style="display:none;">
+	<div class="panel-body">	
+		<section class="col col-sm-4">
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<th></th>
+						{% for stat_field in stat_fields|keys %}
+							<th>{{ fields_map[stat_field]['label'] }}</th>
+						{% endfor %}
+					</tr>
+					<tr>
+						<th>Totale:</th>
+						{% for stat_field in stat_fields|keys %}
+							<td>
+								{% if stat_fields[stat_field]['total'] %}
+									{{ statistics[stat_field]|apply_filter(fields_map[stat_field]['type']) }}
+								{% endif %}
+							</td>
+						{% endfor %}
+					</tr>
+					<tr>
+						<th>Media:</th>
+						{% for stat_field in stat_fields|keys %}
+							<td>
+								{% if stat_fields[stat_field]['avg'] %}
+									{{ (statistics[stat_field] / item_number)|apply_filter(fields_map[stat_field]['type']) }}
+								{% endif %}
+							</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</div>
+</div>

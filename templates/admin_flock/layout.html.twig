@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <!-- Metadata -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="IOT System"/>
+        <title>
+            {%- block title -%}IOT System{%- endblock -%}
+        </title>
+
+        <link rel="icon" href="{{ asset('build/images/sinervis/favicon_iotquiz.ico') }}" type="image/x-icon">
+
+        {% block stylesheets -%}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="pace-done fixed-sidebar">
+        <div id="wrapper">
+            <!-- Menu header start -->
+            <nav class="navbar-default navbar-static-side fixed-nav" role="navigation">
+                <div class="sidebar-collapse">
+                    {{ knp_menu_render('mainMenu', {'template': 'admin_flock/menu.html.twig' , 'currentClass' : 'active'}) }}
+                </div>
+            </nav>
+            <!-- Menu header end -->
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <div class="pcoded-wrapper">
+                    <div class="row border-bottom">
+                        <nav class="navbar navbar-fixed-top fixed-nav" role="navigation" style="margin-bottom: 0">
+                            <div class="navbar-header">
+                                <a class="navbar-minimalize minimalize-styl-2 btn btn-success " href="#"><i
+                                            class="fa fa-bars"></i>
+                                </a>
+                                <a class="minimalize-styl-2 btn btn-success back-button" href="#"
+                                   onclick="history.back();">
+                                    <i class="fa fa-chevron-left"></i>
+                                </a>
+                            </div>
+                            <ul class="nav navbar-top-links navbar-right">
+                                <li style="padding: 20px">
+                                    <span class="m-r-sm text-muted welcome-message"><b>{{ app.user.username }}, Benvenuto in IOT System</b></span>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path('app_logout') }}">
+                                        <i class="fas fa-sign-out-alt"></i> Log out
+                                    </a>
+                                </li>
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('admin_user', {'_switch_user': '_exit'}) }}" style="color: orange;">
+                                            Exit impersonation
+                                        </a>
+                                    </li>
+                                {% endif %}
+{#                                <li>#}
+{#                                    <a class="right-sidebar-toggle">#}
+{#                                        <i class="fa fa-tasks"></i>#}
+{#                                    </a>#}
+{#                                </li>#}
+                            </ul>
+
+                        </nav>
+                    </div>
+
+                    <!-- MAIN CONTENT -->
+                    {% block body %}{% endblock %}
+
+                </div>
+            </div>
+
+        </div>
+        {{ (app.environment != 'test') ? '<div class="se-pre-con"></div>' : '' }}
+
+        {% include 'admin_flock/_flashbag_messages.html.twig' %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+    </body>
+</html>

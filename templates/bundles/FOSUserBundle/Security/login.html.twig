@@ -1,0 +1,57 @@
+{% extends "bundles/FOSUserBundle/layout.html.twig" %}
+
+{% block fos_user_content %}
+    <form action="{{ path("fos_user_security_check") }}" method="post" id="login-form" class="m-t" novalidate>
+
+                            <div class="auth-box">
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                        <h3 class="text-left txt-primary">Accedi ora</h3>
+                                    
+	                                    {% if error %}
+								            <div class="alert alert-danger fade show">
+								                <button class="close" data-dismiss="alert"> × </button>
+								                <i class="fa-fw fa fa-times"></i>
+								                {{ error.message|trans }}
+								            </div>
+	       								{% endif %}
+									</div>
+                                </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nome utente" autofocus id="username" name="_username" value="{{ last_username }}" required="required">
+                                    <span class="md-line"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" id="password" name="_password" required="required">
+                                    <span class="md-line"></span>
+                                </div>
+                                <div class="form-group" style="text-align: left">
+                                        <label class="checkbox icheck-peterriver  ">
+                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+                                            <label for="remember_me">
+                                                <span>&nbsp;Ricordami </span>
+                                            </label>
+                                        </label>
+
+                                    <!--div class="col-sm-5 col-xs-12 forgot-phone text-right">
+                                        <a data-toggle="modal" href="{{path("fos_user_resetting_request")}}">Dimenticato la password?</a>
+                                    </div-->
+                                </div>
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"/>
+                                    </div>
+                                </div>
+                                <!--hr/>
+                                <div class="row">
+                                    
+                                    <div class="col-md-2">
+                                        <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                                    </div>
+                                </div-->
+
+                            </div>
+                        </form>
+
+{% endblock fos_user_content %}

@@ -1,0 +1,19 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set contact_infos = entity.contact is defined ? entity.contact.infos : entity.infos %}
+{% if contact_infos|length %}
+    <ul class="contactable-infos">
+        {% for key, contactInfo in array_unique(contact_infos) %}
+            {% if contactInfo.type == 'email' %}
+                <li>
+                    <i class="fa fw {{ contactInfo.icon }}"></i> &nbsp;
+                    <a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>
+                </li>
+            {% elseif contactInfo.type == 'website' %}
+                <li>
+                    <i class="fa fw {{ contactInfo.icon }}"></i> &nbsp;
+                    <a href="{{ contactInfo.value }}" target="_blank">{{ contactInfo.value }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}

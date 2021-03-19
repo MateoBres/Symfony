@@ -1,0 +1,62 @@
+<!-- TEMPLATE {{ _self }} -->
+{% from 'admin_flock/crud/Form/common_form_macros.twig' import field_type_specific_classes %}
+
+{% if (configuration.fields_map.contact.fields_map is defined) %}
+  {% set contact_field_map = configuration.fields_map.contact.fields_map %}
+{% else %}
+  {% set contact_field_map = configuration.fields_map %}
+{% endif %}
+
+
+{% set fields_to_be_excluded = ['ownedPlaces', 'representatives', 'imageFile', 'type'] %}
+{% if configuration.fields_map.avoid_contact_infos is defined%}
+  {% set fields_to_be_excluded = fields_to_be_excluded|merge(['infos']) %}
+{% endif %}
+
+
+{% if field.type is defined %}
+  {% set subfield = field.type %}
+  {% if attribute(contact_field_map,subfield.vars.name) is defined %}
+    {% set field_conf = attribute(contact_field_map,subfield.vars.name) %}
+  {% else %}
+    {% set field_conf = {'label': subfield.vars.name, 'type': 'string' } %}
+  {% endif %}
+
+  <div class="form-group col {% if field_conf.class is defined %}{{ field_conf.class }}{% else %}col-md-4{% endif %} {{ field_type_specific_classes(subfield) }}">
+    {{ form_label(subfield) }}
+    {{ form_widget(subfield) }}
+    {{ form_errors(subfield) }}
+  </div>
+
+  {% do field.type.setRendered %}
+{% endif %}
+
+{% for subfield in field %}
+  {% if subfield.vars.name not in fields_to_be_excluded %}
+    {# get or create a configuration for the current field #}
+    {% if attribute(contact_field_map,subfield.vars.name) is defined %}
+      {% set field_conf = attribute(contact_field_map,subfield.vars.name) %}
+    {% else %}
+      {% set field_conf = {'label': subfield.vars.name, 'type': 'string' } %}
+    {% endif %}
+
+    {# TODO: go through this file and document it #}
+    {% if subfield.vars.block_prefixes.1 != 'infinite_form_polycollection' %}
+      <div class="form-group col {% if field_conf.class is defined %}{{ field_conf.class }}{% else %}col-md-4{% endif %} {{ field_type_specific_classes(subfield) }}">
+        {{ form_label(subfield) }}
+        {{ form_widget(subfield) }}
+        {{ form_errors(subfield) }}
+      </div>
+      {% else %}
+        {{ form_row(subfield) }}
+      {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if field.imageFile is defined %}
+  <div class="form-group col {{contact_field_map.imageFile.class}}">
+    {{ form_label(field.imageFile) }}
+    {{ form_widget(field.imageFile) }}
+    {{ form_errors(field.imageFile) }}
+  </div>
+{% endif %}

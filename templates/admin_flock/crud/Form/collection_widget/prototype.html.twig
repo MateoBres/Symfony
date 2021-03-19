@@ -1,0 +1,60 @@
+{#https://twig.symfony.com/doc/2.x/tags/macro.html#macro#}
+{% macro children_printer(field, fields_map) %}
+
+  {% import _self as prototype_tpl %}
+  {# check if field is a single or collection (e.g. customer representative)#}
+
+  {% if attribute(fields_map, field.vars.name).collection_widget is defined %}
+    {% set class = attribute(fields_map, field.vars.name).collection_widget.class ~ ' field-' ~ field.vars.name %}
+  {% elseif attribute(fields_map, field.vars.name).class is defined %}
+    {% set class = attribute(fields_map, field.vars.name).class ~ ' field-' ~ field.vars.name %}
+  {% else %}
+    {% set class = 'no-field-map-class' %}
+  {% endif %}
+
+{#  {% if field.children is empty or (field.vars.block_prefixes[1] == 'choice' and field.vars.block_prefixes[2] == 'entity') %}#}
+{#  TODO: if something goes wrong check this point #}
+  {% if field.children is empty or (field.vars.block_prefixes[1] == 'choice') %}
+    {{form_row(field, {'class': class })}}
+  {% else %}
+    {% if 'collection' in field.vars.block_prefixes %}
+      {{form_widget(field)}}
+    {% else %}
+      {% for child in field.children %}
+        {{prototype_tpl.children_printer(child, fields_map)}}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{% endmacro %}
+
+{% macro field_printer(field, fields_map, field_name) %}
+  {% import _self as prototype_tpl %}
+  {% if (field.vars.name == 'contact' and field_name != 'representatives') %}
+    {% set configuration = {'fields_map': fields_map} %}
+    {% include 'contact_flock/Contact/Form/render_field_contact.html.twig' %}
+  {% else %}
+    {% if (fields_map != '') or (fields_map is not empty) %}
+      {% if attribute(fields_map, field.vars.name).class is defined %}
+        {% set class = attribute(fields_map, field.vars.name).class ~ ' field-' ~ field.vars.name %}
+      {% endif %}
+    {% else %}
+      {% set class = 'no-field-map-class' %}
+    {% endif %}
+    {{prototype_tpl.children_printer(field, fields_map)}}
+  {% endif %}
+{% endmacro %}
+
+{% import _self as prototype_tpl %}
+
+{% apply spaceless %}
+    <div id="{{form.vars.id}}" parent-name="{{field_name}}" entity-name="{{ btn_label_name }}"></div>
+    {% set class = 'prototyped' %}
+      {%  if form.children | length %}
+        {% for field in form %}
+          {{prototype_tpl.field_printer(field, fields_map, field_name)}}
+        {% endfor %}
+      {% else %}
+        {{prototype_tpl.field_printer(form, fields_map, field_name)}}
+      {% endif %}
+{% endapply %}
+

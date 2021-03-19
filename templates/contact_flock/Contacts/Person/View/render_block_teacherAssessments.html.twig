@@ -1,0 +1,42 @@
+{% if entity.teacher.teacherAssessments | length > 0 %}
+    <table class="table table-bordered table-sm mb-0">
+        <thead>
+        <tr>
+            <th>Titolo modello</th>
+            <th>Status</th>
+            <th>Data compilazione</th>
+            <th>Data scadenza</th>
+            <th class="actions">Operazioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for completedQuestionnaire in entity.teacher.teacherAssessments %}
+            <tr>
+                <td>
+                    <a href="{{ path('questionnaire_flock_questionnaire_show', { id: completedQuestionnaire.questionnaire.id }) }}">{{ completedQuestionnaire.questionnaire.name }}</a>
+                </td>
+                <td>
+                    {% set labelClass = '' %}
+                    {% if completedQuestionnaire.status is constant('App\\DBAL\\Types\\TeacherAssessmentStatusType::VALID') %}
+                        {% set labelClass = 'success' %}
+                    {% elseif completedQuestionnaire.status is constant('App\\DBAL\\Types\\TeacherAssessmentStatusType::NOT_VALID') %}
+                        {% set labelClass = 'danger' %}
+                    {% elseif completedQuestionnaire.status is constant('App\\DBAL\\Types\\TeacherAssessmentStatusType::EXPIRED') %}
+                        {% set labelClass = 'danger' %}
+                    {% endif %}
+
+                    <span class="label label-{{ labelClass }}">
+                                {{ completedQuestionnaire.status | readable_enum('TeacherAssessmentStatusType') }}
+                            </span>
+                </td>
+                <td>{{ completedQuestionnaire.createdAt | date('d/m/Y') }}</td>
+                <td>{{ completedQuestionnaire.expirationDate | date('d/m/Y') }}</td>
+                <td class="actions">
+                    {{ link_to_action_show(completedQuestionnaire, {}, { display_name: 'Scheda valutazione docente' }) }} &nbsp;
+                    {{ link_to_action_edit(completedQuestionnaire, {}, { display_name: 'Scheda valutazione docente' }) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

@@ -1,0 +1,32 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% if entity.realServices|length %}
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Attivo</th>
+      <th>Periodo</th>
+      <th>Operazioni</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for service in entity.realServices %}
+        <tr>
+          <td>
+            {{ link_to_show(service,{'getter':'getServiceCategory'}) }}
+          </td>
+          <td>{% if service.isActive() %}Si{% else %}No{% endif %}</td>
+          <td>
+            Dal: {{ service.getFirstStartDate|localizeddate('long','none','it') }}<br/>
+            Al: {{ service.getLastEndDate|localizeddate('long','none','it') }}
+          </td>
+          <td class="actions">
+            {{ link_to_action_show(service) }}
+            {{ link_to_action_edit(service) }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

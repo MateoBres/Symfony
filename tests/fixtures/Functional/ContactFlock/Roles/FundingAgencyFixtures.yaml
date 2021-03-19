@@ -1,0 +1,15 @@
+App\Entity\ContactFlock\Roles\FundingAgency:
+  f_agency_{1..10}:
+    contact.type : 'c'
+    contact.businessName: <company()>
+    contact.infos: ["@phone_contact<current()>", "@email_contact<current()>"]
+
+App\Entity\ContactFlock\ContactInfos\Phone:
+  phone_contact{1..20}:
+    type: '50%? fisso : cellulare'
+    value: <e164PhoneNumber()>
+
+App\Entity\ContactFlock\ContactInfos\Email:
+  email_contact{1..20}:
+    type: 'email'
+    value: <email()>

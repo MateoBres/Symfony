@@ -1,0 +1,21 @@
+services:
+    sinervis_user_flock.configure_menu_listener:
+        class: App\EventListener\UserFlock\ConfigureMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sinervis_admin.menu_configure, method: onMenuConfigure }
+        arguments: [ "@service_container" ]
+
+    sinervis_user_flock.user_listener:
+        class: App\EventListener\UserFlock\UserListener
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\UserFlock\User'
+                lazy: true
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\UserFlock\User'
+                lazy: true
+        arguments: ["@security.password_encoder"]

@@ -1,0 +1,191 @@
+
+.sv-main-dashboard {
+    margin-top: 72px !important;
+}
+.sv-dashboard-row {
+    padding-bottom: 2rem;
+
+    .sv-dashboard-col {
+        .ibox {
+            background-color: #ffffff;
+            .ibox-title,
+            .info-box-title {
+                font-size: 14px;
+                font-weight: bold;
+                padding: 4px 20px 4px 4px;
+                text-transform: uppercase;
+
+                span.icon {
+                    padding: 4px;
+                    color: #ffffff;
+                    width: 30px;
+                    height: 31px;
+                    display: inline-block;
+                    text-align: center;
+                    margin-right: 4px;
+                    margin-right: 8px;
+                }
+            }
+            .ibox-title {
+                display: flex;
+                align-items: center;
+                border: 2px solid #fff;
+                cursor: auto;
+            }
+            .info-box-title {
+                display: flex;
+                justify-content: center;
+            }
+            .ibox-content {
+                table {
+                    min-height: 300px;
+                }
+            }
+        }
+
+        .dataTables_wrapper {
+            padding-bottom: 0px;
+            div.dataTables_filter label {
+                text-align: right;
+                margin-right: 0px;
+            }
+        }
+    }
+
+    .sv-security {
+        .ibox-title {
+            span.icon {
+                background: #37c5bd;
+            }
+        }
+    }
+    .sv-quality {
+        .ibox-title {
+            span.icon {
+                background: #f8a800;
+            }
+        }
+    }
+}
+.sv-widget-box {
+    .ibox-content {
+        .info-box-wrapper {
+            display: flex;
+            flex-direction: column;
+            padding: 4px;
+            .info-box-icon {
+                padding: 8px;
+                font-size: 2.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: orange;
+                color: #ffffff;
+            }
+
+            .info-box-content {
+                .info-box-title {
+                    text-align: center;
+                    font-weight: bold;
+                    padding: 8px 4px;
+                }
+                .info-box-data {
+                    > .row > div {
+                        padding-right: 12px;
+                        padding-left: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .highchart-canvas {
+            overflow: visible !important;
+            width: 100%;
+            .highcharts-title {
+                display: none;
+            }
+        }
+    }
+}
+
+.sv-badge-widget-box {
+    .ibox-content {
+        padding: 0px;
+    }
+}
+
+.sv-chart-widget-box {
+    .ibox-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        div.highcharts-container,
+        svg.highcharts-root {
+            overflow: visible !important;
+        }
+
+        .highcharts-exporting-group {
+            display: none;
+        }
+    }
+}
+
+.sv-table-widget-box {
+    .ibox-content {
+        overflow-y: scroll;
+        &::-webkit-scrollbar-track {
+            background-color: #ffffff;
+        }
+        &::-webkit-scrollbar {
+            width: 6px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #a4a4a4;
+        }
+    }
+    .table-suffix {
+        text-align: right;
+        padding: 8px;
+        padding-top: 16px;
+        font-weight: bold;
+    }
+}
+
+.sv-security {
+    .ibox-content {
+        &::-webkit-scrollbar-thumb {
+            background-color: #37c5bd;
+        }
+    }
+}
+.sv-quality {
+    .ibox-content {
+        &::-webkit-scrollbar-thumb {
+            background-color: #f8a800;
+        }
+    }
+}
+
+div.title-extra-actions {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 1rem;
+}
+
+@media (min-width: 576px) {
+    .sv-widget-box {
+        .ibox-content {
+            .info-box-wrapper {
+                flex-direction: row;
+            }
+        }
+    }
+}

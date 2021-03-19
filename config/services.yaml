@@ -1,0 +1,65 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    mailer_user: user
+    sender_name: user
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\Form\CourseFlock\CourseEditionType:
+        autowire: true
+
+    TFox\MpdfPortBundle\Service\MpdfService: '@t_fox_mpdf_port.mpdf'
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+        #app.maker.make_crud:
+        #    class: App\Maker\SinervisMakeCrud
+        #    #arguments: ['@maker.doctrine_helper', '@maker.renderer.form_type_renderer']
+        #    arguments: ['@maker.doctrine_helper']
+        #    calls:
+        #        - [configureCommand, ['@security.command.user_password_encoder', '@?']]
+        #        - [interact, ['@?', '@?', '@security.command.user_password_encoder']]
+        #    tags:
+        #        - { name: maker.command }
+
+
+        #sinervis.maker.renderer.form_type_renderer:
+        #class: App\Maker\Renderer\SinervisFormTypeRenderer
+        #arguments: ['@maker.generator']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+
+imports:
+    - { resource: ../src/Service/services.yml }
+    - { resource: ../src/Resources/config/Icons.yml }
+    - { resource: ../src/Resources/config/Images.yaml }

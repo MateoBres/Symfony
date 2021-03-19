@@ -1,0 +1,14 @@
+{% apply spaceless %}
+{% macro field_type_specific_classes(field) %}
+    {%-  if field.vars.block_prefixes[1] is defined -%}
+        {%- set field_type = field.vars.block_prefixes[1] -%}
+        {%- set field_expanded = field.vars.expanded is defined ? field.vars.expanded : false -%}
+        {%- set field_multiple = field.vars.multiple is defined ? field.vars.multiple : false -%}
+        {%- if field_type == 'choice' and field_expanded and field_multiple == false -%}
+            form-radio
+        {%- elseif field_type == 'checkbox' or (field_type == 'choice' and field_expanded and field_multiple == true) -%}
+            multiple border-checkbox-section
+        {%- endif -%}
+    {%- endif -%}
+{% endmacro %}
+{% endapply %}

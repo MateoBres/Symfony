@@ -1,0 +1,42 @@
+/* IMAGE UPLOADER */
+
+.image-file-thumb {
+    border: 4px solid $navy;
+    @include border-radius(2px);
+}
+
+.vich-image {
+
+    label.button-upload-onlybutton {
+        color: $light-blue;
+        display: inline-block;
+        margin-bottom: 10px;
+
+        input {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+
+    .form-group {
+        min-height: initial;
+        margin-bottom: 0;
+    }
+
+    .border-checkbox-section{
+        padding-bottom: 0;
+    }
+
+    #rares_image_crop_crop_rotate {
+        margin-top: 10px;
+    }
+
+    .cropper-modal {
+        @extend .image-file-thumb;
+        /*width: 200px;*/
+    }
+}

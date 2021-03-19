@@ -1,0 +1,35 @@
+<div class="card block-section">
+    <div class="card-body">
+        <div class="module-information">
+            <table class="table table-sm mb-0">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Edizione</th>
+                    <th>Stato allocazione</th>
+                    <th>Ore allocate</th>
+                    <th>Compenso orario</th>
+                    <th class="actions">Operazioni</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for assignment in entity.educationProvider.assignments %}
+                    {% if instance_of(assignment.collaborator, 'App\\Entity\\ContactFlock\\Roles\\Teacher') %}
+                        <tr>
+                            <td>{{ link_to_show(assignment.collaborator) }}</a></td>
+                            <td>{{ link_to_show(assignment.edition) }}</a></td>
+                            <td>{% include 'commercial_flock/contracts/shared/View/render_field_lessonAllocationStatus.html.twig' with {entity: assignment} %}</td>
+                            <td>{{ assignment.allocatedTime | secToHoursMins }}</td>
+                            <td>{{ assignment.hourlyFee | sv_currency() }}</td>
+                            <td class="actions">
+                                {{ link_to_action_show(assignment, {}, { display_name: 'Incarico' }) }} &nbsp;
+                                {{ link_to_action_edit(assignment, {}, { display_name: 'Incarico' }) }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

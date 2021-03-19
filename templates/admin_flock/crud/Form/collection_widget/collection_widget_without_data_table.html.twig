@@ -1,0 +1,118 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{# the following line is useful to avoid rendering the field as a unit 
+   when no subfields are present. For example in create form.
+#}
+{% do form.setRendered %}
+{% set field_name = form.vars.name %}
+
+{% set sortable = false %}
+{% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+    {% set sortable = true %}
+{% endif %}
+
+<div class="jarviswidget-content smart-form collection-widget-without-datatable-wrapper">
+    <table class="table form-data-table table-bordered {{ sortable ? 'sortable-table' : '' }}" id="{{ id }}">
+        {% if form.vars.attr.fields_map is defined and form.vars.attr.fields_map.no_table_header is not defined %}
+            <thead>
+            <tr>
+                {% if sortable %}
+                    <th class="table-sortable-handler"></th>
+                {% endif %}
+                <th class="sv-row">
+                    {% if form.vars.attr.fields_map.table_headers is defined %}
+                        <div class="header-wrapper">
+                        {% for table_header in form.vars.attr.fields_map.table_headers %}
+                            <div class="">{{ table_header.label | raw }} {{ table_header.required is defined ? '<span style="color: red;">*</span>': '' }}</div>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        {% for field_map in form.vars.attr.fields_map %}
+                            {% if field_map.collection_widget is defined %}
+                                <div class="{{ field_map.collection_widget.class }}">{{ field_map.label | raw }} {{ field_map.required is defined ? '<span style="color: red;">*</span>': '' }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </th>
+                {% if form.vars.allow_delete == true %}
+                    <th></th>
+                {% endif %}
+            </tr>
+            </thead>
+        {% endif %}
+        <tbody>
+        {% set last_subform = {} %}
+        {% for subform in form %}
+            {% set last_subform = subform %}
+            <tr id="{{ id }}-row_{{ loop.index0 }}" class="no-data-table">
+                {% if sortable %}
+                    <td class="table-sortable-handler">
+                        <i class="glyphicon glyphicon-move"></i>
+                    </td>
+                {% endif %}
+                <td class="data-td sv-row">
+                    {# following check is useful to identify whether the 'entry_type' is a primitive field type
+                       or a custom form type. #}
+                    {% if subform.children | length == 0 %}
+                        {% set subform = [subform] %}
+                    {% endif %}
+
+                    {% for field in subform %}
+
+                        {% if (field.vars.name == 'contact') %}
+                            {% set configuration = form.vars.attr %}
+                            {% include 'contact_flock/Contact/Form/render_field_contact.html.twig' %}
+                        {% else %}
+                            {% set class = '' %}
+                            {% if attribute(form.vars.attr.fields_map, field.vars.name).collection_widget is defined %}
+                                {% set class = attribute(form.vars.attr.fields_map, field.vars.name).collection_widget.class %}
+                            {% elseif attribute(form.vars.attr.fields_map, field.vars.name).class is defined %}
+                                {% set class = attribute(form.vars.attr.fields_map, field.vars.name).class %}
+                            {% endif %}
+
+                            {{ form_row(field, {'class': class}) }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                {% if form.vars.allow_delete == true %}
+                    <td class="data-action">
+                        <a href="#" class="delete" data-toggle="tooltip" title="Rimuovi elemento"><i class="{{ icons['remove'] }} text-danger"></i></a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        {% if prototype is defined %}
+
+            <tfoot>
+            <tr class="without-data-table" class="no-data-table">
+                <td colspan="3">
+                    {% set fields_map = '' %}
+                    {% if form.vars.attr.fields_map is defined %}
+                        {% set fields_map = form.vars.attr.fields_map %}
+                    {% endif %}
+
+                    {% set btn_label_name = form.vars.attr.add_more_button_label is defined ? form.vars.attr.add_more_button_label|split('_')|last : 'Aggiungi' %}
+
+                    {% set prototype_content = include('admin_flock/crud/Form/collection_widget/prototype.html.twig', { form: prototype, fields_map: fields_map, parent_name: field_name}) %}
+
+                    <a href="#" class="add btn btn-inverse btn-xs btn-mini add-{{ btn_label_name|lower }}" data-prototype="{% apply escape %}{{ prototype_content | raw }}{% endapply %}" data-track-id="{{ id }}-row__ID_">
+                        <i class="fa fa-fw fa-plus-circle"></i>
+                        Aggiungi {{ btn_label_name }}
+                    </a>
+
+                    {% if form.vars.allow_duplicate is defined and form.vars.allow_duplicate == true %}
+                        <a href="#" class="add duplicate btn btn-inverse btn-xs btn-mini add-{{ btn_label_name|lower }}" data-skip-duplication="{{ form.vars.skip_duplication | join(',') }}" data-prototype="{% apply escape %}{{ prototype_content | raw }}{% endapply %}" data-track-id="{{ id }}-row__ID_">
+                            <i class="fas fa-clone"></i>
+                            Duplica {{ btn_label_name }}
+                        </a>
+                    {% endif %}
+
+                </td>
+            </tr>
+            </tfoot>
+        {% endif %}
+
+    </table>
+</div>

@@ -1,0 +1,9 @@
+parameters:
+  excluded_tables:
+    - "catastali"
+
+services:
+    # Override the default service with your own
+    fidry_alice_data_fixtures.persistence.purger_factory.doctrine:
+        class: App\Tests\CustomDBPurger
+        arguments: ['@doctrine.orm.entity_manager', null, '%excluded_tables%']

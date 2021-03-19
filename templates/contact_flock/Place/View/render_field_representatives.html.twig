@@ -1,0 +1,13 @@
+<!-- TEMPLATE {{ _self }} -->
+<ul>
+  {% for representative in entity.representatives %}
+    <li>
+      {{ representative }} ({{ representative.type }})
+      {% for contactInfo in representative.contact.contactable.infos %}
+        <span class="btn btn-default btn-ci-icon" rel="popover" data-placement="top" title="{{ contactInfo.type|capitalize }}" data-html="true" data-content="<a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>">
+          <i class="fa {{ contactInfo.icon }}"></i>
+        </span>
+      {% endfor %}
+    </li>
+  {% endfor %}
+</ul>

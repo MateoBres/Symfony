@@ -1,0 +1,19 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% set contact_type = entity.type %}
+{{dump('something is wrong - inform Yash (render_block_contact.html.twig)')}}
+<table class="table table-bordered">
+  {% for field_name in block_conf.fields %}
+    {% set field_conf = attribute(configuration.fields_map,field_name) %}
+
+    {% if (contact_type == 'Azienda' and field_name in ['type','businessName','vatId','taxCode', 'turnover', 'headcount'])or
+          (contact_type == 'Persona' and field_name in ['type','firstName','lastName','gender','birthDate','birthCity','taxCode']) %}
+      <tr>
+        <th>{{ field_conf.label }}</th>
+        <td>
+          {% include [ configuration.bundle_name ~ ':' ~ configuration.entity_name ~ ':View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig', 'SinervisAdminBundle:crud:View/render_field.html.twig'] %}
+        </td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+</table>

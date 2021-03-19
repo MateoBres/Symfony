@@ -1,0 +1,23 @@
+App\Entity\ContactFlock\Roles\CompanyAggregator:
+  c_aggreg_person{1..5}:
+    contact: '@person*'
+    contact.infos: ["@phone_contact*", "@email_contact*"]
+
+App\Entity\ContactFlock\Contacts\Person:
+  person{1..5}:
+    type: 'p'
+    firstname: <firstName()>
+    lastName: <lastName()>
+    gender: 'm'
+    birthCity: <city()>
+    birthDate: <date_create()>
+
+App\Entity\ContactFlock\ContactInfos\Phone:
+  phone_contact{1..20}:
+    type: '50%? fisso : cellulare'
+    value: <e164PhoneNumber()>
+
+App\Entity\ContactFlock\ContactInfos\Email:
+  email_contact{1..20}:
+    type: 'email'
+    value: <email()>

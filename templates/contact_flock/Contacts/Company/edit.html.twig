@@ -1,0 +1,29 @@
+{% extends 'admin_flock/crud/edit.html.twig' %}
+{% form_theme entity_form 'contact_flock/Contacts/Company/Form/_sinervis_contactbundle_contact_company_customer_students_widget.twig' %}
+
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('contact') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('contact') }}
+{% endblock javascripts %}
+
+{% block object_action_list %}
+  <a class="btn btn-primary btn-sm" href="{{ app.request.server.get('HTTP_REFERER') }}">Annulla <span class="btn-icon"><i class="fas fa-list"></i></span></a>
+{% endblock object_action_list %}
+
+{% block entity_operation_title %}
+  Modifica {{ configuration.singular_name }}: <span class="full-name">{{ entity.cleanFullName }}</span>
+{% endblock entity_operation_title %}
+
+{% block main_entity_form %}
+  {% embed "admin_flock/crud/Form/render_form.html.twig" %}
+    {% block multipstep_titles %}
+      {% include 'contact_flock/Contacts/Generic/Form/render_multistep_titles.html.twig' %}
+    {% endblock %}
+  {% endembed %}
+{% endblock main_entity_form %}

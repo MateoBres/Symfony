@@ -1,0 +1,86 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}
+    Modifica  {{ configuration.singular_name }} - {{ parent() }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('entity_form') }}
+    {# {{ form_stylesheet(form) }} #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#{{ form_javascript(form) }}#}
+
+    {{ encore_entry_script_tags('entity_form') }}
+    {# include addictional javascript like form collection validator #}
+    {#% for js_name in configuration.addictional_js %}
+      <script type="text/javascript" src="/bundles/{{ configuration.bundle_name |replace({'Bundle': '', }  ) | lower }}/js/{{  js_name }}"></script>
+    {% endfor %#}
+
+{% endblock %}
+
+{% block body %}
+
+    <!-- TEMPLATE {{ _self }} -->
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-6">
+            <h2 class="page-title txt-color-blueDark">
+                <i class="fas fa-pencil-alt"></i>
+                {% block entity_operation_title %}
+                    Modifica {{ configuration.singular_name }}
+                {% endblock entity_operation_title %}
+            </h2>
+        </div>
+        <div class="col-6 page-actions">
+            <h2 class="float-right">
+                {% block object_actions %}
+                    {% set _object_extra_actions %}
+                        {% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}
+                    {% endset %}
+
+                    {% if _object_extra_actions.__toString|trim|length %}
+                        <div class="btn-group">
+                            <button id="extra-action-button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Altri</button>
+                            <ul id="extra-action-list" class="dropdown-menu">{% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}</ul>
+                        </div>
+                    {% endif %}
+                    {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_ALL'), entity) or is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_OWNED'), entity) %}
+                        {% block object_action_list %}
+{#                            <a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">Elenco#}
+{#                                <span class="btn-icon"><i class="fas fa-list"></i></span></a>#}
+                        {% endblock object_action_list %}
+                    {% endif %}
+
+                    {% block object_action_show %}
+                        <a class="btn btn-success btn-sm entity-show" href="{{ path(configuration.route_prefix ~ '_show', {id: entity.id}) }}" id="form-save">Mostra
+                            <span class="btn-icon"><i class="fas fa-eye"></i></span>
+                        </a>
+                    {% endblock object_action_show %}
+
+                    {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::EDIT'),entity) %}
+                        {% block object_action_save %}
+                            <a class="btn btn-success btn-sm entity-save" href="#" id="form-save">Salva
+                                <span class="btn-icon"><i class="fas fa-save"></i></span></a>{% endblock object_action_save %}
+                    {% endif %}
+                    {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::DELETE'),entity) %}
+                        {% block object_action_delete %}
+{#                        <a href="{{ path(configuration.route_prefix ~ '_delete', configuration.route_params|merge({ 'id': entity.id, 'token': csrf_token(configuration.entity_name ~ entity.id) })) }}" data-method="POST" class="btn btn-danger btn-sm delete-entity">Elimina#}
+{#                            <span class="btn-icon"><i class="fas fa-trash-alt"></i> </span>#}
+{#                            </a>#}
+                        {% endblock object_action_delete %}
+                    {% endif %}
+                {% endblock object_actions %}
+            </h2>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeIn">
+        {% block main_entity_form %}
+            {% include 'admin_flock/crud/Form/render_form.html.twig' %}
+        {% endblock main_entity_form %}
+    </div>
+
+{% endblock body %}

@@ -1,0 +1,53 @@
+singular_name:   Taxonomy_term
+plural_name:     Taxonomy_terms
+
+list_fields:
+  - id
+  - term
+  - machineTerm
+  - createdAt
+  - updatedAt
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   details
+          fields:
+            - id
+            - term
+            - machineTerm
+            - createdAt
+            - updatedAt
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      TaxonomyTerm.id
+    search_alias: TaxonomyTerm.id
+  term:
+    label:        Term
+    type:         string
+    sort_by:      TaxonomyTerm.term
+    search_alias: TaxonomyTerm.term
+  machineTerm:
+    label:        MachineTerm
+    type:         string
+    sort_by:      TaxonomyTerm.machineTerm
+    search_alias: TaxonomyTerm.machineTerm
+  createdAt:
+    label:        CreatedAt
+    type:         datetime
+    sort_by:      TaxonomyTerm.createdAt
+    search_alias: TaxonomyTerm.createdAt
+  updatedAt:
+    label:        UpdatedAt
+    type:         datetime
+    sort_by:      TaxonomyTerm.updatedAt
+    search_alias: TaxonomyTerm.updatedAt

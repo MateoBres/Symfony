@@ -1,0 +1,17 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{#{% block stylesheets %}#}
+{#    {{ encore_entry_link_tags('entity_form') }}#}
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+{#    {{ encore_entry_script_tags('entity_form') }}#}
+{#{% endblock javascripts %}#}
+
+{% block body %}
+    <div class="wrapper animated fadeIn">
+        {% block main_entity_form %}
+            {% include 'admin_flock/crud/Form/render_form.html.twig' %}
+        {% endblock main_entity_form %}
+    </div>
+{% endblock body %}

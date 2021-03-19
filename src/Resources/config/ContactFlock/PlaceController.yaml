@@ -1,0 +1,163 @@
+singular_name:   Luogo
+plural_name:     Luoghi
+
+list_fields:
+- name
+- fullAddress
+- type
+- hasActiveServices
+- siteName
+- siteType
+
+
+blocks:
+    row1:
+        col1:
+            size: 12
+            blocks:
+                entity:
+                    title:  Dettagli
+                    icon:   fa-building
+                    fields:
+                    - name
+                    - fullAddress
+                    - street
+                    - number
+                    - zip
+                    - city
+                    - province
+                    - region
+                    - country
+                    - siteType
+                    - siteName
+                    - latitude
+                    - longitude
+                    - contactable
+
+show_blocks:
+    row1:
+        col1:
+            size: 7
+            blocks:
+                entity:
+                    title:  Dettagli
+                    icon:   fa-building
+                    fields:
+                    - type
+                    - fullAddress
+                    - street
+                    - number
+                    - zip
+                    - city
+                    - province
+                    - region
+                    - country
+                    - siteType
+                    - siteName
+        col2:
+            size: 5
+            blocks:
+                map:
+                    title: Mappa
+                    icon: fa-globe
+                    fields:
+                    - map
+                services:
+                    title: Servizi
+                    icon:  fa-cog
+                    fields:
+                reports:
+                    title: Reports
+                    icon:  fa-file
+                    fields:
+
+fields_map:
+    id:
+        label:        Id
+        type:         integer
+    type:
+        label:        Tipo
+        type:         string
+        class:        col-md-3
+        collection_widget:
+            class:        col-md-3
+    name:
+        label:        Nome
+        type:         self
+        class:        col-md-6
+    fullAddress:
+        label:        Indirizzo completo
+        type:         string
+        class:        col-md-9 address-stretch
+        link_to_show: true
+        sort_by:      Place.fullAddress
+        search_alias: Place.fullAddress
+        collection_widget:
+            class:        col-md-9
+    code:
+        label:        Codice
+        type:         string
+    street:
+        label:        Via
+        type:         string
+        class:        col-md-8 crouch fade
+    number:
+        label:        Civico
+        type:         string
+        class:        col-md-4 crouch fade
+    zip:
+        label:        CAP
+        type:         string
+        class:        col-md-3 crouch fade
+    city:
+        label:        Città
+        type:         string
+        class:        col-md-5 crouch fade
+    province:
+        label:        Provincia
+        type:         string
+        class:        col-md-4 crouch fade
+    region:
+        label:        Regione
+        type:         string
+        class:        col-md-3 crouch fade
+    country:
+        label:        Stato
+        type:         string
+        class:        col-md-3 crouch fade
+    latitude:
+        label:        Latitudine
+        type:         float
+        class:        col-md-3 crouch fade
+    longitude:
+        label:        Longitudine
+        type:         float
+        class:        col-md-3 crouch fade
+    contact:
+        label:        Cliente
+        type:         string
+        sort_by:      contact.fullNameCanonical
+        search_alias: contact.fullNameCanonical
+    siteType:
+        label:        Tipo sito
+        type:         string
+        class:        col-md-6
+    siteName:
+        label:        Sito
+        type:         string
+        class:        col-md-6
+    contactable.infos:
+        label:        Recapiti
+        type:         collection
+        class:        col-md-12
+    contactable:
+        label:        Recapiti
+        type:         collection
+        class:        col-md-12
+    hasActiveServices:
+        label:        Ha servizi attivi
+        type:         boolean
+    isFiscalSendingAddress:
+        label:        Indirizzo per spedizione documenti fiscali
+        type:         boolean
+        class:        col-md-12 invoice-sending-address

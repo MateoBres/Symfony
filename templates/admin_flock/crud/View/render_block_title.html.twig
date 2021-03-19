@@ -1,0 +1,12 @@
+<!-- TEMPLATE {{ _self }} -->
+<h5>
+  <strong>
+    {% if block_conf.icon %}<i class="fas {{ icons[block_conf.icon]  | default(block_conf.icon) }}"></i>{% endif %}
+    {{ attribute(entity, block_conf.title) is defined ? attribute(entity, block_conf.title) : block_conf.title }}
+  </strong>
+</h5>
+
+<div class="title-extra-actions">
+  {% block extra_title_actions %}
+  {% endblock extra_title_actions %}
+</div>

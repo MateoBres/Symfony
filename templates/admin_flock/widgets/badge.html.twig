@@ -1,0 +1,37 @@
+<!-- TEMPLATE {{ _self }} -->
+<div class="ibox sv-widget-box sv-badge-widget-box">
+    <div class="ibox-content {{ polling_channel is defined ? 'long-poll' : '' }}"
+            {{ polling_channel is defined ? 'data-polling-channel='~polling_channel : '' }}
+            {{ polling_source_uri is defined ? 'data-polling-source-uri='~polling_source_uri : '' }}
+         id="{{ block_id }}"
+    >
+        <div class="info-box-wrapper" style="border: 1px solid {{ dark_color }}">
+            <div class="info-box-icon col-sm-4 col-md-2" style="background-color: {{ dark_color }}">
+                <i class="{{ icon }}"></i>
+            </div>
+            <div class="info-box-content col-sm-8 col-md-10" style="background-color: {{ light_color }}">
+                <div class="info-box-title">
+                    <div>{{ title }}</div>
+                </div>
+                <div class="info-box-data">
+                    <div class="row">
+                        {% if data | length %}
+                            {% set grid_width = 12 / (data|length) %}
+                            {% for item in data %}
+                                <div class="col-{{ grid_width }}">
+                                    <span class="stats-label">{{ item.label }}</span>
+                                    <h4>{{ item.value | raw }}</h4>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12">
+                                <span class="stats-label" style="visibility: hidden">label</span>
+                                <h4 style="font-weight: normal">{{ empty_data_message | raw }}</h4>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

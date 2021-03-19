@@ -1,0 +1,28 @@
+<!-- TEMPLATE {{ _self }} -->
+<table class="table table-bordered mb-0">
+    {% for field_name in block_conf.fields %}
+
+        {# get or create a configuration for the current field #}
+        {% if attribute(configuration.fields_map,field_name) is defined %}
+            {% set field_conf = attribute(configuration.fields_map,field_name) %}
+        {% else %}
+            {% set field_conf = {'label': field_name, 'type': 'string' } %}
+        {% endif %}
+
+        {% if field_conf.hide_if_empty is defined and attribute(entity, field_name) is defined and attribute(entity, field_name) is empty %}
+        {% elseif has_field_permission(entity, field_name, field_conf) %}
+            <tr>
+                {% if block_conf.render_collection_field is not defined %}
+                    <th id="{{ field_name }}-label" class="render-block-label">{{ field_conf.label }}</th>
+                {% endif %}
+
+                <td id="{{ field_name|replace({'.' : '-'}) }}-value">
+                    {% include [ configuration.templates_path ~ '/' ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                        configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                        'admin_flock/crud/View/render_field.html.twig'] %}
+                </td>
+            </tr>
+        {% endif %}
+
+    {% endfor %}
+</table>

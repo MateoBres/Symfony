@@ -1,0 +1,136 @@
+table {
+
+    /*td.actions {
+        min-width: 100px;
+    }
+
+    tr.just-last-raw td {
+        border-bottom: 2px solid $border-color;
+    }*/
+
+    &.form-data-table tr.add-new-item td {
+        border-top: none;
+    }
+
+    &.data-representation-table tr.currently-editing {
+        background-color: $lighter-navy;
+    }
+
+    &.table-condensed {
+        margin-bottom: 0px;
+
+        td {
+            padding: 0.2rem 0.1rem !important;
+        }
+    }
+
+    #field-contact-summary {
+        width: 100%;
+    }
+
+    #field-contact-summary td.td-label {
+        color: $text-color;
+        font-weight: bold;
+        width: 135px;
+    }
+
+    > tfoot > tr > td {
+        border: none !important;
+    }
+
+    th .row {
+        margin-left: 0;
+        margin-right: 0;
+
+        section {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    th.sv-row {
+        div {
+            padding: 4px;
+        }
+    }
+
+    th.render-block-label {
+        background-color: $light-blue;
+    }
+
+    &#contact-contactable-infos {
+        td, tr, th {
+            border: none;
+        }
+    }
+}
+
+.creation-form-table {
+    tbody tr {
+        border: 1px solid $border-color;
+    }
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: $lighter-navy;
+}
+
+.form-data-table {
+    /*td {
+        padding-left: 0px;
+        padding-right: 0px;
+    }*/
+
+
+    th.sv-row {
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+
+        > div {
+
+            padding: 8px;
+
+            &:first-child {
+                padding-left: 0px;
+            }
+        }
+    }
+
+    th {
+        border-right: none !important;
+        border-left: none !important;
+
+        &:last-child {
+            border-right: 1px solid $border-color !important;
+        }
+    }
+
+    td.data-action {
+        border-left: none;
+    }
+
+    td.data-td.sv-row {
+        border-right: none;
+
+        > div.mbc-collection {
+            padding-left: 0 !important;
+            padding-right: 0;
+
+            .form-data-table {
+                margin-bottom: 0;
+            }
+        }
+
+        /* hack per lesson generator */
+        > div.end-date {
+            padding-right: 0;
+        }
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+}

@@ -1,0 +1,48 @@
+singular_name:   Impostazioni
+plural_name:     Impostazioni
+icon: settings
+
+blocks:
+  row1:
+    col1:
+      size: 6
+      blocks:
+        general:
+          title:  Impostazioni Generali
+          icon:   details
+          fields:
+            - notificationEmails
+    col2:
+      size: 6
+      blocks:
+        questionnaire_heading:
+          title:  Intestazione Questionario
+          icon:   fa-clipboard-list
+          fields:
+            - questionnaireHeading
+        questionnaire_thanking_msg:
+          title:  Questionario - messaggio di ringraziamento dopo compilazione
+          icon:   fa-clipboard-list
+          fields:
+            - questionnaireThankingMsg
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+  mainContact:
+    label:     Contatto principale
+    type:      sv_entity
+    class:     col-12
+  notificationEmails:
+    label:     Indirizzi mail per recevere le notifiche
+    type:      array
+  questionnaireHeading:
+    label:        Intestazione Questionario Generale
+    type:         text
+    class:        col-md-12
+  questionnaireThankingMsg:
+    label:        Questionario - messaggio di ringraziamento dopo compilazione
+    type:         text
+    class:        col-md-12
+

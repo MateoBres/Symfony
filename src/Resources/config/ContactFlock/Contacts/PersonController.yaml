@@ -1,0 +1,259 @@
+singular_name:   Persona
+plural_name:     Persone
+generic_entity: '../../Contacts/Generic'
+
+#multistep form configuration
+fieldset_titles:
+    fieldset1: Contatto
+#    fieldset2: Dettagli Utente
+
+is_multirole: true
+
+list_fields:
+- firstName
+- lastName
+- taxCode
+- vatId
+- gender
+- birthDate
+- birthCity
+- birthProvince
+- fullNameCanonical
+- cleanFullName
+- type
+- createdBy
+- createdAt
+- updatedBy
+- updatedAt
+
+blocks:
+    fieldset1:
+        row1:
+            col1:
+                size: 12
+                blocks:
+                    contact:
+                        title:  Contatto
+                        icon:   fa-user
+                        fields:
+                        - type
+                        - createUser
+                        - firstName
+                        - lastName
+                        - gender
+                        - birthDate
+                        - birthCity
+                        - birthProvince
+                        - taxCode
+                        - vatId
+                        - professionalPosition
+                        - notes
+                        - fullNameCanonical
+                        - cleanFullName
+                        - imageFile
+                    branches:
+                        title:  Sedi
+                        validator: branches-form-collection-validator.js
+                        icon:   fa-building
+                        fields:
+                        - ownedPlaces
+                    roles:
+                        title:  Ruoli
+                        icon:   fa-pencil
+                        class:  role-toggle-panel # this block is hidden and its options are exposed via 'Ruoli' button
+                        fields:
+                          - roleNames
+                    contact_infos:
+                        title:  Recapiti
+                        icon:   fa-phone
+                        fields:
+                          - infos
+
+
+show_blocks:
+    row1:
+        col1:
+            size: 6
+            blocks:
+                entity:
+                    title:  Dettagli
+                    icon:   details
+                    fields:
+                    - fullName
+                    - summary
+                    - infos
+                    - professionalPosition
+                    - createdBy
+                    - image
+                branches:
+                    title:  Sedi
+                    validator: branches-form-collection-validator.js
+                    icon:   fa-building
+                    fields:
+                    - ownedPlaces
+        contact_roles:
+            size: 6
+            blocks:
+
+
+fields_map:
+    firstName:
+        label:        Nome
+        type:         string
+        sort_by:      Contacts\Person.firstName
+        search_alias: Contacts\Person.firstName
+        class:        col-12 col-sm-6 col-md-12 col-lg-6
+    lastName:
+        label:        Cognome
+        type:         string
+        sort_by:      Contacts\Person.lastName
+        search_alias: Contacts\Person.lastName
+        class:        col-12 col-sm-6 col-md-12 col-lg-6
+    fullName:
+        label:        Nome
+        type:         self
+        sort_by:      Contact\Person.fullNameCanonical
+        search_alias: Contact\Person.fullNameCanonical
+    taxCode:
+        label:        Codice Fiscale
+        type:         string
+        sort_by:      Contacts\Person.taxCode
+        search_alias: Contacts\Person.taxCode
+        class:        col-12 col-sm-6 col-md-12 col-lg-6
+    vatId:
+        label:        Partita IVA
+        type:         string
+        sort_by:      Contacts\Person.vatId
+        search_alias: Contacts\Person.vatId
+        class:        col-12 col-sm-6 col-md-12 col-lg-6
+    gender:
+        label:        Sesso
+        type:         enum_type
+        dbal_type:    PersonGenderType
+        sort_by:      Contacts\Person.gender
+        search_alias: Contacts\Person.gender
+        class:        col-6
+    birthDate:
+        label:        Data di nascita
+        type:         date
+        sort_by:      Contacts\Person.birthDate
+        search_alias: Contacts\Person.birthDate
+        class:        col-6
+    birthCity:
+        label:        Città di nascita
+        type:         string
+        sort_by:      Contacts\Person.birthCity
+        search_alias: Contacts\Person.birthCity
+        class:        col-6
+    birthProvince:
+        label:        Provincia di nascita (Sigla)
+        type:         string
+        sort_by:      Contacts\Person.birthProvince
+        search_alias: Contacts\Person.birthProvince
+        class:        col-6
+    professionalPosition:
+        label:        Posizione professionale
+        type:         enum_type
+        dbal_type:    ProfessionalPositionType
+        class:        col-md-12
+    id:
+        label:        Id
+        type:         integer
+        sort_by:      Contacts\Person.id
+        search_alias: Contacts\Person.id
+    nid:
+        label:        Nid
+        type:         integer
+        sort_by:      Contacts\Person.nid
+        search_alias: Contacts\Person.nid
+    infos:
+        label:        Recapiti
+        type:         collection
+    fullNameCanonical:
+        label:        Nominativo
+        type:         string
+        sort_by:      Contacts\Person.fullNameCanonical
+        search_alias: Contacts\Person.fullNameCanonical
+    cleanFullName:
+        label:        Cleanfullname
+        type:         string
+        sort_by:      Contacts\Person.cleanFullName
+        search_alias: Contacts\Person.cleanFullName
+    notes:
+        label:        Note
+        type:         string
+        class:        col-md-12
+    imageFile:
+        label:        Avatar o foto
+        type:         image
+        class:        col-12
+    image:
+        label:        Avatar o foto
+        type:         image
+    type:
+        label:        Tipo
+        class:        col-12
+        type:         ContactKindType
+        sort_by:      Contacts\Person.type
+        search_alias: Contacts\Person.type
+    createUser:
+        label:        Crea utente
+        class:        col-md-6
+        type:         integer
+    createdBy:
+        label:        Creato da
+        type:         entity
+        link_to_show:   true
+        sort_by:      Contacts\Person.createdBy
+        search_alias: Contacts\Person.createdBy
+    createdAt:
+        label:        Createdat
+        type:         datetime
+        sort_by:      Contacts\Person.createdAt
+        search_alias: Contacts\Person.createdAt
+    updatedBy:
+        label:        Updatedby
+        type:         string
+        sort_by:      Contacts\Person.updatedBy
+        search_alias: Contacts\Person.updatedBy
+    updatedAt:
+        label:        Updatedat
+        type:         datetime
+        sort_by:      Contacts\Person.updatedAt
+        search_alias: Contacts\Person.updatedAt
+    ownedPlaces:
+        label:
+        type:         collection
+        class:        col-md-12
+        path_to_config: ContactFlock/PersonOwnedPlaceController.yaml
+    PersonOwnedPlaces:
+        label:
+        type:         collection
+        class:        col-md-12
+        path_to_config: ContactFlock/PersonOwnedPlaceController.yaml
+    roleNames:
+        label:
+        type:         choice
+        class:        col-md-12
+    summary:
+        label:        Dati anagrafici
+        type:         string
+    professionalAssociation:
+        label:        Ordine/collegio/ass
+        type:         string
+        class:        col-12
+        sort_by:      Contacts\Person.professionalAssociacion
+        search_alias: Contacts\Person.professionalAssociacion
+        render_as_str: true
+    username:
+        label:        Username
+        type:         string
+    email:
+        label:        Email
+        type:         string
+    enabled:
+        label:        Attivo
+        type:         string
+    roles:
+        label:        Ruoli utente
+        type:         array

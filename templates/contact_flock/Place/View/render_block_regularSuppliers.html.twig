@@ -1,0 +1,26 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% if entity.regularSuppliers|length %}
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Fornitore</th>
+      <th>Categorie Servizi</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for regularSupplier in entity.regularSuppliers %}
+        <tr>
+          <td>{{ regularSupplier.supplier }}</td>
+          <td>
+            <ul>
+              {% for providedService in regularSupplier.providedServices %}
+                <li>{{providedService}}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

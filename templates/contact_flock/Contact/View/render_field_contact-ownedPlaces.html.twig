@@ -1,0 +1,9 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set ownedPlaces = entity.contact is defined ? entity.contact.ownedPlaces : entity.ownedPlaces %}
+
+{% for key, place in ownedPlaces %}
+  {% set icon_path = place.icon %}
+  <span tabindex="{{key}}" class="btn btn-default btn-ci-icon info" role="button" data-html="true" rel="popover" title="{{ place.type|capitalize }}" data-placement="top" data-content="{{ place }}">
+    <img src="{{ asset(icon_path) }}" height="15"/>
+  </span>
+{% endfor %}

@@ -1,0 +1,12 @@
+form div.quiz-permissions {
+    label.questionnaire-group,
+    label.question-group {
+        margin-top: 16px !important;
+    }
+
+    label.questionnaire-group ~ label.questionnaire-group,
+    label.question-group ~ label.question-group {
+        margin-top: 6px !important;
+    }
+
+}

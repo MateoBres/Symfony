@@ -1,0 +1,11 @@
+{% extends 'admin_flock/crud/new.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_link_tags('user_form') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user_form') }}
+{% endblock javascripts %}

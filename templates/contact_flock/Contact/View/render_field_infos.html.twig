@@ -1,0 +1,24 @@
+<!-- TEMPLATE {{ _self }} -->
+{% set infos = entity.contact is defined ? entity.contact.infos : entity.infos %}
+
+<table class="table table-borderless table-sm table-condensed" id="contact-contactable-infos">
+  <tbody>
+  {% for contactInfo in infos %}
+      <tr>
+        <td class="icon-col"><div><span class="fa fa-fw {{ contactInfo.icon }}"></span></div></td>
+        <td class="{{ contactInfo.type }}">
+            {% if contactInfo.type != 'email' and contactInfo.type != 'website'%}
+                <a href="tel:{{ contactInfo.value | replace({' ': ''}) }}">{{ contactInfo.value }}</a>
+            {% elseif contactInfo.type == 'website' %}
+                <a href="{{ contactInfo.value }}" target="_blank">{{ contactInfo.value }}</a>
+            {% elseif contactInfo.type == 'email' %}
+                <a href="mailto:{{ contactInfo.value }}">{{ contactInfo.value }}</a>
+            {% else %}
+                {{ contactInfo.value }}
+            {% endif %}
+        </td>
+        <td></td>
+      </tr>
+  {% endfor %}
+  </tbody>
+</table>

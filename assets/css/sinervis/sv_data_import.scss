@@ -1,0 +1,122 @@
+.import-modal {
+    #js-close {
+        background-color: #edf3ff;
+        border-color: #f4f7ff;
+        color: #3e3e3e;
+
+        &:hover {
+            background-color: #dde3ef;
+            border-color: #d9dce4;
+        }
+    }
+
+    .modal-title {
+        width: 100%;
+        text-align: center;
+    }
+
+    .stats {
+        font-weight: bold;
+        padding: 3px 6px;
+        color: #FFFFFF;
+        background-color: transparent;
+        position: absolute;
+    }
+
+    form.sv-data-import-form {
+        .instruction-wrapper {
+            min-width: auto;
+            text-align: left;
+
+            .alert-info {
+                color: #065c61;
+            }
+
+            b.bold {
+                font-size: 12px;
+                font-weight: bolder;
+            }
+
+            .fields-list {
+                border: 1px solid #e7eaec;
+                padding: 10px;
+                background-color: #F4FDFB;
+
+                .column-letter {
+                    display: inline-block;
+                    width: 20px;
+                    background-color: #23c6c8;
+                    padding: 1px;
+                    color: white;
+                    text-align: center;
+                    margin-bottom: 2px;
+                    border-radius: 2px;
+                }
+            }
+        }
+
+        .sv-form-fields {
+            padding-left: 0px;
+            padding-right: 0px;
+
+            .form-group.general-class {
+                width: 100%;
+                max-width: 100%;
+
+                .sv-file-wrapper input {
+                    min-height: 36px;
+                    max-width: 100%;
+                }
+            }
+
+            .form-errors {
+                padding: 4px 15px;
+                color: #ffffff;
+                border-radius: 4px;
+            }
+
+            .progress-wrapper {
+                .progress-message {
+                    margin-top: 8px;
+                    padding: 4px 8px;
+                }
+            }
+        }
+
+        .sv-file-wrapper {
+            label {
+                display: none;
+            }
+
+            div.sv-fake-file-group {
+                padding-left: 0px;
+                padding-right: 0px;
+                margin-bottom: 5px;
+                position: relative;
+                min-height: inherit;
+
+                input {
+                    cursor: pointer;
+                }
+
+                button {
+                    position: absolute;
+                    right: 10px;
+                    top: 7px;
+                    font-size: 12px;
+                    padding: 2px 16px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 768.1px) {
+    .import-modal {
+        form.sv-data-import-form {
+            .instruction-wrapper {
+                min-width: 600px;
+            }
+        }
+    }
+}

@@ -1,0 +1,193 @@
+/*
+ * LESSONS
+ */
+
+.lesson-allocation-list {
+    tr.lesson-assigned {
+        background-color: lighten(theme-color('primary'), 55%);
+    }
+
+    .lesson-badge, label.checkbox input[type=checkbox]:not(checked) + label {
+        margin-bottom: 0 !important;
+        margin-right: 0px !important;
+        min-width: 40px !important;
+        padding: 4px !important;
+    }
+
+    a.collaborator-teacher {
+        color: theme-color('success');
+    }
+    a.collaborator-tutor {
+        color: theme-color('primary');
+    }
+
+}
+
+.lesson-badge, a.lesson-badge {
+    display: inline-block;
+    text-align: center;
+    min-width: 50px;
+    min-height: 10px;
+    padding: 6px;
+    border-radius: 2px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    font-weight: bold;
+    cursor: initial;
+    color: $text-color;
+    @include border-radius(3px);
+    @include box-shadow(0px, 4px, 3px, $dark-gray);
+
+    &.not-assigned {
+        background-color: $light-blue;
+        color: $text-color;
+    }
+
+    &.assigned {
+        background-color: theme-color("success");
+        color: $light-blue;
+        @include box-shadow(0px, 4px, 3px, darken(theme-color("success"), 10%));
+    }
+
+    @at-root {
+        a#{&} {
+            cursor: pointer;
+
+            &:hover {
+
+                &.assigned {
+                    background-color: lighten(theme-color("primary"), 2%);
+                    color: $light-blue;
+                }
+
+                &.not-assigned {
+                    background-color: lighten($light-blue, 2%);
+                }
+            }
+
+            &:active {
+                @include box-shadow(0px, 2px, 1px, $light-gray);
+            }
+        }
+    }
+}
+
+.popover {
+    .popover-header {
+        margin-top: 0px !important;
+        color: $text-color;
+    }
+
+    .lesson-info-popover {
+
+        table {
+            border-collapse: collapse;
+
+            td, th {
+                border: 1px solid $light-gray;
+                padding: 2px 4px;
+                font-size: 10px;
+                white-space: nowrap;
+
+                a {
+                    font-size: 10px;
+                }
+            }
+
+            th {
+                background-color: $light-blue;
+            }
+        }
+    }
+}
+
+
+/*
+ * ASSIGNMENT FORM
+ */
+
+.lesson-selection-section {
+
+    .edition-operations {
+        position: absolute;
+        top: 14px;
+        right: 60px;
+    }
+
+    .block-section {
+
+        .card-body {
+            padding: 10px;
+            position: relative;
+
+            label.checkbox {
+                display: inline-block;
+                cursor: pointer;
+
+                input[type=checkbox] {
+                    display: none;
+
+                    + label {
+
+                        @extend .lesson-badge;
+                        cursor: pointer;
+                        margin-bottom: 4px;
+
+                        &:active {
+                            @include box-shadow(0px, 2px, 1px, $gray);
+                        }
+                    }
+
+                    &:not(checked) {
+                        + label {
+                            background-color: $light-blue;
+                            color: $text-color;
+
+                            &:hover {
+                                background-color: lighten($light-blue, 2%);
+                            }
+                        }
+                    }
+
+                    &:checked {
+                        + label {
+                            background-color: theme-color("primary");
+                            color: $light-blue;
+                            @include box-shadow(0px, 4px, 3px, darken(theme-color("primary"), 10%));
+                            &:hover {
+                                background-color: lighten(theme-color("primary"), 2%);
+                            }
+
+
+                            .popover {
+                                color: $text-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.attendance-status {
+    display: inline-block;
+    text-align: center;
+    background-color: gray;
+    padding: 1px 10px 2px 10px;
+    min-width: 75px;
+    @include border-radius(3px);
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+
+    &.present {
+        background-color: #008000;
+    }
+
+    &.absence {
+        background-color: #e02c2c;
+    }
+}
+

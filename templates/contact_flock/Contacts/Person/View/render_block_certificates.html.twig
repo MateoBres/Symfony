@@ -1,0 +1,7 @@
+{% if entity.student.certificates is not null %}
+
+{{ include('commercial_flock/certificates/shared/View/render_block_certificates.html.twig', {
+    certificates: entity.student.certificates
+}) }}
+
+{% endif %}

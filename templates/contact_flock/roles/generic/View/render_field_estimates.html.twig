@@ -1,0 +1,6 @@
+<!-- TEMPLATE {{ _self }} -->
+<ul>
+  {% for estimate in entity.estimates %}
+    <li>{{ link_to_show(estimate) }}</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,21 @@
+{% extends 'admin_flock/layout.html.twig' %}
+
+{% block title %}home | {{ parent() }}{% endblock %}
+
+{% block stylesheets -%}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sv_homepage') }}
+{% endblock %}
+
+{% block body %}
+    <div class="homepage-wrapper">
+        <div class="inner-wrraper">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sv_homepage') }}
+{% endblock %}

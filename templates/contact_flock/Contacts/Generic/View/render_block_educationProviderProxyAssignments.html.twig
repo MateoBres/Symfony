@@ -1,0 +1,31 @@
+<div class="card block-section">
+    <div class="card-body">
+        <div class="module-information">
+            <table class="table table-sm mb-0">
+                <thead>
+                <tr>
+                    <th>Edizione</th>
+                    <th>Protocollo</th>
+                    <th>Data</th>
+                    <th>Allocazione</th>
+                    <th class="actions">Operazioni</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for proxyAssignment in entity.educationProvider.proxyAssignments %}
+                    <tr>
+                        <td>{{ link_to_show(proxyAssignment.edition) }}</td>
+                        <td>{% include 'commercial_flock/contracts/shared/View/render_field_protocolNumber.html.twig' with {entity: proxyAssignment} %}</td>
+                        <td>{{ proxyAssignment.createdAt | date('d/m/Y') }}</td>
+                        <td>{% include 'commercial_flock/contracts/proxy_assignment/View/render_field_assignmentsAllocationStatus.html.twig' with {entity: proxyAssignment} %}</a></td>
+                        <td class="actions">
+                            {{ link_to_action_show(proxyAssignment, {}, { display_name: 'Incarico' }) }} &nbsp;
+                            {{ link_to_action_edit(proxyAssignment, {}, { display_name: 'Incarico' }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

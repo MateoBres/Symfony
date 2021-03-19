@@ -1,0 +1,97 @@
+<!-- TEMPLATE {{ _self }} -->
+
+<article class="col-sm-12 col-md-{{ col_conf.size }} contact-role-column">
+
+    {% set num_roles = col_conf.blocks | length %}
+    {% set tab_width = num_roles != 0 ? 100/num_roles: 100 %}
+    {% set active_role = app.request.query.get('role') | lcfirst %}
+
+    {% if active_role == '' %}
+        {% set break = false %}
+        {% for role_name, role_config in col_conf.blocks if break == false and (role_config.blocks | length) > 0 %}
+            {% set active_role = role_name %}
+            {% set break = true %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="ibox">
+        <header class="ibox-title bg-success role-block-header rounded-top">
+            <h5><i class="{{ icons['contacts'] }}"></i> Ruoli</h5>
+        </header>
+        <nav class="ibox-content multirole-form-nav navbar navbar-light navbar-expand bg-white mb-3">
+            <ul class="navbar-nav">
+                {% for role_name, role_config in col_conf.blocks %}
+                    {% set num_blocks = role_config.blocks | length > 0 %}
+                    {% set icon = icons[role_name | lower] | default(icons['details']) %}
+                    <li class="nav-item">
+                        <a class="btn btn-primary mr-2{{ num_blocks <= 0 ? ' disabled' : '' }}" href="#role-block-{{ role_name }}" >
+                            <i class="{{ icon }}"></i> {{ role_config.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+
+    {% for role_name, role_config in col_conf.blocks %}
+        {% set num_blocks = role_config.blocks | length > 0 %}
+        {% if num_blocks > 0 %}
+            <div id="role-block-{{ role_name }}" class="ibox">
+                <header class="ibox-title bg-success role-block-header rounded-top">
+                    {% set icon = icons[role_name | lower] | default(icons['details']) %}
+                    <h5>
+                        <i class="{{ icon }}"></i> {{ role_config.title }}
+                    </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link text-light">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </header>
+                <div class="ibox-content">
+                    {% if num_blocks > 0 %}
+                        {% for block_id, block_conf in role_config.blocks %}
+                            {% set block_is_full = 1 %}
+                            {% if block_conf.path_to_content is defined %}
+                                {% set entity_block = entity %}
+
+                                {% for content_path in block_conf.path_to_content %}
+                                    {% if attribute(entity_block, content_path) is defined %}
+                                        {% set entity_block = attribute(entity_block, content_path) %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% set block_is_full = entity_block|length %}
+                            {% endif %}
+
+                            <div class="ibox z-depth-bottom-0 {{ block_conf.class is defined ? block_conf.class : '' }}" id="{{ block_conf.id is defined ? block_conf.id : row ~ '-' ~ col ~ '-' ~ block_id }}" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false">
+                                <header class="ibox-title">
+                                    {% include [ configuration.templates_path ~ '/View/render_block_title_' ~ block_id ~ '.html.twig', 'admin_flock/crud/View/render_block_title.html.twig'] %}
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link text-light">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                    </div>
+                                </header>
+                                <div role="content" class="ibox-content">
+                                    {% if block_is_full %}
+                                        {% include [ configuration.templates_path ~ '/View/render_block_' ~ block_id ~ '.html.twig',
+                                            configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_block_' ~ block_id ~ '.html.twig',
+                                            'admin_flock/crud/View/render_block.html.twig'] %}
+                                    {% else %}
+                                        {% include 'admin_flock/crud/View/render_empty_block.html.twig' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                        {% include 'admin_flock/crud/View/render_empty_block.html.twig' %}
+                    {% endif %}
+                </div>
+
+            </div>
+        {% endif %}
+    {% endfor %}
+
+</article>

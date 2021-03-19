@@ -1,0 +1,9 @@
+<!-- TEMPLATE {{ _self }} -->
+{% for key, contactInfo in entity.contact.infos %}
+ {#   <span tabindex="{{key}}" class="btn btn-default info btn-ci-icon" role="button" rel="popover" data-placement="top" title="{{ contactInfo.type|capitalize }}" data-html="true" data-content="<a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>">
+      <i class="fa {{ contactInfo.icon }}"></i>
+    </span>
+	#}
+	<div><i class="fa {{ contactInfo.icon }}"></i>{{ contactInfo.value }}</div>
+
+{% endfor %}

@@ -1,0 +1,68 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{% set count=0 %}
+{% for place in entity.interestedPlaces if place.className=='Event' %}
+  {% set count = count + 1 %}
+{% endfor %}
+
+
+{% if count > 0 %}
+  {% set max_lines = 5 %}
+
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Indirizzo</th>
+        <th>Regione</th>
+        <th>Recapiti</th>
+        <th>Responsabile</th>
+        <th>Operazioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in entity.interestedPlaces if place.className=='Event' %}
+        {% if loop.index <= max_lines %}
+          <tr>
+            <td>
+              {{ place.date|localizeddate('long','none','it') }}
+            </td>
+            <td>
+              {{ link_to_show(place) }}
+            </td>
+            <td>
+              {{ place.region }}
+            </td>
+            <td>
+              {% for contactInfo in place.contactable.infos %}
+                <span class="btn btn-default btn-ci-icon" rel="popover" data-placement="top" title="{{ contactInfo.type|capitalize }}" data-html="true" data-content="<a href='{{ contactInfo.protocol }}:{{ contactInfo.value }}'>{{ contactInfo.value }}</a>">
+                  <i class="fa {{ contactInfo.icon }}"></i>
+                </span>
+              {% endfor %}
+            </td>
+            <td>
+              <ul>
+                {% for representative in place.representatives %}
+                  <li>{{ representative }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td class="actions">
+              {{ link_to_action_show(place) }}
+              {{ link_to_action_edit(place) }}
+            </td>
+          </tr>
+        {% else %}
+          {% if loop.index == max_lines + 1 %}
+            <tr>
+              <td colspan="6">
+                <a class="btn btn-info" href="{{ path('admin_places_event') }}?sinervis_contactbundle_places_eventfilter%5Bcustomer%5D%5Bcondition_pattern%5D=3&sinervis_contactbundle_places_eventfilter%5Bcustomer%5D%5Bautocomplete_field%5D=%7B%22label%22%3A%22{{ entity|replace(' ','+') }}%22%2C%22value%22%3A{{ entity.id }}%7D">Visualizza tutti ({{ count }} eventi)</a>
+              </td>
+            </tr>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
