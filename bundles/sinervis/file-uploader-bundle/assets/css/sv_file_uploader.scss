@@ -1,0 +1,111 @@
+.sinervis-file-wrapper {
+    div.sinervis-file-group div.form-group,
+    div.sinervis-custom-file {
+        display: none;
+    }
+
+    div.sinervis-fake-file-group {
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-bottom: 5px;
+        position: relative;
+        min-height: inherit;
+
+        input {
+            padding: 4px 8px !important;
+        }
+
+        input.fake-file-field {
+            background-color: #F4FDFB;
+            background-image: none;
+        }
+
+        button {
+            position: absolute;
+            right: 10px;
+            top: 4px;
+        }
+
+        i.loading {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: #007900;
+        }
+    }
+
+    .sinervis-file-uploader {
+        > .form-group {
+            margin-bottom: 0px;
+        }
+        .custom-file {
+            display: none;
+        }
+    }
+
+    div.image-preview {
+        background: url('/bundles/sinervisfileuploader/images/opaque.png');
+        background-size: 16px;
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            border: 1px solid #c5c5c5;
+            max-width: 100%;
+        }
+    }
+}
+
+table.table-bordered.sinervis-file-table {
+    border: none;
+    margin-top: 0px;
+
+    tr, td.data-td.row, td.data-action {
+        border: none !important;
+        padding: 0px;
+        padding-bottom: 4px;
+    }
+
+    tr {
+        padding-bottom: 4px;
+    }
+
+    td.data-action {
+        isplay: table-cell;
+        vertical-align: middle;
+    }
+
+    tfoot > tr > td {
+        border-top: none !important;
+    }
+    .sinervis-file-wrapper {
+        width: 100%;
+
+        button {
+            position: absolute;
+            right: 8px;
+            padding: 3px 8px 4px 8px;
+        }
+    }
+}
+
+button.remove-file {
+    border: 1px solid #f78181;
+}
+
+button.select-file {
+    border: 1px solid #3184c6;
+}
+
+.file-load-error {
+    background-color: #ffa4ad !important;
+    color: #272727;
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-align: left;
+    border-left: 4px solid red;
+    padding: 8px 8px;
+    border-radius: 4px;
+}

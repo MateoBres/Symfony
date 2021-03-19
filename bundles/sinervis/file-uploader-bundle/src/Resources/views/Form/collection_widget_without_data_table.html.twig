@@ -1,0 +1,68 @@
+<!-- TEMPLATE {{ _self }} -->
+
+{# the following line is useful to avoid rendering the field as a unit
+   when no subfields are present. For example in create form.
+#}
+{% do form.setRendered %}
+{% set field_name = form.vars.name %}
+
+{% set sortable = false %}
+{% if form.vars.attr.sortable is defined and form.vars.attr.sortable %}
+    {% set sortable = true %}
+{% endif %}
+
+<div class="jarviswidget-content smart-form collection-widget-without-datatable-wrapper">
+    <table class="table form-data-table table-bordered  sinervis-file-table {{ sortable ? 'sortable-table' : '' }}" id="{{ id }}">
+        <tbody>
+        {% set last_subform = {} %}
+        {% for subform in form %}
+            {% set last_subform = subform %}
+            <tr id="{{ id }}-row_{{ loop.index0 }}" class="no-data-table">
+                {% if sortable %}
+                    <td class="table-sortable-handler">
+                        <i class="glyphicon glyphicon-move"></i>
+                    </td>
+                {% endif %}
+                <td class="data-td row">
+                    {{ form_widget(subform) }}
+                </td>
+                {% if form.vars.allow_delete == true %}
+                    <td class="data-action">
+                        <a href="#" class="delete" data-toggle="tooltip" title="Rimuovi elemento"><i class="{{ icons.remove }} text-danger"></i></a>
+
+                        {% if form.vars.attr.fields_map.fold_action is defined and form.vars.attr.fields_map.fold_action %}
+                            <a href="#{{ id }}-row_{{ loop.index0 }} .fold"
+                               class="action-toggle-target folded-content-toggler"
+                               style="display:block;"
+                               data-toggle="tooltip"
+                               data-title="Mostra elementi nascosti"
+                               data-alternate-title="Nascondi elementi"
+                               data-alternate-label="<i class='{{ icons.up }} text-default'></i>"
+                            ><i class="{{ icons.down }} text-default"></i></a>
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        {% if prototype is defined %}
+
+            <tfoot>
+            <tr class="without-data-table" class="no-data-table">
+                <td colspan="3">
+                    {% set btn_label_name = form.vars.attr.add_more_button_label is defined ? form.vars.attr.add_more_button_label|split('_')|last : 'Aggiungi' %}
+
+                    {% set prototype_content = form_widget(form.vars.prototype) %}
+
+                    <a href="#" class="add btn btn-inverse btn-xs btn-mini add-{{ btn_label_name|lower|replace({' ': '-'}) }}" data-prototype="{% apply escape %}{{ prototype_content | raw }}{% endapply %}" data-track-id="{{ id }}-row__ID_">
+                        <i class="fa fa-fw fa-plus-circle"></i>
+                        Aggiungi {{ btn_label_name }}
+                    </a>
+                </td>
+            </tr>
+            </tfoot>
+        {% endif %}
+
+    </table>
+</div>

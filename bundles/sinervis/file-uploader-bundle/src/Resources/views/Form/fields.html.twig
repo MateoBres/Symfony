@@ -1,0 +1,70 @@
+{%- block sv_file_row -%}
+    {%- set force_error = true -%}
+    {{- block('form_row') -}}
+{%- endblock -%}
+
+{% block sv_file %}
+{% endblock %}
+
+{% block sv_file_collection_widget %}
+    {% set collection_class = form.vars.attr.fields_map.collection_class is defined ? form.vars.attr.fields_map.collection_class : '' %}
+
+    {% set children_keys = form.children|keys %}
+    {% set data_index = 0 %}
+    {% if children_keys is not empty %}
+        {% set data_index = max(children_keys) + 1 %}
+    {% endif %}
+
+    <section {{ id is defined ? 'id=label_'~id : '' }}
+            class="col col-md-12 collection {{ collection_class }} {{ attr.class is defined ? attr.class : '' }}"
+            data-index="{{ data_index }}"
+            {{ block('widget_attributes') }}
+    >
+        {% include '@SinervisFileUploader/Form/collection_widget_without_data_table.html.twig' %}
+    </section>
+{% endblock %}
+
+{%- block sv_file_widget -%}
+    <div class="sinervis-file-wrapper" parent-name="{{ form.parent.vars.name }}">
+
+        <div class="sinervis-custom-file">
+            {{ form_widget(form.file) }}
+        </div>
+        <div class="form-group sinervis-fake-file-group col col-12">
+            {% set formatted_size = '' %}
+            {% set stunt_placeholder_value = data ? data.originalName : 'Nessun file selezionato' %}
+            {% set file_loaded = stunt_placeholder_value != 'Nessun file selezionato' and stunt_placeholder_value is not null %}
+            {% set stunt_field_options = {} %}
+            {% if file_loaded and value and value.softDelete == false %}
+                {% set formatted_size = value ? value.size | format_file_size : '' %}
+                {% set stunt_field_options = {'value': stunt_placeholder_value ~ ' [' ~ formatted_size ~ ']'} %}
+            {% endif %}
+            {{ form_widget(form.stunt, stunt_field_options) }}
+
+            <button class="btn btn-default btn-xs select-file {{ file_loaded ? 'd-none' : '' }}" type="button">Scegli File</button>
+            <button class="btn btn-default btn-xs remove-file {{ file_loaded ? '' : 'd-none' }}" type="button">Elimina</button>
+            <i class="fas fa-circle-notch fa-spin loading d-none"></i>
+            <input type="text" class="data-class d-none" value="{{ data_class }}">
+            <input type="text" class="property-name d-none" value="{{ property_name }}">
+        </div>
+        <div class="sinervis-file-group">
+            {{- form_widget(form) -}}
+        </div>
+        {%- if form.delete is defined -%}
+            {{- form_row(form.delete) -}}
+        {%- endif -%}
+        {% set fieldClasses = form.vars.attr.class is defined ? form.vars.attr.class : '' %}
+
+        {% if 'show-image-previe' in fieldClasses and form.vars.value %}
+            <div class="image-preview">
+                {{ sinervis_image_preview(form.vars.value) }}
+            </div>
+        {% endif %}
+{#        {%- if download_uri -%}#}
+{#            <a href="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}" download>#}
+{#                {{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}#}
+{#            </a>#}
+{#        {%- endif -%}#}
+    </div>
+{%- endblock -%}
+

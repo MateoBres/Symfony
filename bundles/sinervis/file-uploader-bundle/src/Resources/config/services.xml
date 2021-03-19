@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sinervis_file_uploader.util.metadata_reader"
+                 class="Sinervis\FileUploaderBundle\Util\MetadataReader"
+                 public="true"
+        >
+            <argument type="service" id="annotations.reader"/>
+            <argument type="service" id="cache.app"/>
+        </service>
+
+        <service id="sinervis_file_uploader.service.sinervis_upload_helper"
+                 class="Sinervis\FileUploaderBundle\Service\SinervisUploaderHelper"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sinervis_file_uploader.util.metadata_reader"/>
+            <argument>%kernel.project_dir%</argument>
+        </service>
+
+        <service id="sinervis_file_uploader.service.sinervis_download_helper"
+                 class="Sinervis\FileUploaderBundle\Service\SinervisDownloadHelper"
+        >
+            <argument type="service" id="sinervis_file_uploader.util.metadata_reader"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="security.token_storage"/>
+        </service>
+
+        <service id="sinervis_file_uploader.controller.sinervis_file_controller"
+                 class="Sinervis\FileUploaderBundle\Controller\SinervisFileController"
+                 public="true"
+        >
+            <argument type="service" id="sinervis_file_uploader.service.sinervis_upload_helper"/>
+            <argument type="service" id="sinervis_file_uploader.service.sinervis_download_helper"/>
+        </service>
+
+        <service id="sinervis_file_uploader.controller.sinervis_file_controller:upload_file"
+                 class="Sinervis\FileUploaderBundle\Controller\SinervisFileController"
+                 public="true"
+        >
+            <argument type="service" id="sinervis_file_uploader.service.sinervis_upload_helper"/>
+            <argument type="service" id="sinervis_file_uploader.service.sinervis_download_helper"/>
+        </service>
+
+        <service id="sinervis_file_uploader.event_subscriber.sv_file_subscriber"
+                 class="Sinervis\FileUploaderBundle\EventSubscriber\SinervisFileSubscriber"
+                 public="true"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sinervis_file_uploader.util.metadata_reader"/>
+            <tag name="doctrine.event_subscriber" />
+        </service>
+
+        <service id="sinervis_file_uploader.twig.sv_file_extension"
+                 class="Sinervis\FileUploaderBundle\Twig\SinervisFileExtension"
+                 public="true"
+        >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="sinervis_file_uploader.service.sinervis_download_helper"/>
+            <tag name="twig.extension" />
+        </service>
+
+    </services>
+
+</container>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d80e7a515063bd4dfba11f591fcf327e",
+    "content-hash": "9019db7d5cdf8b40240e08da22451c84",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -5293,6 +5293,37 @@
                 }
             ],
             "time": "2021-02-11T11:37:01+00:00"
+        },
+        {
+            "name": "sinervis/file-uploader-bundle",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "bundles/sinervis/file-uploader-bundle",
+                "reference": "caee0ccca56527f8ac957e2cb994aaeafd9eb910"
+            },
+            "require": {
+                "php": "^7.3.18"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Sinervis\\FileUploaderBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yash",
+                    "email": "yashmika.lamahewage@sinervis.com"
+                }
+            ],
+            "description": "Handles file uploads",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "sokil/php-bitmap",
@@ -12146,12 +12177,13 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "sinervis/file-uploader-bundle": 20,
         "tfox/mpdf-port-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3",
+        "php": "^7.3.18",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },

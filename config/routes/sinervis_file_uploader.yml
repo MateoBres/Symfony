@@ -1,0 +1,2 @@
+sinervis_file_uploader:
+    resource: '@SinervisFileUploaderBundle/Resources/config/routes.xml'

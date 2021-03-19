@@ -1,0 +1,6 @@
+sinervis_file_uploader:
+    form_label:
+         delete_confirm: Rimuovere?
+    link:
+         download: Scaricare
+

@@ -399,6 +399,9 @@
     "setasign/fpdi": {
         "version": "1.6.2"
     },
+    "sinervis/file-uploader-bundle": {
+        "version": "dev-master"
+    },
     "sokil/php-bitmap": {
         "version": "1.1"
     },

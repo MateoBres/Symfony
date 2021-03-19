@@ -1,0 +1,12 @@
+{
+  "entrypoints": {
+    "sv_file_uploader": {
+      "css": [
+        "/sv_file_uploader.css"
+      ],
+      "js": [
+        "/sv_file_uploader.js"
+      ]
+    }
+  }
+}
