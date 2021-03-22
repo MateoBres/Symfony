@@ -30,7 +30,7 @@ blocks:
     fieldset1:
         row1:
             col1:
-                size: 12
+                size: 6
                 blocks:
                     contact:
                         title:  Contatto
@@ -42,33 +42,34 @@ blocks:
                         - lastName
                         - gender
                         - birthDate
-                        - birthCity
-                        - birthProvince
-                        - taxCode
-                        - vatId
-                        - professionalPosition
-                        - notes
-                        - fullNameCanonical
-                        - cleanFullName
-                        - imageFile
-                    branches:
-                        title:  Sedi
-                        validator: branches-form-collection-validator.js
-                        icon:   fa-building
-                        fields:
-                        - ownedPlaces
-                    roles:
-                        title:  Ruoli
-                        icon:   fa-pencil
-                        class:  role-toggle-panel # this block is hidden and its options are exposed via 'Ruoli' button
-                        fields:
-                          - roleNames
+#                        - birthCity
+#                        - birthProvince
+#                        - taxCode
+#                        - notes
                     contact_infos:
                         title:  Recapiti
                         icon:   fa-phone
                         fields:
-                          - infos
-
+                            - infos
+                    branches:
+                        title:  Abitazioni
+                        validator: branches-form-collection-validator.js
+                        icon:   fa-home
+                        fields:
+                        - ownedPlaces
+            col2:
+                size: 6
+                blocks:
+                    user:
+                        title:  Dati Utente
+                        icon:   fa-user-shield
+                        fields:
+                            - user
+                    contactRoles:
+                        title:  Ruoli
+                        icon:   fa-users
+                        fields:
+                            - contactRoles
 
 show_blocks:
     row1:
@@ -82,19 +83,28 @@ show_blocks:
                     - fullName
                     - summary
                     - infos
-                    - professionalPosition
                     - createdBy
-                    - image
                 branches:
-                    title:  Sedi
+                    title:  Abitazioni
                     validator: branches-form-collection-validator.js
-                    icon:   fa-building
+                    icon:   fa-home
                     fields:
                     - ownedPlaces
-        contact_roles:
+        col2:
             size: 6
             blocks:
-
+                user:
+                    title:  Dati Utente
+                    icon:   fa-user-shield
+                    fields:
+                        - user.username
+                        - user.email
+                        - user.enabled
+                contactRoles:
+                    title:  Ruoli
+                    icon:   fa-users
+                    fields:
+                        - contactRoles
 
 fields_map:
     firstName:
@@ -251,9 +261,24 @@ fields_map:
     email:
         label:        Email
         type:         string
+    plainPassword:
+        label:        Password
+        type:         string
     enabled:
         label:        Attivo
         type:         string
     roles:
         label:        Ruoli utente
+        type:         array
+    user.username:
+        label:        Username
+        type:         string
+    user.email:
+        label:        Email
+        type:         string
+    user.enabled:
+        label:        Attivo
+        type:         boolean
+    contactRoles:
+        label:        Ruoli
         type:         array

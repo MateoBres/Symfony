@@ -21,6 +21,7 @@ doctrine:
             ProfessionalPositionType: App\DBAL\Types\ProfessionalPositionType
             SettingsKindType: App\DBAL\Types\SettingsKindType
             CourseModuleAreaType: App\DBAL\Types\CourseModuleAreaType
+            ContactRolesType: App\DBAL\Types\ContactRolesType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

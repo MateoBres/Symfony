@@ -120,9 +120,6 @@ class PlaceType extends AdminAbstractType
                 'attr' => array('geo-name' => 'longitude'),
                 'required' => false,
             ))
-            ->add('isFiscalSendingAddress', null, array(
-                'label' => $this->getLabel('isFiscalSendingAddress'),
-            ))
             // Andrea requested to remove this (mail on 22 Ottobre 2016 11:30)
             //->add('contactable',new ContactableType(), array('label'=>false))
         ;
@@ -141,18 +138,6 @@ class PlaceType extends AdminAbstractType
                     'required' => false,
                 ));
         }
-
-        $builder->add('infos', PolyCollectionType::class, array(
-            'label' => 'Recapiti',
-            'types' => array(
-                EmailType::class,
-                PhoneType::class,
-            ),
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-            'required' => false,
-        ));
 //    if($this->_add_interested_relation) {
 //      $builder
 //          ->add('customer','genemu_jqueryautocompleter_entity', array(

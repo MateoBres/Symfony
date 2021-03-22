@@ -26,95 +26,44 @@ class UserType extends AdminAbstractType
         parent::buildForm($builder, $options);
         $user = $options['data'] ?? null;
 
-        $builder
-            ->add('username', null, [
-                'label'=> $this->getLabel('username')
-            ])
-            ->add('email', null, [
-                'label'=> $this->getLabel('email')
-            ])
-            ->add('enabled', null, [
-                'label'=> $this->getLabel('enabled'),
-                'disabled' => $user && $user->getId() === 1,
-                'attr' => [
-                    'class' => 'user-enabled'
-                ]
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => $this->getLabel('roles'),
-                'choices' => array(
-//                    'SUPER ADMIN' => 'ROLE_SUPER_ADMIN',
-                    'ADMIN' => 'ROLE_ADMIN',
-                ),
-                'disabled' => $user && $user->getId() === 1,
-                'expanded' => true,
-                'multiple' => true,
-                'attr' => [
-                    'class' => 'user-roles'
-                ]
-            ])
-        ;
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $user = $event->getData();
+            $form = $event->getForm();
 
-        $builder
-            ->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                [$this, 'onPreSetData']
-            )
-            ->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                [$this, 'onPreSubmit']
-            )
-            ->addEventListener(
-                FormEvents::POST_SUBMIT,
-                [$this, 'onPostSubmit']
-            );
-    }
+            $form
+                ->add('username', null, [
+                    'label'=> $this->getLabel('username')
+                ])
+                ->add('email', null, [
+                    'label'=> $this->getLabel('email')
+                ])
 
-    public function onPreSetData(FormEvent $event): void
-    {
-        $user = $event->getData();
-        $form = $event->getForm();
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'options' => array(
+                        'translation_domain' => 'FOSUserBundle',
+                        'attr' => array(
+                            'autocomplete' => 'new-password',
+                        ),
+                    ),
+                    'required' => $user->getId() === null,
+                    'first_options' => array('label' => 'Password'),
+                    'second_options' => array('label' => 'Ripeti password'),
+                    'invalid_message' => 'Le password non coincidono',
+                    'attr' => [
+                        'class' => 'password-wrapper'
+                    ]
+                ))
+                ->add('enabled', null, [
+                    'label'=> $this->getLabel('enabled'),
+                    'disabled' => $user && $user->getId() === 1,
+                    'attr' => [
+                        'class' => 'user-enabled'
+                    ]
+                ])
+            ;
+        });
 
-        $form->add('plainPassword', RepeatedType::class, array(
-            'type' => PasswordType::class,
-            'options' => array(
-                'translation_domain' => 'FOSUserBundle',
-                'attr' => array(
-                    'autocomplete' => 'new-password',
-                ),
-            ),
-            'required' => !$user || $user->getId() === null,
-            'first_options' => array('label' => 'Password'),
-            'second_options' => array('label' => 'Ripeti password'),
-            'invalid_message' => 'Le password non coincidono',
-            'attr' => [
-                'class' => 'password-wrapper'
-            ]
-        ));
-
-        $isAdmin = in_array('ROLE_ADMIN', $user->getRoles(), true);
-
-        if ($isAdmin) {
-            $user->setQuizPermissions([]);
-            $event->setData($user);
-        }
-    }
-
-    public function onPreSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-
-        $isAdmin = isset($data['roles']) && in_array('ROLE_ADMIN', $data['roles'], true);
-    }
-
-    public function onPostSubmit(FormEvent $event): void
-    {
-        $user = $event->getData();
-        $isAdmin = in_array('ROLE_ADMIN', $user->getRoles(), true);
-        if ($isAdmin) {
-            $user->setQuizPermissions([]);
-            $event->setData($user);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1355,3 +1355,9 @@ div.collection-widget-without-datatable-wrapper table.form-data-table th {
   display: inline-block;
   margin-right: 40px;
 }
+
+.sidebar-collapse li {
+  background: linear-gradient(
+          90deg
+          , rgba(0,22,61,1) 0%, rgb(0 53 86) 100%, rgba(0,22,61,1) 100%);
+}

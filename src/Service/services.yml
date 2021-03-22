@@ -3,5 +3,5 @@ imports:
     - { resource: ContactFlock/services.yml }
     - { resource: UserFlock/services.yml }
     - { resource: TaxonomyFlock/services.yml }
-    - { resource: SettingsFlock/services.yaml }
+#    - { resource: SettingsFlock/services.yaml }
     - { resource: bundles/services.yml }

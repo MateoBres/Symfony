@@ -851,7 +851,7 @@ h5 {
   font-weight: 600;
 }
 .nav > li > a {
-  color: #333333;
+  color: #ffffff;
   font-weight: 600;
   padding: 14px 20px 14px 16px;
   display: block;
@@ -866,10 +866,6 @@ h5 {
   display: block;
   width: 100%;
   position: relative;
-}
-.nav.metismenu > li.first {
-  padding-bottom: 20px;
-  padding-left: 16px;
 }
 .nav.metismenu > li div.profile-element {
   text-align: center;
@@ -891,7 +887,9 @@ h5 {
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-  background-color: #757575;
+  background: linear-gradient(
+          90deg
+          , rgb(42 80 148) 0%, rgb(39 115 162) 100%, rgb(42 80 148) 100%);
   color: white;
 }
 .nav .open > a,
@@ -1026,11 +1024,11 @@ h5 {
   font-size: 12px;
 }
 .nav-header {
-  padding: 33px 25px;
+  padding: 24px 24px;
   /*background-color: #2f4050;*/
   /*background-image: url("../../images/inspinia/patterns/header-profile.png");*/
-  border-bottom: 4px solid #313131;
-  background: #565656 !important;
+  border-bottom: 4px solid #e80303;
+  background: linear-gradient(90deg, rgba(0,22,61,1) 0%, rgba(0,79,129,1) 100%, rgba(0,22,61,1) 100%);
 }
 .caret {
   display: inline-block;
@@ -1053,7 +1051,9 @@ ul.nav-second-level {
 }
 .nav > li.active {
   border-left: 4px solid #42a4ff;
-  background: #757575;
+  background: linear-gradient(
+          90deg
+          , rgb(24 54 107) 0%, rgb(29 103 148) 100%, rgb(24 54 107) 100%);
 }
 .nav.nav-second-level > li.active {
   border: none;
@@ -1632,8 +1632,8 @@ button:focus {
 }
 .navbar-header .btn-success {
   color: #fff;
-  background-color: #717273;
-  border-color: #656565;
+  background-color: #0e3052;
+  border-color: #08173e;
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -4456,10 +4456,15 @@ samp {
 }
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #c7c7c7;
+  background: linear-gradient(90deg, rgba(0,22,61,1) 0%, rgba(0,79,129,1) 50%, rgba(0,22,61,1) 100%);;
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
+}
+.sidebar-collapse {
+  background: linear-gradient(
+          90deg
+          , rgba(0,22,61,1) 0%, rgb(0 57 93) 100%, rgba(0,22,61,1) 100%);
 }
 html,
 body {
@@ -5053,7 +5058,7 @@ table.table-mail tr td {
   float: none;
   margin-top: 0;
   position: absolute;
-  top: 15px;
+  top: 10px;
   right: 15px;
   padding: 0;
   text-align: right;
@@ -5096,7 +5101,7 @@ table.table-mail tr td {
 }
 .blue-bg,
 .bg-success {
-  background-color: #717273 !important;
+  background: linear-gradient(90deg, rgba(0,22,61,1) 0%, rgba(0,79,129,1) 100%, rgba(0,22,61,1) 100%);
   color: #ffffff;
 }
 .navy-bg,

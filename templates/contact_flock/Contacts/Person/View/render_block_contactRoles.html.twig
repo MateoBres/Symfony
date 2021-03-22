@@ -1,0 +1,12 @@
+<!-- TEMPLATE {{ _self }} -->
+<table>
+    <tr>
+        <td>
+            <ul>
+                {% for role in entity.contactRoles %}
+                    <li>{{ role | readable_enum('ContactRolesType') }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+</table>

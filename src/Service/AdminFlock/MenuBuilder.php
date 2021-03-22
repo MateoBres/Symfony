@@ -42,8 +42,8 @@ class MenuBuilder
             ])
             ->setAttributes(array(
                 'class' => 'nav-header',
-                'path_to_logo' => 'build/images/sinervis/iot_system_logo.png',
-                'path_to_short_logo' => 'build/images/sinervis/iot_system_short_logo.png'
+                'path_to_logo' => 'build/images/sinervis/website_logo.png',
+                'path_to_short_logo' => 'build/images/sinervis/website_short_logo.png'
             ));
 
         $menu->addChild('Home', [

@@ -8,7 +8,7 @@ use App\Controller\AdminFlock\AdminController;
 use App\Entity\ContactFlock\Contact;
 use App\Entity\ContactFlock\Contacts\Company;
 use App\Entity\ContactFlock\Contacts\Person;
-use App\Filter\ContactFlock\Roles\StudentFilterType;
+use App\Filter\SettingsFlock\SettingsFilterType;
 use App\Form\ContactFlock\ContactType;
 use App\Service\AdminFlock\EntityLayoutConfigManager;
 use Doctrine\ORM\Query\Expr;
@@ -50,7 +50,7 @@ class ContactController extends AdminController
 
     protected function getNewEntityFilterType()
     {
-        return StudentFilterType::class;
+        return SettingsFilterType::class;
     }
 
     protected function getRepository()
@@ -70,7 +70,7 @@ class ContactController extends AdminController
 
     protected function preRender($contact, $operation)
     {
-        $this->mergeRoleLayoutConfigsToMainLayoutConfig($contact, $operation);
+//        $this->mergeRoleLayoutConfigsToMainLayoutConfig($contact, $operation);
     }
 
     private function mergeRoleLayoutConfigsToMainLayoutConfig($contact, $operation)

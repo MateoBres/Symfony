@@ -26,9 +26,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * Person
  *
  * @ORM\Entity
- * @ContactRoleMap({
- *   "Worker" = "App\Entity\ContactFlock\Roles\Worker",
- * })
  */
 class Person extends Contact
 {
@@ -75,6 +72,7 @@ class Person extends Contact
      *
      * @DoctrineAssert\Enum(entity="App\DBAL\Types\PersonGenderType")
      * @ORM\Column(name="gender", type="PersonGenderType", length=1, nullable=true)
+     * @Assert\NotBlank(message="Sesso non dovrebbe essere vuoto.")
      */
     protected $gender;
 

@@ -8,6 +8,7 @@
 
 namespace App\Form\ContactFlock\Contacts;
 
+use App\DBAL\Types\ContactRolesType;
 use App\DBAL\Types\PersonGenderType;
 use App\DBAL\Types\ProfessionalPositionType;
 use App\Entity\ContactFlock\GenericProfession;
@@ -115,6 +116,14 @@ class PersonType extends ContactType
                     'add_more_button_label' => 'Abitazione',
                     'fields_map' => $this->getFieldsMap('PersonOwnedPlaces'),
                 ),
+            ))
+            ->add('contactRoles', ChoiceType::class, array(
+                'label' => $this->getLabel('contactRoles'),
+                'choices' => ContactRolesType::getChoices(),
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
+                'attr' => ['class' => 'multiple']
             ))
         ;
     }

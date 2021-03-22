@@ -16,16 +16,16 @@ class ConfigureMenuListener extends BaseConfigureMenuListener
     {
         $menu = $event->getMenu();
 
-//        $menu->addChild('Contatti', [
-//            'uri' => '#',
-//            'extras' => [
-//                'icon' => $this->icons->contacts,
-//                'orderNumber' => 20,
-//                'routes' => [
-//                    ['pattern' => '(contact_flock)'],
-//                ],
-//            ],
-//        ]);
+        $menu->addChild('Contatti', [
+            'route' => 'contact_flock_contact',
+            'extras' => [
+                'icon' => $this->icons->contacts,
+                'orderNumber' => 20,
+                'routes' => [
+                    ['pattern' => '(contact_flock)'],
+                ],
+            ],
+        ]);
 
 //        $menu->addChild('Operatori', [
 //            'orderNumber' => 20,
@@ -44,9 +44,6 @@ class ConfigureMenuListener extends BaseConfigureMenuListener
 //            ]);
 //        }
 
-        if (!$menu['Cliniche']) {
-            $menu->removeChild('Cliniche');
-        }
     }
 
 }

@@ -34,66 +34,6 @@
                 {{ sv_form.sv_row(entity_form, entity, blocks['fieldset1'], configuration) }}
             </div>
 
-            {# Blocchi form ruoli #}
-            <div class="col-12 col-md-6">
-
-                <div class="ibox">
-                    <header class="ibox-title bg-success role-block-header rounded-top">
-                        <h5>
-                            <i class="{{ icons['contacts'] }}"></i> Ruoli
-                        </h5>
-                    </header>
-                    <nav class="ibox-content multirole-form-nav bg-white mb-3 pt-0">
-
-                        <div class="dropdown role-toggle-button-wrapper inline mt-3">
-                            <button type="button" class="btn btn-inverse dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Scegli i Ruoli
-                            </button>
-                            <div class="dropdown-menu js-drop-down-menu-content multiple border-checkbox-section form-group">
-                            </div>
-                        </div>
-
-                        {% for sv_fieldset, rows in blocks[1:] %}
-                            {% set num_rows = rows | length > 0 %}
-                            {% set fieldset_icon = icons[sv_fieldset | replace({'fieldset_': ''}) | lower] | default(icons['details']) %}
-                            <div class="inline mt-3">
-                                <a class="btn btn-primary mr-2{{ num_rows <= 0 ? ' disabled' : '' }}" href="#role-block-{{ sv_fieldset }}">
-                                    <i class="{{ fieldset_icon }}"></i> {{ attribute(fieldset_titles, sv_fieldset) }}
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </nav>
-                </div>
-
-                {% if blocks | length > 1 %}
-                    {% for sv_fieldset, rows in blocks[1:] %}
-                        {% set fieldset_title = attribute(fieldset_titles, sv_fieldset) %}
-                        {% set fieldset_icon = icons[sv_fieldset | replace({'fieldset_': ''}) | lower] | default(icons['details']) %}
-
-                        {% set num_rows = rows | length > 0 %}
-                        {% if num_rows > 0 %}
-                            <div id="role-block-{{ sv_fieldset }}" class="ibox role-block">
-                                <header class="ibox-title bg-success role-block-header rounded-top">
-                                    <h5>
-                                        <i class="{{ fieldset_icon }}"></i> {{ fieldset_title }}
-                                    </h5>
-                                    <div class="ibox-tools">
-                                        <a class="collapse-link text-light">
-                                            <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                    </div>
-                                </header>
-                                <section class="ibox-content role-block-content">
-                                    <div stepy-title="{{ fieldset_title }}" id="{{ sv_fieldset }}" data-id="{{ sv_fieldset }}">
-                                        {{ sv_form.sv_row(entity_form, entity, rows, configuration, true) }}
-                                    </div>
-                                </section>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-
-                {% endif %}
-            </div>
         </div>
 
     {% elseif is_form_multistep %}

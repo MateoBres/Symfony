@@ -25,14 +25,14 @@ blocks:
           - plainPassword
           - enabled
           - roles
-    col2:
-      size: 6
-      blocks:
-        permissions:
-          title:  Permessi
-          icon:   fa-cog
-          fields:
-            - quizPermissions
+#    col2:
+#      size: 6
+#      blocks:
+#        permissions:
+#          title:  Permessi
+#          icon:   fa-cog
+#          fields:
+#            - quizPermissions
 
 
 show_blocks:
@@ -47,17 +47,17 @@ show_blocks:
             - username
             - email
             - enabled
-            - lastLogin
-            - roles
-    col2:
-      size: 5
-      blocks:
-        permissions:
-          title:  Permessi
-          icon:   fa-cog
-          class: 'permissions-block'
-          fields:
-            - quizPermissions
+#            - lastLogin
+#            - roles
+#    col2:
+#      size: 5
+#      blocks:
+#        permissions:
+#          title:  Permessi
+#          icon:   fa-cog
+#          class: 'permissions-block'
+#          fields:
+#            - quizPermissions
 
 fields_map:
   username:

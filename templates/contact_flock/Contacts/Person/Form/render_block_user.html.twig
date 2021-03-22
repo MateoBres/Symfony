@@ -1,0 +1,28 @@
+
+{% for field_name, tmp_field in entity_form.user.children %}
+
+    {# get or create a configuration for the current field #}
+    {% if attribute(configuration.fields_map,field_name) is defined %}
+        {% set field_conf = attribute(configuration.fields_map,field_name) %}
+    {% else %}
+        {% set field_conf = {'label': field_name, 'type': 'string' } %}
+    {% endif %}
+
+    {% if attribute(entity_form.user, field_name) is defined %}
+        {% set field = attribute(entity_form.user, field_name) %}
+        {% include [ configuration.templates_path ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+            configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+            'admin_flock/crud/Form/render_field.html.twig'] %}
+    {% elseif '.' in field_name %}
+        {% set field = entity_form %}
+        {% set field_name_parts = field_name|split('.') %}
+        {% for field_name_part in field_name_parts %}
+            {% set field = attribute(field, field_name_part) is defined ? attribute(field, field_name_part) : null %}
+        {% endfor %}
+        {% if field %}
+            {% include [ configuration.templates_path ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                'admin_flock/crud/Form/render_field.html.twig'] %}
+        {% endif %}
+    {% endif %}
+{% endfor %}

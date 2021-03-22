@@ -31,11 +31,6 @@ blocks:
             - birthCity
             - birthProvince
             - taxCode
-        roles:
-          title: Ruoli
-          icon: fa-users
-          fields:
-            - roles
 
 fields_map:
   id:

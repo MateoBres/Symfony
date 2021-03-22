@@ -2,21 +2,10 @@
 
 namespace App\Entity\ContactFlock;
 
-use App\DBAL\Types\RepresentativeTypeType;
 use App\Entity\AdminFlock\TimestampableInterface;
 use App\Entity\AdminFlock\TimestampableTrait;
-use App\Entity\ContactFlock\Roles\CompanyAggregator;
-use App\Entity\ContactFlock\Roles\Customer;
-use App\Entity\ContactFlock\Roles\EducationProvider;
-use App\Entity\ContactFlock\Roles\FundingAgency;
-use App\Entity\ContactFlock\Roles\RegionalPartner;
-use App\Entity\ContactFlock\Roles\Representative;
-use App\Entity\ContactFlock\Roles\Student;
-use App\Entity\ContactFlock\Roles\Teacher;
-use App\Entity\ContactFlock\Roles\Worker;
 use App\Entity\UserFlock\User;
 use App\Entity\ContactFlock\Roles\Tutor;
-use App\Entity\Util\WithImageTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,7 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class Contact implements TimestampableInterface
 {
     use TimestampableTrait;
-    use WithImageTrait;
 
     // call initWithImageTrait in constructor
 
@@ -104,22 +92,20 @@ abstract class Contact implements TimestampableInterface
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\UserFlock\User", inversedBy="contact", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
-     */
-    protected $user;
-
-    protected $roleNames;
-
-    /**
-     * @var Worker
      * @Assert\Valid()
      */
-    protected $worker;
+    protected $user;
 
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $notes;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $contactRoles = [];
 
     /**************************************/
     /* ABSTRACT METHODS                   */
@@ -139,8 +125,6 @@ abstract class Contact implements TimestampableInterface
         $this->roleNames = [];
         $this->infos = new ArrayCollection();
         $this->ownedPlaces = new ArrayCollection();
-
-        $this->initWithImageTrait();
     }
 
     public function __toString()
@@ -466,29 +450,6 @@ abstract class Contact implements TimestampableInterface
     }
 
     /**
-     * Set customer
-     *
-     * @param integer $worker
-     * @return Contact
-     */
-    public function setWorker($worker)
-    {
-        $this->worker = $worker;
-        $this->addRole($worker);
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return Worker
-     */
-    public function getWorker()
-    {
-        return $this->worker;
-    }
-
-    /**
      * Set createUser
      *
      * @param integer $createUser
@@ -545,8 +506,18 @@ abstract class Contact implements TimestampableInterface
         return $this;
     }
 
-    /**************************************/
-    /* END                                */
-    /**************************************/
+    public function getContactRoles(): ?array
+    {
+        return $this->contactRoles;
+    }
+
+    public function setContactRoles(?array $contactRoles): self
+    {
+        $this->contactRoles = $contactRoles;
+
+        return $this;
+    }
+
+
 
 }

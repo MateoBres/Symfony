@@ -7,6 +7,7 @@ use App\Entity\AdminFlock\TimestampableTrait;
 use App\Repository\UserFlock\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -28,11 +29,13 @@ class User implements UserInterface, TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=127)
+     * @Assert\NotBlank(message="Username non dovrebbe essere vuoto.")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Email non dovrebbe essere vuoto.")
      */
     private $email;
 
@@ -46,11 +49,6 @@ class User implements UserInterface, TimestampableInterface
      * @ORM\Column(type="string")
      */
     private $password;
-
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private $quizPermissions = [];
 
     /**
      * @ORM\Column(type="boolean")
@@ -166,17 +164,6 @@ class User implements UserInterface, TimestampableInterface
         // $this->plainPassword = null;
     }
 
-    public function getQuizPermissions(): ?array
-    {
-        return $this->quizPermissions;
-    }
-
-    public function setQuizPermissions(?array $quizPermissions): self
-    {
-        $this->quizPermissions = $quizPermissions;
-
-        return $this;
-    }
 
     public function getEnabled(): ?bool
     {

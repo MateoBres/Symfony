@@ -1,6 +1,6 @@
-services:
-  sinervis_settings_flock.configure_menu_listener:
-    class: App\EventListener\SettingsFlock\ConfigureMenuListener
-    tags:
-      - { name: kernel.event_listener, event: sinervis_admin.menu_configure, method: onMenuConfigure }
-    arguments: [ "@service_container" ]
+#services:
+#  sinervis_settings_flock.configure_menu_listener:
+#    class: App\EventListener\SettingsFlock\ConfigureMenuListener
+#    tags:
+#      - { name: kernel.event_listener, event: sinervis_admin.menu_configure, method: onMenuConfigure }
+#    arguments: [ "@service_container" ]
