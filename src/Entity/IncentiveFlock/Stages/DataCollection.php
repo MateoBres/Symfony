@@ -3,6 +3,7 @@
 namespace App\Entity\IncentiveFlock\Stages;
 
 use App\Entity\IncentiveFlock\Documents\Document;
+use App\Entity\IncentiveFlock\Intervention;
 use App\Repository\IncentiveFlock\Stages\DataCollectionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -51,6 +52,11 @@ class DataCollection extends Stage
      * @ORM\OneToOne(targetEntity=Document::class, cascade={"persist", "remove"})
      */
     private $costCap;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Intervention::class, mappedBy="dataCollection", cascade={"persist", "remove"})
+     */
+    private $intervention;
 
     /**************************************/
     /* CUSTOM CODE                        */
@@ -133,6 +139,28 @@ class DataCollection extends Stage
     public function setCostCap(?Document $costCap): self
     {
         $this->costCap = $costCap;
+
+        return $this;
+    }
+
+    public function getIntervention(): ?Intervention
+    {
+        return $this->intervention;
+    }
+
+    public function setIntervention(?Intervention $intervention): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($intervention === null && $this->intervention !== null) {
+            $this->intervention->setDataCollection(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($intervention !== null && $intervention->getDataCollection() !== $this) {
+            $intervention->setDataCollection($this);
+        }
+
+        $this->intervention = $intervention;
 
         return $this;
     }

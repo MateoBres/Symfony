@@ -23,7 +23,6 @@
 {% if is_form_multistep %}
     {% set fieldset_titles = configuration.fieldset_titles %}
 {% endif %}
-
 {{ form_start(entity_form, {'attr': {'id':'admin-form', 'autocomplete':'off', 'class': form_op}}) }}
 
     {% if is_form_multirole %}
@@ -74,7 +73,7 @@
                         {% if block_conf.class is defined %}
                             {% set panel_classes =  panel_classes ~ ' ' ~ block_conf.class %}
                         {% endif %}
-
+{#                        {{ dump(block_id, block_conf) }}#}
                         <div class="{{ panel_classes }}" id="{{ panel_id }}">
                             <header class="ibox-title extra-side-padding panel-heading rounded-top {{ nested ? '' : 'bg-success' }}">
                                 <h5>
@@ -106,6 +105,9 @@
                                  id="fieldset_{{ row ~ '-' ~ col ~ '-' ~ block_id }}">
                                 <div class="form-row">
 
+{#                                    {{ dump(configuration.templates_path ~ '/Form/render_block_' ~ block_id ~ '.html.twig') }}#}
+{#                                    {{ dump(configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_block_' ~ block_id ~ '.html.twig') }}#}
+{#                                    {{ dump('admin_flock/crud/Form/render_block.html.twig')}}#}
                                     {% include [ configuration.templates_path ~ '/Form/render_block_' ~ block_id ~ '.html.twig',
                                         configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_block_' ~ block_id ~ '.html.twig',
                                         'admin_flock/crud/Form/render_block.html.twig'] %}

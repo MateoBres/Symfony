@@ -17,6 +17,7 @@
                 {% endif %}
 
                 <td id="{{ field_name|replace({'.' : '-'}) }}-value">
+{#{{ dump(configuration.templates_path ~ '/' ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig') }}#}
                     {% include [ configuration.templates_path ~ '/' ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
                         configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
                         'admin_flock/crud/View/render_field.html.twig'] %}

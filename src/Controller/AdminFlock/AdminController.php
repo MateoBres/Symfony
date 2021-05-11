@@ -73,7 +73,9 @@ abstract class AdminController extends AbstractController
         $this->settingsManager = $settingsManager;
 
         if (!$this->route_prefix) {
+
             $this->route_prefix = $this->getMainRoutePrefix($this->getNewEntity());
+            //dd($this->route_prefix);
         }
 
         $reflector = new ReflectionClass($this);
@@ -103,7 +105,10 @@ abstract class AdminController extends AbstractController
             if (isset($config['icon'])) $this->icon = $config['icon'];
             if (isset($config['generic_entity'])) $this->generic_entity = $config['generic_entity'];
             if (isset($config['stat_fields'])) $this->stat_fields = $config['stat_fields'];
+            //dd($this->fields_map);
+//            dd($config['fields_map']);
             if (isset($config['fields_map'])) $this->fields_map = array_merge($this->fields_map, $config['fields_map']);
+
             if (isset($config['block_filters'])) $this->block_filters = array_merge($this->block_filters, $config['block_filters']);
 
             if (isset($config['fieldset_titles'])) $this->fieldset_titles = array_merge($this->fieldset_titles, $config['fieldset_titles']);
@@ -281,6 +286,7 @@ abstract class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $fullEntityNamespace = $this->getFullEntityNamespace();
+
         $query = $em
             ->getRepository($fullEntityNamespace)
             ->createQueryBuilder($this->getQueryMainAliasName())
@@ -297,9 +303,12 @@ abstract class AdminController extends AbstractController
             $whereQuery = $query->expr()->orX();
             foreach ($this->fields_map as $field => $configuration) {
                 if (isset($configuration['search_alias'])) {
+
                     $whereQuery->add($query->expr()->like($configuration['search_alias'], '?1'));
                     $count++;
+
                 }
+                //dd($configuration['search_alias']);
             }
             if ($count) {
                 $query->andWhere($whereQuery);
@@ -310,6 +319,9 @@ abstract class AdminController extends AbstractController
 
     protected function getFilterForm()
     {
+//        dd($this->createForm($this->getNewEntityFilterType(), null, array(
+//            'fields_map' => $this->fields_map
+//        )));
         return $this->createForm($this->getNewEntityFilterType(), null, array(
             'fields_map' => $this->fields_map
         ));
@@ -409,6 +421,7 @@ abstract class AdminController extends AbstractController
 
         // apply advanced filters (Lexik bundle)
         $filter_form = $this->getFilterForm();
+        //dd($filter_form);
         $this->applyAdvanceFilters($request, $query, $filter_form);
 
         $this->postApplyFilters($query, $filter_form->isSubmitted());
@@ -432,13 +445,14 @@ abstract class AdminController extends AbstractController
             'table_class' => 'index-' . $this->flock_name . '-' . str_replace('\\', '-', $this->entity_name),
             'fields' => $this->list_fields,
         ];
-
+        //dd($renderVars);
+//        dd($renderVars['entities']->getItems()[0]->getProfessori()->count());
         $this->tweakRenderVariables($renderVars, 'index');
 
         if($request->get('excel-export')){
             return $this->listExcelExport($request, $query, $renderVars);
         }
-
+        //dd($renderVars);
         return $this->render($this->templates_path . '/index.html.twig', $renderVars);
     }
 
@@ -486,7 +500,7 @@ abstract class AdminController extends AbstractController
         $this->preExecute();
 
         $entity = $this->getRepository()->find($id);
-
+        //dd($entity->getInterventions()->first());
         if (!$entity) {
             $this->get('session')->getFlashBag()->add('error', 'L\'elemento non è stato trovato!');
             return $this->redirect($this->generateUrl($this->route_prefix, $this->route_params));
@@ -507,13 +521,15 @@ abstract class AdminController extends AbstractController
             'new_dummy_entity' => $this->getNewEntity(),
         ];
 
+        //dd($this->templates_path . '/show.html.twig', $renderVars);
         $this->tweakRenderVariables($renderVars, 'show');
-
+        //dd($renderVars['entity']);
+//        dd($this->templates_path . '/show.html.twig');
         return $this->render($this->templates_path . '/show.html.twig', $renderVars);
     }
 
     /**
-     * Creates a form from an antity.
+     * Creates a form from an entity.
      *
      * @param  $entity The entity
      *
@@ -549,10 +565,10 @@ abstract class AdminController extends AbstractController
      */
     public function new(Request $request, $redirect_to_show = true)
     {
-        $this->preExecute();
+        $this->preExecute();//null
 
         $entity = $this->getNewEntity();
-
+        //dd($entity);
         $this->setDefaultsForEntity($entity, 'new', $request);
 
         $form = $this->createFormWithCustomOptions($entity, $request);
@@ -570,10 +586,11 @@ abstract class AdminController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+//            dd($entity);
             $this->get('session')->getFlashBag()->add('success', 'L\'elemento è stato creato!');
 
             $response = $this->onPostPersist($request, $entity, $redirect_to_show);
+
             if($response)
                 return $response;
 
@@ -604,9 +621,10 @@ abstract class AdminController extends AbstractController
         ];
 
         $this->tweakRenderVariables($renderVars, 'new');
-
+        //dd($renderVars);
         return $this->render($this->templates_path . '/new.html.twig', $renderVars);
-    }
+    } //contact_flock/Contacts/Person/new.html.twig
+    // extends '@SinervisAdmin/crud/new.html.twig'
 
     protected function onPostUpdate(Request $request, $entity, $redirect_to_show = false, $extraData = []): ?Response
     {
@@ -627,7 +645,7 @@ abstract class AdminController extends AbstractController
 
         $entity = $this->getRepository()->find($id);
         $entity->setUpdatedAt(new \DateTime());
-
+//        dd($entity);
         if (!$entity) {
             $this->get('session')->getFlashBag()->add('error', 'L\'elemento non è stato trovato!');
             return $this->redirect($this->generateUrl($this->route_prefix, $this->route_params));
@@ -648,6 +666,7 @@ abstract class AdminController extends AbstractController
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($entity);
             $em->flush();
 
@@ -682,7 +701,7 @@ abstract class AdminController extends AbstractController
         ];
 
         $this->tweakRenderVariables($renderVars, 'edit');
-
+//        dd($renderVars);
         return $this->render($this->templates_path . '/edit.html.twig', $renderVars);
     }
 

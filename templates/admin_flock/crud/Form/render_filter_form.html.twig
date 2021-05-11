@@ -12,6 +12,7 @@
 
 {{ form_start(filter_form, {'attr': {'id':'admin-form', 'autocomplete':'off', 'class': ''}}) }}
     {% for field in filter_form %}
+
         {% if (field.vars.block_prefixes.2 == 'filter_collection_adapter') %}
             {# recursively call the template when form contains sub forms #}
             {% include 'admin_flock/crud/Form/render_filter_form.html.twig' with {'filter_form': field[0]} %}

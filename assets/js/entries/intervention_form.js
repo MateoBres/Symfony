@@ -1,0 +1,1 @@
+import '../../css/sinervis/IncentiveFlock/intervention_form.scss';

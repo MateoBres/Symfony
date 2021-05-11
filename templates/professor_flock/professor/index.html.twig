@@ -1,0 +1,10 @@
+{% extends 'admin_flock/crud/index.html.twig' %}
+
+{% block create_action %}
+    <a href="{{ path(configuration.route_prefix ~ '_new', configuration.route_params) }}"
+       type="button" class="btn btn-success">
+
+        Crea  <i class="fas fa-plus"></i>
+
+    </a>
+{% endblock create_action %}

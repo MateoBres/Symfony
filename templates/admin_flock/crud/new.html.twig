@@ -2,6 +2,7 @@
 
 {% block title %}
     Crea  {{ configuration.singular_name }} - {{ parent() }}
+
 {% endblock title %}
 
 {% block stylesheets %}
@@ -39,7 +40,8 @@
             <h2 class="float-right">
                 {% block object_actions %}
                     {% block object_action_list %}
-                        <a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">Elenco <span class="btn-icon"><i class="fas fa-list"></i></span></a>
+                        <a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">
+                            Elenco <span class="btn-icon"><i class="fas fa-list"></i></span></a>
                     {% endblock object_action_list %}
                     {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::CREATE')) %}
                         {% block object_action_save %}
@@ -58,6 +60,7 @@
 
     <div class="wrapper wrapper-content animated fadeIn">
         {% block main_entity_form %}
+
             {% include 'admin_flock/crud/Form/render_form.html.twig' %}
         {% endblock main_entity_form %}
 

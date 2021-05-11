@@ -1,0 +1,106 @@
+{% extends 'admin_flock/crud/index.html.twig' %}
+
+{% block tbody %}
+    {% for entity in entities %}
+        {% block tbody_tr_open %} <tr id="entity-{{ entity.id }}"> {% endblock tbody_tr_open %}
+        {% for field_name in fields %}
+
+            {# get or create a configuration for the current field #}
+            {% if attribute(configuration.fields_map,field_name) is defined %}
+                {% set field_conf = attribute(configuration.fields_map,field_name) %}
+            {% else %}
+                {% set field_conf = {'label': field_name, 'type': 'string' } %}
+            {% endif %}
+
+            {% if has_field_permission(entity, field_name, field_conf) %}
+                {# print td with data for the table #}
+
+{#                    <td class="{{ field_conf.type }} {{ field_name|replace({'.':'-'}) }}">#}
+{#                {% if(field_name == 'realEstate.municipality') %}#}
+{#                    <b><td class="{{ field_conf.type }} {{ field_name|replace({'.':'-'}) }}"></b>#}
+{#                {% else %}#}
+                    <td class="{{ field_conf.type }} {{ field_name|replace({'.':'-'}) }}">
+{#                {%  endif %}#}
+                    {#
+                    {% if field_conf.link_to_show is defined and field_conf.link_to_show %}
+                      {{ link_to_show(entity, {'route_params':configuration.route_params}) }}
+                    {% else %}
+                      {% include [ configuration.flock_name ~ ':' ~ configuration.entity_name ~ ':View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig', 'SinervisAdminBundle:crud:View/render_field.html.twig'] %}
+                    {% endif %}
+                    #}
+                    {% if field_conf.link_to_show is defined and field_conf.link_to_show and is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::VIEW'),entity) %}
+                    {% set entityIcon = get_entity_icon(entity) %}
+                    {% set entityDescription = get_entity_description(entity) %}
+                    <a href="{{ path(configuration.route_prefix ~ '_show', configuration.route_params|merge({ 'id': entity.id })) }}" {{  entityDescription ? 'Vai a <b>' ~ entityDescription ~ '</b>' : '' }}>
+                        {{ (entityIcon ? entityIcon ~ ' ' : '') | raw }}
+                        {% endif %}
+
+                        {# START CACHING #}
+                        {% set cache_entry = 'gconsulting_new_render_field_' ~ get_entity_class(entity, 'complete') ~ '_' ~ field_name %}
+                        {% set cache_entry = "" %}
+                        {#% if cache.contains(cache_entry) and cache_entry != "" %}
+                                                        {% include cache.fetch(cache_entry) %}
+                                                    {% else %#}
+                        {% set template_found = false %}
+{#                        {{ dump( configuration.templates_path ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig') }}#}
+                        {% set field_templates =  [
+                            configuration.templates_path ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                            configuration.templates_path ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                            configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                            configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
+                            'admin_flock/crud/View/render_field.html.twig'] %}
+                        {% for template in field_templates %}
+                            {% set template_source = source(template, true) %}
+                            {% if template_source is not empty and not template_found %}
+                                {#% set r = cache.save(cache_entry,template) %#}
+                                {% include(template) %}
+                                {% set template_found = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {#% endif %#}
+                        {# END CACHING #}
+
+                        {% if field_conf.link_to_show is defined and field_conf.link_to_show and is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::VIEW'),entity) %}
+                    </a>
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endfor %}
+
+        {# print actions colum #}
+        {% block operation_body_block %}
+            <td class="actions" style="white-space: nowrap;">
+                {% block object_actions %}
+                    {% set _object_extra_actions %}
+                        {% include [ configuration.templates_path ~ '/_object_extra_actions.html.twig', 'admin_flock/crud/_object_extra_actions.html.twig'] %}
+                    {% endset %}
+
+                    {% if _object_extra_actions.__toString|trim|length %}
+                        <div class="more-options-link">
+                            <a tabindex="{{ entity.id }}"
+                               role="button"
+                               class="tabledit-edit-button waves-effect waves-light"
+                               data-html="true" data-placement="top"
+                               data-toggle="popover"
+                               data-content='<ul id="extra-action-list">{{ _object_extra_actions.__toString|trim }}</ul>'>
+                                <span class="fas fa-chevron-up"></span>
+                            </a>
+                        </div>
+                    {% endif %}
+                    <!--span class="d-inline-block" data-toggle="popover" data-content="Disabled popover" data-trigger="hover">
+                        <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
+                    </span-->
+
+                    {% block object_action_show %}{{ link_to_action_show(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_show %}
+                    {% block object_action_edit %}{{ link_to_action_edit(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_edit %}
+                    {% block object_action_delete %}
+                        {% set configuration = configuration|merge({'entity_name' : get_entity_class(entity)}) %}
+                        {{ link_to_action_delete(entity, configuration, {'route_params': configuration.route_params}) }}
+                    {% endblock object_action_delete %}
+
+                {% endblock object_actions %}
+            </td>
+        {% endblock operation_body_block %}
+        </tr>
+    {% endfor %}
+{% endblock tbody %}

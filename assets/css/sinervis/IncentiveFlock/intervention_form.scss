@@ -1,0 +1,29 @@
+.group-incentive-stage {
+    display: flex;
+    > label {
+        flex: 1;
+    }
+    > div {
+        flex: 4;
+    }
+
+    div.incentive-stage {
+        width: 100%;
+
+        .form-group.incentive-stage-model {
+            display: flex;
+            > label {
+                flex: 1;
+            }
+            > div {
+                flex: 3;
+            }
+
+            div.incentive-stage-model {
+                display: flex;
+                width: 100%;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,21 @@
+{% extends 'admin_flock/crud/new.html.twig' %}
+
+
+{% block object_actions %}
+    {% set nome='Matteo' %}
+
+    {% block object_action_list %}
+        <a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">
+            Elenco Professori <span class="btn-icon"><i class="fas fa-list"></i></span></a>
+    {% endblock object_action_list %}
+    {% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::CREATE')) %}
+        {% block object_action_save %}
+            <a class="btn btn-success btn-sm entity-save" href="#" id="form-save">
+                Salva Professore <span class="btn-icon"><i class="fas fa-save"></i> </span>
+            </a>
+            <a class="btn btn-success btn-sm" href="javascript:" id="save-and-new-button">
+                Salva e crea uno nuovo <span class="btn-icon"><i class="fas fa-save"></i></span>
+            </a>
+        {% endblock object_action_save %}
+    {% endif %}
+{% endblock object_actions %}

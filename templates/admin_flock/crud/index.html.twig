@@ -92,8 +92,7 @@
                   btn-success
                 {% endif %} btn-labeled btn-labeled-right advanced_search"
                                              data-toggle-slide="advanced-search-form">{% if filter_form.vars.submitted %}
-                                                <i
-                                                        class="ti-check-box"></i> Filtri attivi{% else %}Ricerca avanzata{% endif %}
+                                                <i class="ti-check-box"></i> Filtri attivi{% else %}Ricerca avanzata{% endif %}
                                             <i class="ti-arrow-down"></i></span>
 
                                         </div>
@@ -247,6 +246,7 @@
                                                         {% include cache.fetch(cache_entry) %}
                                                     {% else %#}
                                                     {% set template_found = false %}
+{#                                                  {{ configuration.templates_path ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig' }}#}
                                                     {% set field_templates =  [
                                                         configuration.templates_path ~ '/Index/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
                                                         configuration.templates_path ~ '/View/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
@@ -294,7 +294,6 @@
                                                 <!--span class="d-inline-block" data-toggle="popover" data-content="Disabled popover" data-trigger="hover">
                                                     <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
                                                 </span-->
-
                                                 {% block object_action_show %}{{ link_to_action_show(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_show %}
                                                 {% block object_action_edit %}{{ link_to_action_edit(entity, configuration,{'route_params':configuration.route_params}) }}{% endblock object_action_edit %}
                                                 {% block object_action_delete %}

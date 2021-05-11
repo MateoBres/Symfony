@@ -50,6 +50,7 @@ field_conf     array('label'=>'...', 'type'=>'...'
         {% elseif field_conf.type == 'currency' or field_conf.type == 'sv_currency' %}
             &euro; {{ value|number_format(2, ',', '.') }}
         {% elseif field_conf.type == 'entity' and value and (value is iterable or value.id is defined) %}
+
             {% if value.id > 0 %} {# Yash to be removed when 'inquadramento fiscale' is set #}
                 {{ link_to_show(value, {short_name: render_short_name}) }}
             {% endif %}

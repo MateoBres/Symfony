@@ -14,10 +14,12 @@
 
   {% set link_to_list = path(configuration.route_prefix, configuration.route_params) %}
   {% if active_role is not empty and attribute(entity, active_role) is defined %}
+
     {% set path_to_list = get_route_by_entity(attribute(entity, active_role)) %}
     {% set link_to_list = path_to_list is not null ? path(path_to_list) : null %}
   {% endif %}
   {% if link_to_list %}
+
     <a class="btn btn-success btn-sm" href="{{ link_to_list }}">
       Elenco <span class="btn-icon"><i class="fas fa-list"></i></span>
     </a>
@@ -27,7 +29,7 @@
 
 {% block object_action_edit %}
   {% set active_role = app.request.query.get('role') %}
-
+{#{{ dump(configuration.route_prefix ~ '_edit', configuration.route_params|merge({ 'id': entity.id, 'role': active_role, '_fragment': active_role })) }}#}
   <a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix ~ '_edit', configuration.route_params|merge({ 'id': entity.id, 'role': active_role, '_fragment': active_role })) }}">
     Modifica <span class="btn-icon"><i class="fas fa-pencil-alt"></i> </span>
   </a>
@@ -35,5 +37,6 @@
 
 {% block object_action_create %}
   {% set active_role = app.request.query.get('role') %}
+{#  {{ dump(configuration.route_params)}}#}
   <a href="{{ path(configuration.route_prefix ~ '_new', configuration.route_params|merge({'role': active_role})) }}" type="button" class="btn btn-sm btn-success"><i class="fas fa-plus"></i></a>
 {% endblock object_action_create %}

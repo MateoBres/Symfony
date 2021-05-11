@@ -21,6 +21,7 @@
             <!-- Menu header start -->
             <nav class="navbar-default navbar-static-side fixed-nav" role="navigation">
                 <div class="sidebar-collapse">
+{#                    {{ dump(knp_menu_render('mainMenu', {'template': 'admin_flock/menu.html.twig' , 'currentClass' : 'active'})) }}#}
                     {{ knp_menu_render('mainMenu', {'template': 'admin_flock/menu.html.twig' , 'currentClass' : 'active'}) }}
                 </div>
             </nav>
@@ -80,6 +81,7 @@
             {{ encore_entry_script_tags('app') }}
             <script src="{{ asset('/bundles/sinervisfileuploader/js/sv_file_uploader.js') }}"></script>
         {% endblock %}
+
 
     </body>
 </html>

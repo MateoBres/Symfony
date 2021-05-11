@@ -135,6 +135,9 @@
             "src/DBAL/Types/.gitignore"
         ]
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -238,6 +241,12 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v4.0.0"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.2.0"
     },
@@ -338,6 +347,9 @@
     },
     "php-http/stopwatch-plugin": {
         "version": "1.2.0"
+    },
+    "php-webdriver/webdriver": {
+        "version": "1.10.0"
     },
     "phpoffice/phpspreadsheet": {
         "version": "1.12.0"

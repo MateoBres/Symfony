@@ -27,9 +27,12 @@
             </header>
             <div role="content" class="ibox-content">
                 {% if block_is_full %}
+{#                    {% block full %}Matteo{% endblock %}#}
+{#                    {{ dump(configuration.templates_path ~ '/View/render_block_' ~ block_id ~ '.html.twig',) }}#}
                     {% include [ configuration.templates_path ~ '/View/render_block_' ~ block_id ~ '.html.twig',
                         configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_block_' ~ block_id ~ '.html.twig',
                         'admin_flock/crud/View/render_block.html.twig'] %}
+
                 {% else %}
                     {% include 'admin_flock/crud/View/render_empty_block.html.twig' %}
                 {% endif %}

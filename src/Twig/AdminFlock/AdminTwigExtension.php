@@ -221,7 +221,7 @@ class AdminTwigExtension extends AbstractExtension
     {
         if (!$object)
             return '';
-
+//        dd($object->getId());
         // check permission
         if (!$this->auth_checker->isGranted(AdminVoter::VIEW, $object))
             return '';  // the user has no permission to view this object, return empty string

@@ -1,0 +1,74 @@
+singular_name:   Pittore
+plural_name:     Pittori
+generic_entity: '../../Artists/Generic'
+
+
+list_fields:
+  - fullName
+  - speciality
+  - tecnic
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - firstName
+            - lastName
+            - speciality
+            - tecnic
+
+show_blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - fullName
+            - speciality
+            - tecnic
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Artists_Painter.id
+  firstName:
+    label:        Nome
+    type:         string
+    sort_by:      Artists_Painter.firstName
+    search_alias: Artists_Painter.firstName
+  lastName:
+    label:        Cognome
+    type:         string
+    sort_by:      Artists_Painter.lastName
+    search_alias: Artists_Painter.lastName
+  fullName:
+    label:        Nome
+    type:         string
+    sort_by:      Artists_Painter.fullName
+  speciality:
+    label:        Specialitá
+    type:         string
+    sort_by:      Artists_Painter.speciality
+    search_alias: Artists_Painter.speciality
+  createdAt:
+    label:        Creato il
+    type:         datetime
+  updatedAt:
+    label:        Modificato il
+    type:         datetime
+  tecnic:
+    label:        Tecnica
+    type:         string
+    sort_by:      Artists_Painter.tecnic
+    search_alias: Artists_Painter.tecnic

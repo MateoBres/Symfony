@@ -34,6 +34,19 @@ services:
     App\Form\CourseFlock\CourseEditionType:
         autowire: true
 
+    App\EventListener\ArtistFlock\ArtistListener:
+        tags:
+            - name: 'doctrine.event_listener'
+                # this is the only required option for the lifecycle listener tag
+              event: 'prePersist'
+
+
+#    App\EventListener\ArtistFlock\ArtistListener2:
+#        tags:
+#            - name: 'doctrine.orm.entity_listener'
+#              event: 'preUpdate'
+#              entity: 'App\Entity\ArtistFlock\Artist'
+
     TFox\MpdfPortBundle\Service\MpdfService: '@t_fox_mpdf_port.mpdf'
 
     twig.extension.intl:

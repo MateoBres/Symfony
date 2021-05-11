@@ -46,7 +46,7 @@ class UserType extends AdminAbstractType
                             'autocomplete' => 'new-password',
                         ),
                     ),
-                    'required' => $user->getId() === null,
+                    'required' => $user && $user->getId() === null,
                     'first_options' => array('label' => 'Password'),
                     'second_options' => array('label' => 'Ripeti password'),
                     'invalid_message' => 'Le password non coincidono',

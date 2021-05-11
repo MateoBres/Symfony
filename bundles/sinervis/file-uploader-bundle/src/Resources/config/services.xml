@@ -35,14 +35,7 @@
         >
             <argument type="service" id="sinervis_file_uploader.service.sinervis_upload_helper"/>
             <argument type="service" id="sinervis_file_uploader.service.sinervis_download_helper"/>
-        </service>
-
-        <service id="sinervis_file_uploader.controller.sinervis_file_controller:upload_file"
-                 class="Sinervis\FileUploaderBundle\Controller\SinervisFileController"
-                 public="true"
-        >
-            <argument type="service" id="sinervis_file_uploader.service.sinervis_upload_helper"/>
-            <argument type="service" id="sinervis_file_uploader.service.sinervis_download_helper"/>
+            <argument type="service" id="doctrine"/>
         </service>
 
         <service id="sinervis_file_uploader.event_subscriber.sv_file_subscriber"

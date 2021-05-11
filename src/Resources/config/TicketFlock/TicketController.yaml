@@ -1,0 +1,51 @@
+singular_name:   Ticket
+plural_name:     Tickets
+
+list_fields:
+  - id
+  - tag
+  - series
+  - numInterventions
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - id
+            - tag
+            - series
+            - interventions
+
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Ticket.id
+    search_alias: Ticket.id
+  tag:
+    label:        Tag
+    type:         string
+    sort_by:      Ticket.tag
+    search_alias: Ticket.tag
+  series:
+    label:        Series
+    type:         integer
+    sort_by:      Ticket.series
+    search_alias: Ticket.series
+  interventions:
+    label:        Interventi
+    type:         collection
+    class:        col-3
+  numInterventions:
+    label:        Interventi
+    type:         entity
+    class:        col-3
+

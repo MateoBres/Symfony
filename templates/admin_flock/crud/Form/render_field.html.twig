@@ -2,15 +2,17 @@
 {% from 'admin_flock/crud/Form/common_form_macros.twig' import field_type_specific_classes %}
 
 {% if field.vars.attr.avoid_rendering is not defined %}
-
+{#    {{ dump(field) }}#}
     {% set isCustomizable = field_conf.customizable is defined and field_conf.customizable and field.parent.children[field.vars.name ~ 'Changed'] is defined %}
     {% set fieldWidgetParameters = {} %}
     {% set readOnly = false %}
 
     {% if isCustomizable %}
+{#                    {{ dump() }}#}
         {% set switchValue = field.parent.children[field.vars.name ~ 'Changed'].vars.value %}
         {% set readOnly = switchValue ? false : true %}collection_widget
         {% if readOnly == true %}
+{#            {{ dump() }}#}
             {% set fieldWidgetParameters = fieldWidgetParameters | merge({attr:{'readonly' : 'readonly'}}) %}
         {% endif %}
     {% endif %}
@@ -22,12 +24,20 @@
     {% set html_field_class = field.vars.attr.class is defined ? field.vars.attr.class : '' %}
 
     <div class="{{ (readOnly ? 'readonly-area' : '') }} form-group col group-{{ html_field_class }} {% if field_conf.class is defined %}{{ field_conf.class }}{% else %}col-sm-6{% endif %} {{ field_type_specific_classes(field) }}">
+{#        {{ dump(field) }}#}
         {% if field.vars.label %}
-            {% if field_conf.label is defined %}
-                {{ form_label(field, field_conf.label) }}
-            {% else %}
-                {{ form_label(field) }}
-            {% endif %}
+            {{ form_label(field) }}
+{#            {{ '+1 month'|date('F js') }}#}
+{#            {%  set nome = 'luca' %}#}
+{#            {% set letters = ['a','b','c','d','e','f'] %}#}
+{#            {% autoescape 'html' %}#}
+{#                {% for letter in letters|capitalize %}#}
+{#                    {{ dump(letter) }}#}
+{#                    {{ '<strong>' }}{{nome~letter}}{{ '<strong>' }}#}
+{#                {% endfor %}#}
+{#            {% endautoescape %}#}
+{#            {{ 4 in [1,2,3] }}#}
+{#                        {{ dump(field.vars.label) }}#}
         {% endif %}
 
         {% if isCustomizable %}

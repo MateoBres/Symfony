@@ -1,6 +1,6 @@
 
 {% for field_name, tmp_field in entity_form.user.children %}
-
+{#    {{ dump(entity_form.user.children) }}#}
     {# get or create a configuration for the current field #}
     {% if attribute(configuration.fields_map,field_name) is defined %}
         {% set field_conf = attribute(configuration.fields_map,field_name) %}
@@ -9,6 +9,9 @@
     {% endif %}
 
     {% if attribute(entity_form.user, field_name) is defined %}
+{#        {{ dump(configuration.templates_path ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig') }}#}
+{#        {{ dump(configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig') }}#}
+{#        {{ dump('admin_flock/crud/Form/render_field.html.twig') }}#}
         {% set field = attribute(entity_form.user, field_name) %}
         {% include [ configuration.templates_path ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',
             configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/Form/render_field_' ~ field_name|replace({'.':'-'}) ~ '.html.twig',

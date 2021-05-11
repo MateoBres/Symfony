@@ -1,0 +1,75 @@
+singular_name:   Scultore
+plural_name:     Scultori
+generic_entity: '../../Artists/Generic'
+
+
+list_fields:
+  - fullName
+  - speciality
+  - material
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - firstName
+            - lastName
+            - speciality
+            - material
+
+show_blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - fullName
+            - speciality
+            - material
+
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Artists_Sculptor.id
+  firstName:
+    label:        Nome
+    type:         string
+    sort_by:      Artists_Sculptor.firstName
+    search_alias: Artists_Sculptor.firstName
+  lastName:
+    label:        Cognome
+    type:         string
+    sort_by:      Artists_Sculptor.lastName
+    search_alias: Artists_Sculptor.lastName
+  fullName:
+    label:        Nome
+    type:         string
+    sort_by:      Artists_Sculptor.fullName
+  speciality:
+    label:        Specialitá
+    type:         string
+    sort_by:      Artists_Sculptor.speciality
+    search_alias: Artists_Sculptor.speciality
+  createdAt:
+    label:        Creato il
+    type:         datetime
+  updatedAt:
+    label:        Modificato il
+    type:         datetime
+  material:
+    label:        Materiali
+    type:         string
+    sort_by:      Artists_Sculptor.material
+    search_alias: Artists_Sculptor.material

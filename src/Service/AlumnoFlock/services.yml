@@ -1,0 +1,6 @@
+services:
+    sinervis_alumno_flock.configure_menu_listener:
+        class: App\EventListener\AlumnoFlock\ConfigureMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sinervis_admin.menu_configure, method: onMenuConfigure }
+        arguments: [ "@service_container" ]

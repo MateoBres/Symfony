@@ -1,0 +1,107 @@
+singular_name:   Intervento
+plural_name:     Interventi
+
+list_fields:
+  - id
+  - createdAt
+  - updatedAt
+  - realEstate.municipality
+  - realEstate.section
+  - realEstate.paper
+  - realEstate.particle
+  - ticket
+
+
+blocks:
+  row1:
+    col1:
+      size: 12
+      blocks:
+        realEstate:
+          title:  Dettagli Immobile
+          icon:   fa-table
+          fields:
+            - realEstate.municipality
+            - realEstate.section
+            - realEstate.paper
+            - realEstate.particle
+            - ticket
+  row2:
+    col1:
+      size: 12
+      blocks:
+        contactWithCustomer:
+          title:  Dettagli Immobile
+          icon:   fa-table
+          fields:
+            - contactWithCustomer
+            - dataCollection
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Intervention.id
+    search_alias: Intervention.id
+  createdAt:
+    label:        CreatedAt
+    type:         datetime
+    sort_by:      Intervention.createdAt
+    search_alias: Intervention.createdAt
+  updatedAt:
+    label:        UpdatedAt
+    type:         datetime
+    sort_by:      Intervention.updatedAt
+    search_alias: Intervention.updatedAt
+  municipality:
+    label:        Comune
+    type:         string
+    class:        col-3
+  realEstate.municipality:
+    label:        Comune
+    type:         string
+    class:        col-3
+    sort_by:      realEstate.municipality
+    search_alias: realEstate.municipality
+  section:
+    label:        Sezione
+    type:         string
+    class:        col-3
+  realEstate.section:
+    label:        Sezione
+    type:         string
+    class:        col-3
+    sort_by:      realEstate.section
+    search_alias: realEstate.section
+  paper:
+    label:        Foglio
+    type:         string
+  realEstate.paper:
+    label:        Foglio
+    type:         string
+    class:        col-3
+    sort_by:      realEstate.paper
+    search_alias: realEstate.paper
+  particle:
+    label:        Particella
+    type:         string
+  realEstate.particle:
+    label:        Particella
+    type:         string
+    class:        col-3
+    sort_by:      realEstate.particle
+    search_alias: realEstate.particle
+  contactWithCustomer:
+    label:        Contatto con il cliente
+    type:         entity
+    class:        col-12
+  dataCollection:
+    label:        Raccolta dati
+    type:         entity
+    class:        col-12
+  ticket:
+    label:        Ticket
+    type:         entity
+    class:        col-3
+
+

@@ -6,6 +6,7 @@ use App\Entity\AdminFlock\TimestampableInterface;
 use App\Entity\AdminFlock\TimestampableTrait;
 use App\Repository\IncentiveFlock\RealEstateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RealEstateRepository::class)
@@ -27,21 +28,25 @@ class RealEstate implements TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=127)
+     * @Assert\NotBlank(message="Comune non dovrebbe essere vuoto.")
      */
     private $municipality;
 
     /**
      * @ORM\Column(type="string", length=127)
+     * @Assert\NotBlank(message="Sezione non dovrebbe essere vuoto.")
      */
     private $section;
 
     /**
      * @ORM\Column(type="string", length=127)
+     * @Assert\NotBlank(message="Foglio non dovrebbe essere vuoto.")
      */
     private $paper;
 
     /**
      * @ORM\Column(type="string", length=127)
+     * @Assert\NotBlank(message="Particella non dovrebbe essere vuoto.")
      */
     private $particle;
 
@@ -59,6 +64,11 @@ class RealEstate implements TimestampableInterface
     /**************************************/
     /* GETTERS & SETTERS                  */
     /**************************************/
+
+    public function __toString():string
+    {
+        return $this->getParticle();
+    }
 
     public function getId(): ?int
     {

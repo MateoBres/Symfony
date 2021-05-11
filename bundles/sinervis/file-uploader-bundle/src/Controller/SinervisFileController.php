@@ -4,11 +4,10 @@
 namespace Sinervis\FileUploaderBundle\Controller;
 
 use App\Security\AdminFlock\AdminVoter;
-use Sinervis\FileUploaderBundle\Annotations\SinervisUploadableField;
+use Doctrine\Persistence\ManagerRegistry;
 use Sinervis\FileUploaderBundle\Entity\SvFile;
 use Sinervis\FileUploaderBundle\Service\SinervisDownloadHelper;
 use Sinervis\FileUploaderBundle\Service\SinervisUploaderHelper;
-use Sinervis\FileUploaderBundle\Util\MetadataReader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,16 +16,17 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
-class SinervisFileController extends AbstractController
+class SinervisFileController
 {
     private $uploaderHelper;
     private $downloadHelper;
-    private $metadataReader;
+    private $doctrine;
 
-    public function __construct(SinervisUploaderHelper $uploaderHelper, SinervisDownloadHelper $downloadHelper)
+    public function __construct(SinervisUploaderHelper $uploaderHelper, SinervisDownloadHelper $downloadHelper, ManagerRegistry $doctrine)
     {
         $this->uploaderHelper = $uploaderHelper;
         $this->downloadHelper = $downloadHelper;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -44,7 +44,7 @@ class SinervisFileController extends AbstractController
     public function downloadFile(Request $request, $id)
     {
         /** @var SvFile $svFile */
-        $svFile = $this->getDoctrine()->getRepository(SvFile::class)->find($id);
+        $svFile = $this->doctrine->getRepository(SvFile::class)->find($id);
 
         if (!$svFile) {
 //            $this->get('session')->getFlashBag()->add('error', 'L\'elemento non è stato trovato!');
@@ -61,10 +61,5 @@ class SinervisFileController extends AbstractController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $svFile->getOriginalName());
 
         return $response;
-    }
-
-    function getFileInBase64($request, $uri)
-    {
-
     }
 }

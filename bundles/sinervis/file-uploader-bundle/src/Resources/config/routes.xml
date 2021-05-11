@@ -5,13 +5,13 @@
         https://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="sinervis_file_uploader_bundle_api"
-           controller="sinervis_file_uploader.controller.sinervis_file_controller:upload_file::uploadFile"
+           controller="sinervis_file_uploader.controller.sinervis_file_controller::uploadFile"
            path="/sinervis-file-upload-api"
            methods="POST|PUT">
     </route>
 
     <route id="sinervis_file_uploader_bundle_api_file_download"
-           controller="sinervis_file_uploader.controller.sinervis_file_controller:upload_file::downloadFile"
+           controller="sinervis_file_uploader.controller.sinervis_file_controller::downloadFile"
            path="/sinervis-file-upload-api/download/{id}"
            methods="GET">
     </route>

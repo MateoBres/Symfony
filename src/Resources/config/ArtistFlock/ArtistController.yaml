@@ -1,0 +1,64 @@
+singular_name:   Artista
+plural_name:     Artisti
+
+list_fields:
+  - fullName
+  - speciality
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - firstName
+            - lastName
+            - speciality
+
+show_blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - firstName
+            - lastName
+            - speciality
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+  firstName:
+    label:        Nome
+    type:         string
+    sort_by:      Artist.firstName
+    search_alias: Artist.firstName
+  lastName:
+    label:        Cognome
+    type:         string
+    sort_by:      Artist.lastName
+    search_alias: Artist.lastName
+  fullName:
+    label:        Nome
+    type:         string
+    sort_by:      Artist.fullName
+  speciality:
+    label:        Specialita
+    type:         string
+    sort_by:      Artist.speciality
+    search_alias: Artist.speciality
+  createdAt:
+    label:        Creato il
+    type:         datetime
+  updatedAt:
+    label:        Modificato il
+    type:         datetime

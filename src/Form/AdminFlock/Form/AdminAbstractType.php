@@ -111,6 +111,7 @@ abstract class AdminAbstractType extends AbstractType
      */
     public function getBlockPrefix()
     {
+
         return StringUtil::fqcnToBlockPrefix(get_class($this));
     }
 } 

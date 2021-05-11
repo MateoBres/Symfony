@@ -1,0 +1,25 @@
+<!-- TEMPLATE {{ _self }} -->
+<table class="table">
+    <thead>
+    <tr>
+        <th>Fase</th>
+        <th>Modello</th>
+        <th>File</th>
+        <th>Approvato</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">{{ configuration.fields_map.contactWithCustomer.label }}</td>
+            <td>Preventivo</td>
+            <td>{{ sinervis_file(entity.contactWithCustomer.estimate.paper) }}</td>
+            <td>{{ entity.contactWithCustomer.estimate.isPaperApproved }}</td>
+        </tr>
+        <tr>
+{#            <td>{{ configuration.fields_map.contactWithCustomer.label }}</td>#}
+            <td>Disciplinare di incarico</td>
+            <td>{{ sinervis_file(entity.contactWithCustomer.dutyAssignment.paper) }}</td>
+            <td>{{ entity.contactWithCustomer.dutyAssignment.isPaperApproved }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -2,6 +2,11 @@ imports:
     - { resource: AdminFlock/services.yml }
     - { resource: ContactFlock/services.yml }
     - { resource: UserFlock/services.yml }
+    - { resource: IncentiveFlock/services.yml }
+    - { resource: TicketFlock/services.yml }
     - { resource: TaxonomyFlock/services.yml }
 #    - { resource: SettingsFlock/services.yaml }
     - { resource: bundles/services.yml }
+    - { resource: ProfessorFlock/services.yml }
+    - { resource: StudentFlock/services.yml }
+    - { resource: ArtistFlock/services.yml }

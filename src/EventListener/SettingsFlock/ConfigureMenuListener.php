@@ -19,6 +19,7 @@ class ConfigureMenuListener extends BaseConfigureMenuListener
                 'route' => 'settings_flock_settings_show_globals',
                 'extras' => ['icon' => $this->icons->settings]
             ]);
+//            dd($menu['Impostazioni']['Applicazione']);
             $this->addCreateMenuItem($menu['Impostazioni']['Applicazione'], 'settings_flock_settings_edit_globals');
         }
     }

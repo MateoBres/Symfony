@@ -1,0 +1,117 @@
+singular_name:   Professore
+plural_name:     Professori
+
+list_fields:
+  - fullName
+  - teach
+  - studentsEntity
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        profesore:
+          title:  Dettagli professore
+          icon:   fa-user
+          fields:
+            - name
+            - surname
+            - teach
+
+    col2:
+      size: 7
+      blocks:
+        alunni:
+          title: Alunni assegnati
+          icon: fa-users
+          fields:
+            - students
+
+show_blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        professore:
+          title:  Dettagli professore
+          icon:   fa-user
+          fields:
+            - fullName
+            - teach
+
+        alunni:
+          title: Alunni assegnati
+          icon: fa-users
+          fields:
+            - students
+
+    col2:
+      size: 5
+      blocks:
+        prova:
+          title: Dettagli Prova
+          icon: fa-table
+          fields:
+            - prova
+            - prova1
+
+
+
+
+
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Professor.id
+    search_alias: Professor.id
+  name:
+    label:        Nome
+    type:         string
+    sort_by:      Professor.name
+    search_alias: Professor.name
+  surname:
+    label:        Cognome
+    type:         string
+    sort_by:      Professor.surname
+    search_alias: Professor.surname
+  fullName:
+    label:        Nome
+    type:         string
+    sort_by:      Professor.fullName
+    search_alias: Professor.fullName
+  teach:
+    label:        Materia
+    type:         string
+    sort_by:      Professor.teach
+    search_alias: Professor.teach
+  createdAt:
+    label:        CreatedAt
+    type:         datetime
+    sort_by:      Professor.createdAt
+    search_alias: Professor.createdAt
+  updatedAt:
+    label:        UpdatedAt
+    type:         datetime
+    sort_by:      Professor.updatedAt
+    search_alias: Professor.updatedAt
+  students:
+    label:        Alunni
+    type:         collection
+    class:        col-6
+  studentsEntity:
+    label:        Alunni
+    type:         entity
+    class:        col-6
+  prova:
+    label:        Prova
+    type:         string
+    class:        col-5
+  prova1:
+    label:        Prova1
+    type:         string
+    class:        col-5

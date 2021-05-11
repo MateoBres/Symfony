@@ -1,0 +1,14 @@
+{% extends 'admin_flock/crud/show.html.twig' %}
+
+{% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_ALL'), entity) or is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_OWNED'), entity) %}
+    {% block object_action_list %}<a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix, configuration.route_params) }}">Elenco Alunni <span class="btn-icon"><i class="fas fa-list"></i></span></a>{% endblock object_action_list %}
+{% endif %}
+{% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::LIST_ALL'), entity) or is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::CREATE'), entity) %}
+    {% block object_action_create %}<a href="{{ path(configuration.route_prefix ~ '_new', configuration.route_params) }}" type="button" class="btn btn-sm btn-success">Crea Alunno <i class="fas fa-plus"></i></a>{% endblock object_action_create %}
+{% endif %}
+{% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::EDIT'),entity) %}
+    {% block object_action_edit %}<a class="btn btn-success btn-sm" href="{{ path(configuration.route_prefix ~ '_edit', configuration.route_params|merge({ 'id': entity.id })) }}">Modifica Alunno <span class="btn-icon"><i class="fas fa-pencil-alt"></i> </span></a>{% endblock object_action_edit %}
+{% endif %}
+{% if is_granted(constant('App\\Security\\AdminFlock\\Authorization\\Voter\\AdminVoter::DELETE'),entity) %}
+    {% block object_action_delete %}<a href="{{ path(configuration.route_prefix ~ '_delete', configuration.route_params|merge({ 'id': entity.id, 'token': csrf_token(configuration.entity_name ~ entity.id) })) }}" data-method="POST" class="btn btn-danger btn-sm delete-entity">Elimina Alunno <span class="btn-icon"><i class="fas fa-trash-alt"></i> </span></a>{% endblock object_action_delete %}
+{% endif %}

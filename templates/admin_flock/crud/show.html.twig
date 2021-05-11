@@ -1,6 +1,8 @@
 {% extends 'admin_flock/layout.html.twig' %}
 
 {% block title %}
+{% set nome='Matteo' %}
+{#    {{ dump() }}#}
   Dettagli  {{ configuration.singular_name }} - {{ parent() }}
 {% endblock title %}
 
@@ -59,6 +61,9 @@
     {% for row, cols in blocks %}
       <div class="row">
         {% for col, col_conf in cols %}
+{#            {{ dump(configuration.templates_path ~ '/View/render_column_' ~ col ~ '.html.twig')}}#}
+{#            {{ dump(configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_column_' ~ col ~ '.html.twig')}}#}
+{#            {{ dump('admin_flock/crud/View/render_column.html.twig')}}#}
             {% include [ configuration.templates_path ~ '/View/render_column_' ~ col ~ '.html.twig',
                 configuration.templates_path ~ '/' ~ configuration.generic_entity ~ '/View/render_column_' ~ col ~ '.html.twig',
                 'admin_flock/crud/View/render_column.html.twig'] %}

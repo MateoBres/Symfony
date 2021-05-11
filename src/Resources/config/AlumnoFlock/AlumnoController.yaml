@@ -1,0 +1,63 @@
+singular_name:   Alumno
+plural_name:     Alumnos
+
+list_fields:
+  - id
+  - fullName
+  - professoreEntity
+
+
+blocks:
+  row1:
+    col1:
+      size: 7
+      blocks:
+        entity:
+          title:  Dettagli
+          icon:   fa-table
+          fields:
+            - id
+            - nome
+            - cognome
+            - professori
+
+
+fields_map:
+  id:
+    label:        Id
+    type:         integer
+    sort_by:      Alumno.id
+    search_alias: Alumno.id
+  nome:
+    label:        Nome
+    type:         string
+    sort_by:      Alumno.nome
+    search_alias: Alumno.nome
+  cognome:
+    label:        Cognome
+    type:         string
+    sort_by:      Alumno.cognome
+    search_alias: Alumno.cognome
+  professori:
+    label:        Professori
+    type:         collection
+    class:        col-6
+  professoreEntity:
+    label:        Professori
+    type:         entity
+    class:        col-6
+
+
+
+
+
+#  createdAt:
+#    label:        CreatedAt
+#    type:         datetime
+#    sort_by:      Alumno.createdAt
+#    search_alias: Alumno.createdAt
+#  updatedAt:
+#    label:        UpdatedAt
+#    type:         datetime
+#    sort_by:      Alumno.updatedAt
+#    search_alias: Alumno.updatedAt
